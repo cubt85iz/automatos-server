@@ -68,8 +68,8 @@ jobs:
         id: define-image-metadata
         uses: docker/metadata-action@v5
         with:
-          image: |
-            ${{ matrix.image_name }}
+          images: |
+            ${{ matrix.image_name }}-${{ matrix.deploy_suite_tag }}
           labels: |
             io.artifacthub.package.logo-url=https://avatars.githubusercontent.com/u/120078124?s=200&v=4
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/ublue-os/ucore/main/README.md
