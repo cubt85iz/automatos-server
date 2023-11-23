@@ -60,8 +60,8 @@ jobs:
         id: generate-image-tags
         shell: bash
         run: |
-          TIMESTAMP="$(date +%Y%m%d)"
-          BUILD_TAGS=( "latest" "${TIMESTAMP}")
+          TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
+          BUILD_TAGS=( "latest" "${TIMESTAMP}" "$(echo ${TIMESTAMP} | cut -d '-' -f 1)”)
           echo "alias_tags=${BUILD_TAGS[*]}" >> $GITHUB_OUTPUT
 
       - name: Define Image Metadata
