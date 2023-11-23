@@ -42,7 +42,7 @@ jobs:
       packages: write
       id-token: write
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         image_name:
           - osn
