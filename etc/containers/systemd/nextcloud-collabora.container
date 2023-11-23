@@ -1,0 +1,18 @@
+[Unit]
+Description=Container service for Nextcloud Collabora
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/nextcloud/aio-collabora:latest
+EnvironmentFile=/var/containers/dotenv/%p.env
+Network=nextcloud
+AutoUpdate=registry
+Pull=always
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,21 @@
+[Unit]
+Description=Container service for Audiobookshelf
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/advplyr/%p:latest
+EnvironmentFile=/var/containers/dotenv/%p.env
+Volume=%p-config:/config:Z
+Volume=%p-metadata:/metadata:Z
+Volume=shared-audiobooks:/var/%p/audiobooks:z,rw,rslave,rbind
+PublishPort=8689:80
+AutoUpdate=registry
+Pull=always
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

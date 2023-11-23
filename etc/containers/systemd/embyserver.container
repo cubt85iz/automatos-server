@@ -1,0 +1,23 @@
+[Unit]
+Description=Container service for Emby
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/emby/%p:latest
+AddDevice=/dev/dri/renderD128
+EnvironmentFile=/var/containers/dotenv/%p.env
+Volume=%p-data:/config:Z
+Volume=shared-movies:/mnt/movies:z,rw,rslave,rbind
+Volume=shared-tv:/mnt/tv:z,rw,rslave,rbind
+Tmpfs=/transcode
+PublishPort=8096:8096
+AutoUpdate=registry
+Pull=always
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

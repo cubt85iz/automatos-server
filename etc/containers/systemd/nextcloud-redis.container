@@ -1,0 +1,19 @@
+[Unit]
+Description=Container service for Nextcloud Redis
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/nextcloud/aio-redis:latest
+EnvironmentFile=/var/containers/dotenv/%p.env
+Volume=/var/containers/volumes/nextcloud/redis:/data:rw,Z
+Network=nextcloud
+AutoUpdate=registry
+Pull=always
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
