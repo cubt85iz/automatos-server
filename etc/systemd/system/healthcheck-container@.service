@@ -1,0 +1,7 @@
+[Unit]
+Description=Healthcheck for containers
+
+[Service]
+ExecStartPre=/usr/bin/test $(docker container inspect -f "{{.State.Running}}" %i) == "true"
+ExecStartPre=/usr/bin/test $(docker container inspect -f "{{.State.Restarting}}" %i) == "true"
+ExecStart=/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null $(cat /etc/healthcheck-container@%i.url)

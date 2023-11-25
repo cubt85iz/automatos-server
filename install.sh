@@ -24,6 +24,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
     INCLUDE_EMBY=y
     INCLUDE_GOTIFY=y
     INCLUDE_MEALIE=y
+    INCLUDE_PLEX=y
   else
     echo "ERROR: Deployment suite not recognized ($DEPLOY_SUITE)."
     exit 1
@@ -69,6 +70,7 @@ if [ -z "${INCLUDE_UNIFI-}" ]; then
 fi
 if [ -z "${INCLUDE_YTSUBS-}" ]; then
   rm ytsubs.container
+  rm /etc/systemd/system/ytsubs.timer
 fi
 popd &> /dev/null
 

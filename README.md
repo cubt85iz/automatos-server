@@ -1,13 +1,15 @@
-# OSN
+# OSN (OS for NAS)
 
-Fedora CoreOS image, based on [ucore](https://github.com/ublue-os/ucore.git), with support for ZFS and various vontainerized services.
+Fedora CoreOS image, based on [ucore](https://github.com/ublue-os/ucore.git), with support for ZFS and various containerized services.
+
+## Customization
+
+Clone the repo and create a DEPLOY_SUITE to deploy your own custom combination of services. Use the [osn-ignition](https://github.com/cubt85iz/osn-ignition.git) project for secrets management.
 
 ## Installation
 
-1. Clone [osn-ignition](https://github.com/cubt85iz/osn-ignition.git) repository.
-1. Create a `secrets.yml` using the provided example.
-1. Execute `just serve` to spin up a python web server to host the generated ignition configuration.
-1. Load live environment for CoreOS and execute `sudo coreos-installer --insecure-ignition --ignition-url http://<web-server-ip>:8080/.generated/config.ign /dev/nvme0n1`
-1. Execute `systemctl reboot` to reboot into Fedora CoreOS.
-1. Rebase to repository.
-1. Rebase to image.
+1. Clone [osn-ignition](https://github.com/cubt85iz/osn-ignition.git) repository and follow the instructions there to install Fedora CoreOS.
+1. Execute the following command to rebase to the unsigned version of this image: `sudo rpm-ostree rebase ostree-unverified-registry:ghcr.io/cubt85iz/osn:latest`. NOTE: Replace `osn:latest` with the image name and tag you wish to target.
+1. Execute the following command to reboot to the new image: `sudo systemctl reboot`.
+1. Execute the following command to rebase to the signed image: `sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/cubt85iz/osn:latest`. NOTE: Replace `osn:latest` with the image name and tag you wish to target.
+1. Execute the following command to reboot to the new image: `sudo systemctl reboot`

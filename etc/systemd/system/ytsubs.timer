@@ -1,0 +1,9 @@
+[Unit]
+Description=Download YouTube videos after rebooting or weekly.
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=1w
+
+[Install]
+WantedBy=timers.target
