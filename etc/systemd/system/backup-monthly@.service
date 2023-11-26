@@ -4,7 +4,7 @@ Description=Service for daily container volume backups
 [Service]
 Type=oneshot
 EnvironmentFile="/etc/containers/config/%i.env"
-EnvironmentFile="/etc/secrets.env"
+EnvironmentFile="/etc/containers/config/host_secrets.env"
 Environment=TIMESTAMP=$(date +%%Y_%%m_%%d-%%H_%%M_%%S)
 ExecStartPre=/usr/local/bin/create-snapshot "$DATASET" "monthly" "n" "$TIMESTAMP"
 ExecStart=/usr/local/bin/backup-snapshot "$DATASET@$TIMESTAMP-monthly" "$BACKUP_PATH" "$BACKUP_KEY"
