@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SNAPSHOT=$1
+REPO=$2
+KEY=$3
+
+DATASET=$(echo "$SNAPSHOT" | cut -d "@" -f 1)
+SNAPNAME=$(echo "$SNAPSHOT" | cut -d "@" -f 2)
+
+if [ -n "$SNAPSHOT" ] && zfs list -H -t snapshot "$SNAPSHOT"; then
+  if [ -n "$REPO" ]; then
+    if [ ! -d "$REPO" ]; then
+      borg init -e "$KEY" "$REPO"
+    fi
+
+    borg create "$REPO::$SNAPSHOT" "/var/$DATASET/.zfs/$SNAPNAME"
+  else
+    echo "Please provide a valid repository path."
+    exit 1
+  fi
+else
+  echo "Please provide a valid ZFS snapshot."
+  exit 1
+fi

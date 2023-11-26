@@ -1,0 +1,6 @@
+[Unit]
+Description=Backup container volumes weekly
+
+[Timer]
+OnCalendar=Sun *-*-2..31 4:00:00
+AccuracySec=1s

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DATASET=$1
+TYPE=$2
+RECURSIVE=${3:-n}
+TIMESTAMP=${4:-$(date +%Y_%m_%d-%H_%M_%S)}
+
+if [ -n "$DATASET" ] && zfs list -H -t filesystem $DATASET; then
+  if [ -n "$TYPE" ]; then
+    if [ -n "$RECURSIVE" ]; then
+      case $RECURSIVE in
+        Y|y|yes|1)
+          zfs snapshot -r "$DATASET@$TIMESTAMP-$TYPE"
+          ;;
+        *)
+          zfs snapshot "$DATASET@$TIMESTAMP-$TYPE"
+          ;;
+      esac
+    fi
+  else
+    echo "Please provide a valid snapshot type. Valid values are daily, weekly, monthly, yearly."
+    exit 1
+  fi
+else
+  echo "Please provide a valid ZFS dataset."
+  exit 1
+fi
