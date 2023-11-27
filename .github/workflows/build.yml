@@ -71,9 +71,8 @@ jobs:
           images: |
             ${{ matrix.image_name }}-${{ matrix.deploy_suite_tag }}
           labels: |
-            io.artifacthub.package.logo-url=https://avatars.githubusercontent.com/u/120078124?s=200&v=4
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/ublue-os/ucore/main/README.md
-            org.opencontainers.image.description=An OCI image of Fedora CoreOS with NVIDIA and/or ZFS pre-installed
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/cubt85iz/osn/main/README.md
+            org.opencontainers.image.description=A ucore-derived image with ZFS and container quadlets
             org.opencontainers.image.title=${{ matrix.image_name }}
             org.opencontainers.image.version=${{ matrix.image_version }}
 

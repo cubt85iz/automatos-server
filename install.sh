@@ -18,7 +18,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
     INCLUDE_UNIFI=y
     INCLUDE_YTSUBS=y
   elif [ "$DEPLOY_SUITE" == "nnk" ]; then
-      INCLUDE_EMBY=y
+    INCLUDE_EMBY=y
   elif [ "$DEPLOY_SUITE" == "pow" ]; then
     INCLUDE_AUDIOBOOKSHELF=y
     INCLUDE_EMBY=y
@@ -30,8 +30,8 @@ if [ -n "$DEPLOY_SUITE" ]; then
     exit 1
   fi
 else
-    echo "ERROR: Deployment suite not provided."
-    exit 1
+  echo "ERROR: Deployment suite not provided."
+  exit 1
 fi
 
 # Remove quadlet containers & networks
