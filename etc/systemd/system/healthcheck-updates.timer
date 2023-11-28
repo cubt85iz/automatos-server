@@ -1,0 +1,8 @@
+[Unit]
+Description=Check for important updates
+
+[Timer]
+OnUnitActiveSec=60m
+
+[Install]
+WantedBy=timers.target
