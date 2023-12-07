@@ -1,0 +1,20 @@
+[Unit]
+Description=Container service for Nextcloud
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/%p/aio-nextcloud:latest
+EnvironmentFile=/home/core/.config/containers/config/%p.env
+Volume=/var/containers/volumes/nextcloud/www:/var/www/html:rw,z
+Volume=/var/containers/volumes/nextcloud/data:/mnt/ncdata:rw,Z
+Network=nextcloud
+AutoUpdate=registry
+Pull=always
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

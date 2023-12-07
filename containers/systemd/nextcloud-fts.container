@@ -1,0 +1,19 @@
+[Unit]
+Description=Container service for Nextcloud Full-Text Search
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/nextcloud/aio-fulltextsearch:latest
+EnvironmentFile=/home/core/.config/containers/config/%p.env
+Volume=/var/container/volumes/nextcloud/fts:/usr/share/elasticsearch/data:rw,Z
+Network=nextcloud
+AutoUpdate=registry
+Pull=always
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

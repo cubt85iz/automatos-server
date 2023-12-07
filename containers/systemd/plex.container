@@ -1,0 +1,34 @@
+[Unit]
+Description=Container service for Plex
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/plexinc/pms-docker:plexpass
+AddDevice=/dev/dri
+EnvironmentFile=/home/core/.config/containers/config/%p.env
+Volume=/var/containers/volumes/%p/config:/config:Z
+Volume=/var/containers/volumes/shared/audiobooks:/media/audiobooks:z,rw,rslave,rbind
+Volume=/var/containers/volumes/shared/movies:/media/movies:z,rw,rslave,rbind
+Volume=/var/containers/volumes/shared/music:/media/music:z,rw,rslave,rbind
+Volume=/var/containers/volumes/shared/tv:/media/tv:z,rw,rslave,rbind
+Tmpfs=/transcode
+PublishPort=32400:32400/tcp
+PublishPort=3005:3005/tcp
+PublishPort=8324:8324/tcp
+PublishPort=32469:32469/tcp
+PublishPort=1900:1900/udp
+PublishPort=32410:32410/udp
+PublishPort=32412:32412/udp
+PublishPort=32413:32413/udp
+PublishPort=32414:32414/udp
+Network=plex
+AutoUpdate=registry
+Pull=always
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

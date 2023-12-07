@@ -1,0 +1,19 @@
+[Unit]
+Description=Container service for %p
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/gotify/server:latest
+EnvironmentFile=/home/core/.config/containers/config/%p.env
+Volume=%p-data:/app/data:Z
+PublishPort=8111:80
+AutoUpdate=registry
+Pull=always
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
