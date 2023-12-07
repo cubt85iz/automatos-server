@@ -4,6 +4,7 @@ ARG DEPLOY_SUITE=${DEPLOY_SUITE}
 
 COPY etc /etc
 COPY *.sh /tmp/
+COPY containers/ /home/core/.config/containers
 
 RUN mkdir -p /var/lib/alternatives \
     && /tmp/install.sh \

@@ -18,7 +18,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
     INCLUDE_UNIFI=y
     INCLUDE_YTSUBS=y
   elif [ "$DEPLOY_SUITE" == "nnk" ]; then
-    INCLUDE_EMBY=y
+    INCLUDE_SYNCTHING=y
   elif [ "$DEPLOY_SUITE" == "pow" ]; then
     INCLUDE_AUDIOBOOKSHELF=y
     INCLUDE_EMBY=y
@@ -35,7 +35,7 @@ else
 fi
 
 # Remove quadlet containers & networks
-pushd /etc/containers/systemd &> /dev/null
+pushd /home/core/.config/containers/systemd/ &> /dev/null
 if [ -z "${INCLUDE_AUDIOBOOKSHELF-}" ]; then
   rm audiobookshelf.container
 fi
