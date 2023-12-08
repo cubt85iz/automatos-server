@@ -76,3 +76,5 @@ popd &> /dev/null
 
 INCLUDED_PACKAGES=(borgbackup curl dbus-tools firewalld iwlegacy-firmware iwlwifi-dvm-firmware iwlwifi-mvm-firmware just nano podman rclone samba vim wget xdg-dbus-proxy xdg-user-dirs)
 rpm-ostree install "${INCLUDED_PACKAGES[@]}"
+
+setsebool -P samba_export_all_rw 1
