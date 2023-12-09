@@ -3,10 +3,11 @@ Description=Service for daily container volume backups
 
 [Service]
 Type=oneshot
-EnvironmentFile="/etc/containers/config/%i.env"
-EnvironmentFile="/etc/containers/config/host_secrets.env"
+EnvironmentFile="/home/core/.config/containers/config/%i.env"
+EnvironmentFile="/etc/dotenv/host_secrets.env"
 Environment=TIMESTAMP=$(date +%%Y_%%m_%%d-%%H_%%M_%%S)
 ExecStartPre=/usr/local/bin/create-snapshot "$DATASET" "yearly" "n" "$TIMESTAMP"
 ExecStart=/usr/local/bin/backup-snapshot "$DATASET@$TIMESTAMP-yearly" "$BACKUP_PATH" "$BACKUP_KEY"
 ExecStartPost=/usr/local/bin/upload-to-b2 "$B2_ACCOUNT" "$B2_KEY" "$BACKUP_PATH" "%H-$DATASET"
 ExecStartPost=/usr/local/bin/prune-snapshots "$DATASET" "yearly" "n" "$KEEP_YEARLY"
+ExecStartPost=/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null "$BACKUP_MONITOR_URL"
