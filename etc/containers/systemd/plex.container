@@ -1,6 +1,9 @@
 [Unit]
 Description=Container service for Plex
 Requires=network-online.target nss-lookup.target
+Requires=plex-config-volume.service plex-network.service
+Requires=shared-audiobooks-volume.service shared-movies-volume.service
+Requires=shared-music-volume.service shared-tv-volume.service
 After=network-online.target nss-lookup.target
 After=plex-config-volume.service plex-network.service
 After=shared-audiobooks-volume.service shared-movies-volume.service
@@ -26,7 +29,7 @@ PublishPort=32410:32410/udp
 PublishPort=32412:32412/udp
 PublishPort=32413:32413/udp
 PublishPort=32414:32414/udp
-Network=plex
+Network=plex-network
 AutoUpdate=registry
 Pull=always
 
