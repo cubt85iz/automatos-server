@@ -2,13 +2,14 @@
 Description=Container service for Plex
 Requires=network-online.target nss-lookup.target
 After=network-online.target nss-lookup.target
+After=plex-config-volume.service plex-network.service
 
 [Container]
 ContainerName=%p
 Image=docker.io/plexinc/pms-docker:plexpass
 AddDevice=/dev/dri
 EnvironmentFile=/home/core/.config/containers/config/%p.env
-Volume=/var/containers/volumes/%p/config:/config:Z
+Volume=%p-volume:/config:Z
 Volume=/var/containers/volumes/shared/audiobooks:/media/audiobooks:z,rw,rslave,rbind
 Volume=/var/containers/volumes/shared/movies:/media/movies:z,rw,rslave,rbind
 Volume=/var/containers/volumes/shared/music:/media/music:z,rw,rslave,rbind
