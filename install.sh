@@ -31,7 +31,7 @@ else
 fi
 
 # Remove quadlet containers & networks
-pushd /home/core/.config/containers/systemd/ &> /dev/null
+pushd /etc/containers/systemd/ &> /dev/null
 if [ -z "${INCLUDE_AUDIOBOOKSHELF-}" ]; then
   rm audiobookshelf.container
 fi
