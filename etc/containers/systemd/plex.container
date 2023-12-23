@@ -1,24 +1,20 @@
 [Unit]
 Description=Container service for Plex
 Requires=network-online.target nss-lookup.target
-Requires=plex-config-volume.service plex-network.service
-Requires=shared-audiobooks-volume.service shared-movies-volume.service
-Requires=shared-music-volume.service shared-tv-volume.service
+Requires=plex-network.service
 After=network-online.target nss-lookup.target
-After=plex-config-volume.service plex-network.service
-After=shared-audiobooks-volume.service shared-movies-volume.service
-After=shared-music-volume.service shared-tv-volume.service
+After=plex-network.service
 
 [Container]
 ContainerName=%p
 Image=docker.io/plexinc/pms-docker:plexpass
 AddDevice=/dev/dri
 EnvironmentFile=/etc/containers/config/%p.env
-Volume=plex-config-volume:/config:Z
-Volume=shared-audiobooks-volume:/media/audiobooks:z,rw,rslave,rbind
-Volume=shared-movies-volume:/media/movies:z,rw,rslave,rbind
-Volume=shared-music-volume:/media/music:z,rw,rslave,rbind
-Volume=shared-tv-volume:/media/tv:z,rw,rslave,rbind
+Volume=/var/containers/volumes/plex/config:/config:Z
+Volume=/var/containers/shared-volumes/audiobooks:/media/audiobooks:z,rw,rslave,rbind
+Volume=/var/containers/shared-volumes/movies:/media/movies:z,rw,rslave,rbind
+Volume=/var/containers/shared-volumes/music:/media/music:z,rw,rslave,rbind
+Volume=/var/containers/shared-volumes/tv:/media/tv:z,rw,rslave,rbind
 Tmpfs=/transcode
 PublishPort=32400:32400/tcp
 PublishPort=3005:3005/tcp
