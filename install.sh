@@ -20,13 +20,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
   elif [ "$DEPLOY_SUITE" == "nnk" ]; then
     INCLUDE_SYNCTHING=y
   elif [ "$DEPLOY_SUITE" == "pow" ]; then
-    INCLUDE_AUDIOBOOKSHELF=y
-    INCLUDE_EMBY=y
-    INCLUDE_GOTIFY=y
-    INCLUDE_MEALIE=y
     INCLUDE_PLEX=y
-    INCLUDE_SYNCTHING=y
-    INCLUDE_UNIFI=y
   else
     echo "ERROR: Deployment suite not recognized ($DEPLOY_SUITE)."
     exit 1
