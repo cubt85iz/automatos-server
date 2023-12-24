@@ -20,6 +20,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
   elif [ "$DEPLOY_SUITE" == "nnk" ]; then
     INCLUDE_SYNCTHING=y
   elif [ "$DEPLOY_SUITE" == "pow" ]; then
+    INCLUDE_EMBY=y
     INCLUDE_PLEX=y
   else
     echo "ERROR: Deployment suite not recognized ($DEPLOY_SUITE)."
