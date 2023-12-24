@@ -12,7 +12,6 @@ Volume=/var/containers/volumes/audiobookshelf/metadata:/metadata:Z
 Volume=/var/containers/shared-volumes/audiobooks:/var/audiobookshelf/audiobooks:z,rw,rslave,rbind
 PublishPort=8689:80
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure
