@@ -6,8 +6,8 @@ After=network-online.target nss-lookup.target unifi-db.service
 [Container]
 ContainerName=%p
 Image=docker.io/jacobalberty/unifi:latest
-EnvironmentFile=/home/core/.config/containers/config/%p.env
-Volume=unifi-data:/unifi:Z
+EnvironmentFile=/etc/containers/config/%p.env
+Volume=/var/containers/volumes/unifi/data:/unifi:Z
 Tmpfs=/var/run/unifi
 PublishPort=3478:3478/udp
 PublishPort=6789:6789/tcp
@@ -16,9 +16,8 @@ PublishPort=8443:8443/tcp
 PublishPort=8880:8880/tcp
 PublishPort=8843:8843/tcp
 PublishPort=10001:10001/udp
-Network=unifi
+Network=unifi-network
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure
