@@ -1,9 +1,9 @@
 [Unit]
-Description=Service for daily container volume backups
+Description=Service for weekly container volume backups
 
 [Service]
 Type=oneshot
-EnvironmentFile="/home/core/.config/containers/config/%i.env"
+EnvironmentFile="/etc/containers/config/%i.env"
 EnvironmentFile="/etc/dotenv/host_secrets.env"
 Environment=TIMESTAMP=$(date +%%Y_%%m_%%d-%%H_%%M_%%S)
 ExecStartPre=/usr/local/bin/create-snapshot "$DATASET" "weekly" "n" "$TIMESTAMP"
