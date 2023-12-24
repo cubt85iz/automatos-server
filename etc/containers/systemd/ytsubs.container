@@ -1,18 +1,15 @@
 [Unit]
-Description=Container service for Audiobookshelf
+Description=Container service for YTSubs
 Requires=network-online.target nss-lookup.target
 After=network-online.target nss-lookup.target
 
 [Container]
-ContainerName=container-%p
-Image=docker.io/%p/%p:latest
-EnvironmentFile=/home/core/.config/containers/config/%p.env
+ContainerName=%p
+Image=registry.gitlab.com/cubt85iz/ytsubs:latest
+EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/%p/config:/config:Z
 Volume=/var/containers/volumes/%p/metadata:/metadata:Z
-Volume=/var/containers/volumes/shared/audiobooks:/var/%p/audiobooks:z,rw,rslave,rbind
-PublishPort=8689:80
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure
