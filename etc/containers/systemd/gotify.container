@@ -10,7 +10,6 @@ EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/gotify/data:/app/data:Z
 PublishPort=8111:80
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure
