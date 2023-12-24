@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Plex
-Requires=network-online.target nss-lookup.target
-After=network-online.target nss-lookup.target
+Requires=network-online.target nss-lookup.target plex-network.service
+After=network-online.target nss-lookup.target plex-network.service
 
 [Container]
 ContainerName=%p
@@ -23,6 +23,7 @@ PublishPort=32410:32410/udp
 PublishPort=32412:32412/udp
 PublishPort=32413:32413/udp
 PublishPort=32414:32414/udp
+Network=plex-network
 AutoUpdate=registry
 
 [Service]

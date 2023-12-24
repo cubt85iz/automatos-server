@@ -8,6 +8,7 @@ ContainerName=%p
 Image=docker.io/meisnate12/plex-meta-manager:nightly
 EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/plex-meta-manager/config:/config:Z
+Network=plex-network
 AutoUpdate=registry
 
 [Service]
