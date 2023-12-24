@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Plex
-Requires=network-online.target nss-lookup.target plex-network.service
-After=network-online.target nss-lookup.target plex-network.service
+Requires=network-online.target nss-lookup.target zfs.target plex-network.service
+After=network-online.target nss-lookup.target zfs.target plex-network.service
 
 [Container]
 ContainerName=%p

@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for UniFi Database
-Requires=network-online.target nss-lookup.target unifi-network.service
-After=network-online.target nss-lookup.target unifi-network.service
+Requires=network-online.target nss-lookup.target zfs.target unifi-network.service
+After=network-online.target nss-lookup.target zfs.target unifi-network.service
 
 [Container]
 ContainerName=%p
