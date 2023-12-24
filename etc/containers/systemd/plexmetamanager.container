@@ -1,17 +1,13 @@
 [Unit]
-Description=Container service for Audiobookshelf
+Description=Container service for Plex Meta Manager
 Requires=network-online.target nss-lookup.target
 After=network-online.target nss-lookup.target
 
 [Container]
 ContainerName=%p
-Image=docker.io/%p/%p:latest
-EnvironmentFile=/home/core/.config/containers/config/%p.env
-Volume=/var/containers/volumes/%p/config:/config:Z
-Volume=/var/containers/volumes/%p/metadata:/metadata:Z
-Volume=/var/containers/volumes/shared/audiobooks:/var/%p/audiobooks:z,rw,rslave,rbind
-PublishPort=8689:80
-Network=plex
+Image=docker.io/meisnate12/plex-meta-manager:nightly
+EnvironmentFile=/etc/containers/config/%p.env
+Volume=/var/containers/volumes/plex-meta-manager/config:/config:Z
 AutoUpdate=registry
 Pull=always
 

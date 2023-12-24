@@ -25,6 +25,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
     INCLUDE_GOTIFY=y
     INCLUDE_MEALIE=y
     INCLUDE_PLEX=y
+    INCLUDE_PMM=y
   else
     echo "ERROR: Deployment suite not recognized ($DEPLOY_SUITE)."
     exit 1
