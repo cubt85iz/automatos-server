@@ -6,8 +6,8 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/hkotel/%p:latest
-EnvironmentFile=/home/core/.config/containers/config/%p
-Volume=%p-data:/app/data:Z
+EnvironmentFile=/etc/containers/config/%p
+Volume=/var/containers/volumes/mealie/data:/app/data:Z
 PublishPort=8082:80
 AutoUpdate=registry
 Pull=always
