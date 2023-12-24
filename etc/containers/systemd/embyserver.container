@@ -14,7 +14,6 @@ Volume=/var/containers/shared-volumes/tv:/mnt/tv:z,rw,rslave,rbind
 Tmpfs=/transcode
 PublishPort=8096:8096
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure
