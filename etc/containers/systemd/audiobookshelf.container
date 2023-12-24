@@ -6,10 +6,10 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/advplyr/audiobookshelf:latest
-EnvironmentFile=/home/core/.config/containers/config/%p.env
-Volume=%p-config:/config:Z
-Volume=%p-metadata:/metadata:Z
-Volume=shared-audiobooks:/var/audiobookshelf/audiobooks:z,rw,rslave,rbind
+EnvironmentFile=/etc/containers/config/%p.env
+Volume=/var/containers/volumes/audiobookshelf/config:/config:Z
+Volume=/var/containers/volumes/audiobookshelf/metadata:/metadata:Z
+Volume=/var/containers/shared-volumes/audiobooks:/var/audiobookshelf/audiobooks:z,rw,rslave,rbind
 PublishPort=8689:80
 AutoUpdate=registry
 Pull=always
