@@ -1,16 +1,15 @@
 [Unit]
 Description=Container service for UniFi Database
-Requires=network-online.target nss-lookup.target
-After=network-online.target nss-lookup.target
+Requires=network-online.target nss-lookup.target unifi-network.service
+After=network-online.target nss-lookup.target unifi-network.service
 
 [Container]
 ContainerName=%p
 Image=docker.io/mongo:latest
-EnvironmentFile=/home/core/.config/containers/config/%p.env
-Volume=unifi-db:/data/db:Z
-Network=unifi
+EnvironmentFile=/etc/containers/config/%p.env
+Volume=/var/containers/volumes/unifi/db:/data/db:Z
+Network=unifi-network
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure
