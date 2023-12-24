@@ -24,7 +24,6 @@ PublishPort=32412:32412/udp
 PublishPort=32413:32413/udp
 PublishPort=32414:32414/udp
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure
