@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Mealie
-Requires=network-online.target nss-lookup.target zfs.target
-After=network-online.target nss-lookup.target zfs.target
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
 
 [Container]
 ContainerName=%p
