@@ -1,7 +1,9 @@
 [Unit]
 Description=Container service for Nextcloud Web Server
-Requires=network-online.target nss-lookup.target nextcloud.service
-After=network-online.target nss-lookup.target nextcloud.service
+Requires=network-online.target nss-lookup.target
+Requires=nextcloud.service nextcloud-network.service
+After=network-online.target nss-lookup.target
+After=nextcloud.service nextcloud-network.service
 
 [Container]
 ContainerName=%p
