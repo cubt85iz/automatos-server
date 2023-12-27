@@ -12,6 +12,7 @@ Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
+LimitMEMLOCK=infinity
 Restart=on-failure
 
 [Install]
