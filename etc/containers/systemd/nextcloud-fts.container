@@ -13,6 +13,7 @@ AutoUpdate=registry
 
 [Service]
 LimitMEMLOCK=infinity
+ExecStartPre=/usr/bin/chown -R 1000 /var/containers/volumes/nextcloud/fts
 Restart=on-failure
 
 [Install]
