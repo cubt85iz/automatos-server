@@ -6,12 +6,11 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/nextcloud/aio-imaginary:latest
-EnvironmentFile=/home/core/.config/containers/config/%p.env
+EnvironmentFile=/etc/containers/config/%p.env
 AddCapability=SYS_NICE
 Tmpfs=/tmp
-Network=nextcloud
+Network=nextcloud-network
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure

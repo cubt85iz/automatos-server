@@ -1,17 +1,20 @@
 [Unit]
 Description=Container service for Nextcloud
 Requires=network-online.target nss-lookup.target
-After=network-online.target nss-lookup.target
+Requires=nextcloud-clamav.service nextcloud-collabora.service nextcloud-db.service
+Requires=nextcloud-fts.service nextcloud-imaginary.service nextcloud-redis.service
+After=network-online.target nss-lookup.target nextcloud-db.service
+After=nextcloud-clamav.service nextcloud-collabora.service nextcloud-db.service
+After=nextcloud-fts.service nextcloud-imaginary.service nextcloud-redis.service
 
 [Container]
 ContainerName=%p
 Image=docker.io/%p/aio-nextcloud:latest
-EnvironmentFile=/home/core/.config/containers/config/%p.env
+EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/nextcloud/www:/var/www/html:rw,z
 Volume=/var/containers/volumes/nextcloud/data:/mnt/ncdata:rw,Z
-Network=nextcloud
+Network=nextcloud-network
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure

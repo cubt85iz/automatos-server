@@ -1,12 +1,12 @@
 [Unit]
 Description=Container service for Nextcloud Web Server
-Requires=network-online.target nss-lookup.target
-After=network-online.target nss-lookup.target
+Requires=network-online.target nss-lookup.target nextcloud.service
+After=network-online.target nss-lookup.target nextcloud.service
 
 [Container]
 ContainerName=%p
 Image=docker.io/nextcloud/aio-apache:latest
-EnvironmentFile=/home/core/.config/containers/config/%p.env
+EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/nextcloud/www:/var/www/html:ro,z
 Volume=/var/containers/volumes/nextcloud/apache:/mnt/data:rw,Z
 Tmpfs=/var/log/supervisord
@@ -16,9 +16,8 @@ Tmpfs=/tmp
 Tmpfs=/home/www-data
 PublishPort=8100:80/tcp
 PublishPort=8100:80/udp
-Network=nextcloud
+Network=nextcloud-network
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure

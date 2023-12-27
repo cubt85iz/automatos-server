@@ -6,11 +6,10 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/nextcloud/aio-redis:latest
-EnvironmentFile=/home/core/.config/containers/config/%p.env
+EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/nextcloud/redis:/data:rw,Z
-Network=nextcloud
+Network=nextcloud-network
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure

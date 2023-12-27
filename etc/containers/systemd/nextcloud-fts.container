@@ -6,11 +6,10 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/nextcloud/aio-fulltextsearch:latest
-EnvironmentFile=/home/core/.config/containers/config/%p.env
-Volume=/var/container/volumes/nextcloud/fts:/usr/share/elasticsearch/data:rw,Z
-Network=nextcloud
+EnvironmentFile=/etc/containers/config/%p.env
+Volume=/var/container/volumes/nextcloud/fts:/usr/share/elasticsearch/data:Z
+Network=nextcloud-network
 AutoUpdate=registry
-Pull=always
 
 [Service]
 Restart=on-failure
