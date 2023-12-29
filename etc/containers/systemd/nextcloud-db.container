@@ -14,6 +14,3 @@ AutoUpdate=registry
 [Service]
 ExecStartPre=/usr/bin/chown -R 999 /var/containers/volumes/nextcloud/db
 Restart=on-failure
-
-[Install]
-WantedBy=default.target

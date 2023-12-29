@@ -14,6 +14,3 @@ AutoUpdate=registry
 [Service]
 ExecStartPre=/usr/bin/chown -R 1000 /var/containers/volumes/nextcloud/fts
 Restart=on-failure
-
-[Install]
-WantedBy=default.target
