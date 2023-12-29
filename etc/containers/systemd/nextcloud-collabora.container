@@ -5,7 +5,7 @@ After=network-online.target nss-lookup.target nextcloud-network.service
 
 [Container]
 ContainerName=%p
-Image=docker.io/nextcloud/aio-collabora:latest
+Image=docker.io/collabora/code:latest
 EnvironmentFile=/etc/containers/config/%p.env
 Network=nextcloud-network
 AutoUpdate=registry

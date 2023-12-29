@@ -5,17 +5,14 @@ After=network-online.target nss-lookup.target nextcloud-network.service
 
 [Container]
 ContainerName=%p
-Image=docker.io/nextcloud/aio-postgresql:latest
+Image=docker.io/postgres:16
 EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/nextcloud/db:/var/lib/postgresql/data:Z
-Volume=/var/containers/volumes/nextcloud/dbdata:/mnt/data:Z
-Tmpfs=/var/run/postgresql
 Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
 ExecStartPre=/usr/bin/chown -R 999 /var/containers/volumes/nextcloud/db
-ExecStartPre=/usr/bin/chown -R 999 /var/containers/volumes/nextcloud/dbdata
 Restart=on-failure
 
 [Install]

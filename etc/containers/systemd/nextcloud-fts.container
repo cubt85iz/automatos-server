@@ -1,18 +1,17 @@
 [Unit]
-Description=Container service for Nextcloud Full-Text Search
+Description=Container service for Nextcloud FullTextSearch
 Requires=network-online.target nss-lookup.target nextcloud-network.service
 After=network-online.target nss-lookup.target nextcloud-network.service
 
 [Container]
 ContainerName=%p
-Image=docker.io/nextcloud/aio-fulltextsearch:latest
+Image=docker.io/elasticsearch:8.11.3
 EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/nextcloud/fts:/usr/share/elasticsearch/data:Z
 Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
-LimitMEMLOCK=infinity
 ExecStartPre=/usr/bin/chown -R 1000 /var/containers/volumes/nextcloud/fts
 Restart=on-failure
 

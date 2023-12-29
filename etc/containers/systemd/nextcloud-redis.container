@@ -1,13 +1,12 @@
 [Unit]
-Description=Container service for Nextcloud Redis
+Description=Container service for Nextcloud Redis Cache
 Requires=network-online.target nss-lookup.target nextcloud-network.service
 After=network-online.target nss-lookup.target nextcloud-network.service
 
 [Container]
 ContainerName=%p
-Image=docker.io/nextcloud/aio-redis:latest
+Image=docker.io/redis:7
 EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/nextcloud/redis:/data:rw,Z
 Network=nextcloud-network
 AutoUpdate=registry
 

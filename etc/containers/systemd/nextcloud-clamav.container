@@ -1,22 +1,18 @@
 [Unit]
-Description=Container service for Nextcloud ClamAV
+Description=Container service for Nextcloud AntiVirus
 Requires=network-online.target nss-lookup.target nextcloud-network.service
 After=network-online.target nss-lookup.target nextcloud-network.service
 
 [Container]
 ContainerName=%p
-Image=docker.io/nextcloud/aio-clamav:latest
+Image=docker.io/clamav/clamav:latest
 EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/nextcloud/av:/var/lib/clamav:Z
-Volume=/var/containers/volumes/nextcloud/avlog:/var/log/clamav:Z
-Tmpfs=/var/lock
-Tmpfs=/tmp
 Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
 ExecStartPre=/usr/bin/chown -R 100 /var/containers/volumes/nextcloud/av
-ExecStartPre=/usr/bin/chown -R 100 /var/containers/volumes/nextcloud/avlog
 Restart=on-failure
 
 [Install]
