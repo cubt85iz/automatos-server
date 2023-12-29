@@ -1,9 +1,11 @@
 [Unit]
 Description=Container service for Nextcloud
 Requires=network-online.target nss-lookup.target nextcloud-network.service
-Requires=nextcloud-db.service nextcloud-redis.service
+Requires=nextcloud-clamav.service nextcloud-db.service
+Requires=nextcloud-fts.service nextcloud-redis.service
 After=network-online.target nss-lookup.target nextcloud-network.service
-After=nextcloud-db.service nextcloud-redis.service
+After=nextcloud-clamav.service nextcloud-db.service
+After=nextcloud-fts.service nextcloud-redis.service
 
 [Container]
 ContainerName=%p
