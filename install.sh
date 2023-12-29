@@ -9,7 +9,6 @@ if [ -n "$DEPLOY_SUITE" ]; then
     INCLUDE_AUDIOBOOKSHELF=y
     INCLUDE_EMBY=y
     INCLUDE_GOTIFY=y
-    INCLUDE_IMMICH=y
     INCLUDE_MEALIE=y
     INCLUDE_NEXTCLOUD=y
     INCLUDE_PLEX=y
@@ -48,9 +47,6 @@ if [ -z "${INCLUDE_EMBY-}" ]; then
 fi
 if [ -z "${INCLUDE_GOTIFY-}" ]; then
   rm gotify.container
-fi
-if [ -z "${INCLUDE_IMMICH-}" ]; then
-  rm immich*.container
 fi
 if [ -z "${INCLUDE_MEALIE-}" ]; then
   rm mealie.container
