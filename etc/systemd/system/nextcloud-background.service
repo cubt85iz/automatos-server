@@ -1,0 +1,5 @@
+[Unit]
+Description=Service for background jobs for Nextcloud container
+
+[Service]
+ExecStart=/usr/bin/podman exec -it -u www-data nextcloud php /var/www/html/cron.php

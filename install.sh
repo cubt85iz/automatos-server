@@ -53,6 +53,9 @@ if [ -z "${INCLUDE_MEALIE-}" ]; then
 fi
 if [ -z "${INCLUDE_NEXTCLOUD-}" ]; then
   rm nextcloud*.container
+  pushd /etc/systemd/system/ &> /dev/null
+  rm nextcloud*.{service,timer}
+  popd &> /dev/null
 fi
 if [ -z "${INCLUDE_PLEX-}" ]; then
   rm plex*.{container,network}

@@ -12,6 +12,7 @@ ContainerName=%p
 Image=docker.io/nextcloud:stable
 EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/nextcloud/www:/var/www/html:Z
+PublishPort=8100:80/tcp
 Network=nextcloud-network
 AutoUpdate=registry
 
