@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Plex Meta Manager
-Requires=network-online.target nss-lookup.target zfs.target plex.service
-After=network-online.target nss-lookup.target zfs.target plex.service
+Requires=network-online.target nss-lookup.target zfs.target
+After=network-online.target nss-lookup.target zfs.target
 
 [Container]
 ContainerName=%p
