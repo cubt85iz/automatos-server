@@ -3,7 +3,7 @@ FROM ghcr.io/ublue-os/fedora-coreos:stable-zfs
 ARG DEPLOY_SUITE=${DEPLOY_SUITE}
 
 COPY etc /etc
-COPY usr /usr
+COPY usr/ /usr/
 COPY *.sh /tmp/
 
 RUN mkdir -p /var/lib/alternatives \
