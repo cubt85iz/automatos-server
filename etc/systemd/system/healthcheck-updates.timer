@@ -2,7 +2,8 @@
 Description=Check for important updates
 
 [Timer]
-OnUnitActiveSec=60m
+OnBootSec=1m
+OnCalendar=*:0/60
 
 [Install]
 WantedBy=timers.target

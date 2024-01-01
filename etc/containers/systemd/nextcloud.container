@@ -9,9 +9,11 @@ After=nextcloud-fts.service nextcloud-redis.service
 
 [Container]
 ContainerName=%p
-Image=docker.io/nextcloud:stable
+Image=ghcr.io/cubt85iz/nextcloud:stable
+AddDevice=/dev/dri
 EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/nextcloud/www:/var/www/html:Z
+Volume=/var/containers/volumes/nextcloud/scans:/var/www/html/scans:z
 PublishPort=8100:80/tcp
 Network=nextcloud-network
 AutoUpdate=registry
