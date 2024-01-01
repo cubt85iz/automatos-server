@@ -3,7 +3,7 @@ Description=Check for important updates
 
 [Timer]
 OnBootSec=1m
-OnCalendar=*:0/60
+OnCalendar=hourly
 
 [Install]
 WantedBy=timers.target
