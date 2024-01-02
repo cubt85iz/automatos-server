@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+# Creates a backup for the specified dataset and uploads to Backblaze B2.
+
+DATASET=$1
+PERIODICITY=$2
+RECURSIVE=${3:-n}
+TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
+
+create_snapshot() {
+  if [ -n "$DATASET" ] && zfs list -H -t filesystem "$DATASET"; then
+    if [ -n "$PERIODICITY" ]; then
+      case $RECURSIVE in
+        Y|y|yes|1)
+          zfs snapshot -r "$DATASET@$TIMESTAMP-$PERIODICITY"
+          ;;
+        *)
+          zfs snapshot "$DATASET@$TIMESTAMP-$PERIODICITY"
+          ;;
+      esac
+    else
+      echo "Please provide a valid snapshot periodicity. Valid values are daily, weekly, monthly, yearly."
+      exit 1
+    fi
+  else
+    echo "Please provide a valid ZFS dataset."
+    exit 1
+  fi
+}
+
+backup_snapshot() {
+  SNAPSHOT_NAME="$TIMESTAMP-$PERIODICITY"
+  SNAPSHOT="$DATASET@$SNAPSHOT_NAME"
+  if zfs list -H -t snapshot "$SNAPSHOT"; then
+    if [ -n "$BACKUP_PATH" ]; then
+      if [ ! -d "$BACKUP_PATH" ]; then
+        if [ -n "$BACKUP_KEY" ]; then
+          borg init -e "$BACKUP_KEY" "$BACKUP_PATH"
+        else
+          borg init "$BACKUP_PATH"
+        fi
+      fi
+
+      borg create "$BACKUP_PATH::$SNAPSHOT" "/var/$DATASET/.zfs/$SNAPSHOT_NAME"
+    else
+      echo "Please provide a valid repository path."
+      exit 1
+    fi
+  else
+    echo "Please provide a valid ZFS snapshot."
+    exit 1
+  fi
+}
+
+function rclone {
+  command rclone --b2-account="$ACCOUNT_ID" --b2-key="$ACCOUNT_KEY" "$@"
+}
+
+upload_to_b2() {
+  BUCKET="$DATASET.$(hostname --fqdn)"
+  if [ -n "$B2_ACCOUNT" ] && [ -n "$B2_KEY" ]; then
+    if [ -n "$BACKUP_PATH" ] && [ -d "$BACKUP_PATH" ]; then
+      if [ -n "$BUCKET" ]; then 
+        if ! rclone ls "$BUCKET"; then
+          rclone mkdir "$BUCKET"
+        fi
+
+        rclone sync "$BACKUP_PATH" "$BUCKET"
+      else
+        echo "Please provide a bucket name."
+        exit 1
+      fi
+    else
+      echo "Please provide a valid backup path."
+      exit 1
+    fi
+  else
+    echo "Please provide account credentials for Backblaze B2."
+    exit 1
+  fi
+}
+
+prune_snapshots() {
+  if zfs list -H -t filesystem "$DATASET"; then
+    if [ -n "$PERIODICITY" ]; then
+      if [ -n "$COUNT" ]; then
+        SNAPSHOT_COUNT=$(zfs list -H -t snapshot "$DATASET" | grep -c "$PERIODICITY")
+        if [ "$SNAPSHOT_COUNT" -gt "$COUNT" ]; then
+          OLD_SNAPSHOT_COUNT=$((SNAPSHOT_COUNT - COUNT))
+          echo "Pruning $OLD_SNAPSHOT_COUNT $TYPE snapshots."
+
+          mapfile -t OLD_SNAPSHOTS < <(zfs list -H -t snapshot "$DATASET" | grep "$PERIODICITY" | head -n "$OLD_SNAPSHOT_COUNT")
+          for SNAPSHOT in "${OLD_SNAPSHOTS[@]}"; do
+            case $RECURSIVE in
+              Y|y|yes|1)
+                zfs destroy -r "$SNAPSHOT"
+                ;;
+              *)
+                zfs destroy "$SNAPSHOT"
+                ;;
+            esac
+          done
+        fi
+      else
+        echo "Retention policy undefined for snapshot type."
+        exit 1
+      fi
+    else
+      echo "Please provide a valid snapshot type. Valid values are daily, weekly, monthly, yearly."
+      exit 1
+    fi
+  else
+    echo "Please provide a valid ZFS dataset."
+    exit 1
+  fi
+}
+
+create_snapshot || exit 1
+#backup_snapshot || exit 1
+#upload_to_b2 || exit 1
+#prune_snapshots || exit 1
