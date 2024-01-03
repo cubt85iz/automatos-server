@@ -10,6 +10,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
     INCLUDE_EMBY=y
     INCLUDE_GOTIFY=y
     INCLUDE_MEALIE=y
+    INCLUDE_MINIO=y
     INCLUDE_NEXTCLOUD=y
     INCLUDE_PLEX=y
     INCLUDE_PMM=y
@@ -50,6 +51,9 @@ if [ -z "${INCLUDE_GOTIFY-}" ]; then
 fi
 if [ -z "${INCLUDE_MEALIE-}" ]; then
   rm mealie.container
+fi
+if [ -z "${INCLUDE_MINIO-}" ]; then
+  rm minio.container
 fi
 if [ -z "${INCLUDE_NEXTCLOUD-}" ]; then
   rm nextcloud*.container

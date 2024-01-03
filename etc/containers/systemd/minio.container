@@ -1,0 +1,20 @@
+[Unit]
+Description=Container service for MinIO
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/minio/minio:latest
+EnvironmentFile=/etc/containers/config/%p.env
+Exec=server /data --console-address ":9001"
+Volume=/var/containers/volumes/minio/data:/data:Z
+PublishPort=8532:9000
+PublishPort=8533:9001
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
