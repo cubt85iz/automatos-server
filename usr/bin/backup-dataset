@@ -2,6 +2,8 @@
 
 # Creates a backup for the specified dataset and uploads to Backblaze B2.
 
+set -euo pipefail
+
 DATASET=$1
 PERIODICITY=$2
 RECURSIVE=${3:-n}
@@ -29,19 +31,23 @@ create_snapshot() {
 }
 
 backup_snapshot() {
+  SERVICE="${DATASET##*/}"
   SNAPSHOT_NAME="$TIMESTAMP-$PERIODICITY"
   SNAPSHOT="$DATASET@$SNAPSHOT_NAME"
   if zfs list -H -t snapshot "$SNAPSHOT"; then
     if [ -n "$BACKUP_PATH" ]; then
       if [ ! -d "$BACKUP_PATH" ]; then
-        if [ -n "$BACKUP_KEY" ]; then
-          borg init -e "$BACKUP_KEY" "$BACKUP_PATH"
-        else
-          borg init "$BACKUP_PATH"
+        BORG_PASSPHRASE="$BACKUP_KEY" borg init -e repokey "$BACKUP_PATH"
+
+        KEY_PATH="${BACKUP_PATH%/*}/keys"
+        if [ ! -d "$KEY_PATH" ]; then
+          mkdir -p "$KEY_PATH"
         fi
+        BORG_PASSPHRASE="$BACKUP_KEY" borg key export "$BACKUP_PATH" > "$KEY_PATH/$SERVICE"
+        BORG_PASSPHRASE="$BACKUP_KEY" borg key export --paper "$BACKUP_PATH" > "$KEY_PATH/$SERVICE.txt"
       fi
 
-      borg create "$BACKUP_PATH::$SNAPSHOT" "/var/$DATASET/.zfs/$SNAPSHOT_NAME"
+      BORG_PASSPHRASE="$BACKUP_KEY" borg create "$BACKUP_PATH::${DATASET#*/}@$SNAPSHOT_NAME" "/var/$DATASET/.zfs/snapshot/$SNAPSHOT_NAME"
     else
       echo "Please provide a valid repository path."
       exit 1
@@ -52,30 +58,22 @@ backup_snapshot() {
   fi
 }
 
-function rclone {
-  command rclone --b2-account="$ACCOUNT_ID" --b2-key="$ACCOUNT_KEY" "$@"
-}
-
 upload_to_b2() {
-  BUCKET="$DATASET.$(hostname --fqdn)"
-  if [ -n "$B2_ACCOUNT" ] && [ -n "$B2_KEY" ]; then
-    if [ -n "$BACKUP_PATH" ] && [ -d "$BACKUP_PATH" ]; then
-      if [ -n "$BUCKET" ]; then 
-        if ! rclone ls "$BUCKET"; then
-          rclone mkdir "$BUCKET"
-        fi
-
-        rclone sync "$BACKUP_PATH" "$BUCKET"
-      else
-        echo "Please provide a bucket name."
-        exit 1
+  SERVICE="${DATASET##*/}"
+  BUCKET="$SERVICE.$(hostname --fqdn)"
+  BUCKET=${BUCKET//./-}
+  if [ -n "$BACKUP_PATH" ] && [ -d "$BACKUP_PATH" ]; then
+    if [ -n "$BUCKET" ]; then
+      if ! rclone lsd "$RCLONE_REMOTE:$BUCKET"; then
+        rclone mkdir "$RCLONE_REMOTE:$BUCKET"
       fi
+      rclone sync "$BACKUP_PATH" "$RCLONE_REMOTE:$BUCKET"
     else
-      echo "Please provide a valid backup path."
+      echo "Please provide a bucket name."
       exit 1
     fi
   else
-    echo "Please provide account credentials for Backblaze B2."
+    echo "Please provide a valid backup path."
     exit 1
   fi
 }
@@ -116,6 +114,6 @@ prune_snapshots() {
 }
 
 create_snapshot || exit 1
-#backup_snapshot || exit 1
-#upload_to_b2 || exit 1
-#prune_snapshots || exit 1
+backup_snapshot || exit 1
+upload_to_b2 || exit 1
+prune_snapshots || exit 1
