@@ -4,7 +4,7 @@ Before=sshd.service
 
 [Service]
 Type=oneshot
-ExecCondition=/usr/bin/ls -lZ /etc/ssh/ssh_host_* | grep -v 'unconfined_u:object_r:etc_t'
+ExecCondition=/bin/sh -c "/usr/bin/ls -lZ /etc/ssh/ssh_host_* | grep -v 'unconfined_u:object_r:etc_t'"
 ExecStart=/usr/bin/fix-host-keys
 
 [Install]
