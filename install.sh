@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ouex pipefail
+set -euo pipefail
 
 # Define deployment suites
 if [ -n "$DEPLOY_SUITE" ]; then
@@ -9,6 +9,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
     INCLUDE_AUDIOBOOKSHELF=y
     INCLUDE_EMBY=y
     INCLUDE_GOTIFY=y
+    INCLUDE_JELLYFIN=y
     INCLUDE_MEALIE=y
     INCLUDE_MINIO=y
     INCLUDE_NEXTCLOUD=y
@@ -48,6 +49,9 @@ if [ -z "${INCLUDE_EMBY-}" ]; then
 fi
 if [ -z "${INCLUDE_GOTIFY-}" ]; then
   rm gotify.container
+fi
+if [ -z "${INCLUDE_JELLYFIN-}" ]; then
+  rm jellyfin.container
 fi
 if [ -z "${INCLUDE_MEALIE-}" ]; then
   rm mealie.container

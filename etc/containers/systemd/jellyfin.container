@@ -1,0 +1,23 @@
+[Unit]
+Description=Container service for Jellyfin
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/jellyfin/%p:latest
+AddDevice=/dev/dri
+EnvironmentFile=/etc/containers/config/%p.env
+Volume=/var/containers/volumes/jellyfin/config:/config:Z
+Volume=/var/containers/volumes/jellyfin/cache:/cache:Z
+Volume=/var/containers/shared-volumes/movies:/media/movies:z,rw,rslave,rbind
+Volume=/var/containers/shared-volumes/tv:/media/tv:z,rw,rslave,rbind
+Tmpfs=/transcode
+PublishPort=8097:8096
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
