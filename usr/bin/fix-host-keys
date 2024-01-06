@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+chcon -u unconfined_u -r object_r -t etc_t /etc/ssh/ssh_host_*
