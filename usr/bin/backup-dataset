@@ -79,6 +79,26 @@ upload_to_b2() {
 }
 
 prune_snapshots() {
+  # Determine maximum number of snapshots to retain
+  case $PERIODICITY in
+    daily)
+      COUNT="$KEEP_DAILY"
+      ;;
+    weekly)
+      COUNT="$KEEP_WEEKLY"
+      ;;
+    monthly)
+      COUNT="$KEEP_MONTHLY"
+      ;;
+    yearly)
+      COUNT="$KEEP_YEARLY"
+      ;;
+    *)
+      echo "Invalid periodicity value: $PERIODICITY"
+      exit 1
+      ;;
+  esac
+
   if zfs list -H -t filesystem "$DATASET"; then
     if [ -n "$PERIODICITY" ]; then
       if [ -n "$COUNT" ]; then
