@@ -2,5 +2,5 @@
 Description=Backup container volumes daily
 
 [Timer]
-OnCalendar=Mon..Sat *-*-2..31 4:00:00
+OnCalendar=*-*-* 4:00:00
 AccuracySec=1s

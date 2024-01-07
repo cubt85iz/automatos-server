@@ -1,9 +1,9 @@
 [Unit]
-Description=Service for weekly container volume backups
+Description=Service for daily container volume backups
 
 [Service]
 Type=oneshot
 EnvironmentFile=/etc/containers/config/%i.env
 EnvironmentFile=/etc/dotenv/host_secrets.env
-ExecStart=/usr/bin/backup-dataset "${DATASET}" "weekly"
+ExecStart=/usr/bin/backup-dataset "${DATASET}"
 ExecStartPost=-/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null "${BACKUP_MONITOR_URL}"
