@@ -94,7 +94,7 @@ prune_snapshots() {
 YEAR=$(date +%Y)
 MONTH=$(date +%m)
 DAY=$(date +%d)
-WEEKDAY=$(date +%H)
+WEEKDAY=$(date +%w)
 TIME=$(date +%H-%M-%S)
 TIMESTAMP="${YEAR}-${MONTH}-${DAY}_${TIME}"
 
@@ -105,7 +105,7 @@ if [ -n "$KEEP_YEARLY" ] && [ "$KEEP_YEARLY" -gt 0 ] && [ "$MONTH" = "1" ] && [ 
 elif [ -n "$KEEP_MONTHLY" ] && [ "$KEEP_MONTHLY" -gt 0 ] && [ "$DAY" = "1" ]; then
   PERIODICITY="monthly"
   MAX_SNAPSHOTS=$KEEP_MONTHLY
-elif [ -n "$KEEP_WEEKLY" ] && [ "$KEEP_WEEKLY" -gt 0 ] && [ "$WEEKDAY" = "7" ]; then
+elif [ -n "$KEEP_WEEKLY" ] && [ "$KEEP_WEEKLY" -gt 0 ] && [ "$WEEKDAY" = "0" ]; then
   PERIODICITY="weekly"
   MAX_SNAPSHOTS=$KEEP_WEEKLY
 elif [ -n "$KEEP_DAILY" ] && [ "$KEEP_DAILY" -gt 0 ]; then
