@@ -74,9 +74,9 @@ prune_snapshots() {
   SNAPSHOT_COUNT=$(zfs list -H -t snapshot "$DATASET" | grep -c "$PERIODICITY")
   if [ "$SNAPSHOT_COUNT" -gt "$MAX_SNAPSHOTS" ]; then
     OLD_SNAPSHOT_COUNT=$((SNAPSHOT_COUNT - MAX_SNAPSHOTS))
-    echo "Pruning $OLD_SNAPSHOT_COUNT $TYPE snapshots."
+    echo "Pruning $OLD_SNAPSHOT_COUNT $PERIODICITY snapshots."
 
-    mapfile -t OLD_SNAPSHOTS < <(zfs list -H -t snapshot "$DATASET" | grep "$PERIODICITY" | head -n "$OLD_SNAPSHOT_COUNT")
+    mapfile -t OLD_SNAPSHOTS < <(zfs list -H -o name -t snapshot "$DATASET" | grep "$PERIODICITY" | head -n "$OLD_SNAPSHOT_COUNT")
     for SNAPSHOT in "${OLD_SNAPSHOTS[@]}"; do
       case $RECURSIVE in
         Y|y|yes|1)
@@ -99,6 +99,7 @@ TIME=$(date +%H-%M-%S)
 TIMESTAMP="${YEAR}-${MONTH}-${DAY}_${TIME}"
 
 # Dynamically determine periodicity
+PERIODICITY=
 if [ -n "$KEEP_YEARLY" ] && [ "$KEEP_YEARLY" -gt 0 ] && [ "$MONTH" = "1" ] && [ "$DAY" = "1" ]; then
   PERIODICITY="yearly"
   MAX_SNAPSHOTS=$KEEP_YEARLY
