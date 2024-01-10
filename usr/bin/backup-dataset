@@ -82,11 +82,11 @@ validate_backup() {
 # Prune old snapshots that are outside retention policy.
 prune_snapshots() {
   # Prune and compact borg archives.
-  BORG_PASSPHRASE="$BACKUP_KEY" borg prune -d "$KEEP_DAILY" -w "$KEEP_WEEKLY" -m "$KEEP_MONTHLY" -y "$KEEP_YEARLY" "$DATASET"
-  BORG_PASSPHRASE="$BACKUP_KEY" borg compact "$DATASET"
+  BORG_PASSPHRASE="$BACKUP_KEY" borg prune -d "$KEEP_DAILY" -w "$KEEP_WEEKLY" -m "$KEEP_MONTHLY" -y "$KEEP_YEARLY" "$BACKUP_PATH"
+  BORG_PASSPHRASE="$BACKUP_KEY" borg compact "$BACKUP_PATH"
 
   # Prune ZFS snapshots for archives that aren't in borg repository. 
-  mapfile -t ARCHIVES < <(borg list --json "$BACKUP_PATH" | jq -r '.archives[].archive')
+  mapfile -t ARCHIVES < <(BORG_PASSPHRASE="$BACKUP_KEY" borg list --json "$BACKUP_PATH" | jq -r '.archives[].archive')
   mapfile -t SNAPSHOTS < <(zfs list -H -o name -t snapshot "$DATASET")
   for SNAPSHOT in "${SNAPSHOTS[@]}"
   do
