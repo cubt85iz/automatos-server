@@ -11,10 +11,10 @@ RECURSIVE=${2:-n}
 create_snapshot() {
   case $RECURSIVE in
     Y|y|yes|1)
-      zfs snapshot -r "$DATASET@$TIMESTAMP-$PERIODICITY"
+      zfs snapshot -r "$DATASET@$TIMESTAMP"
       ;;
     *)
-      zfs snapshot "$DATASET@$TIMESTAMP-$PERIODICITY"
+      zfs snapshot "$DATASET@$TIMESTAMP"
       ;;
   esac
 }
@@ -22,8 +22,7 @@ create_snapshot() {
 # Back up snapshot to Borg repository
 backup_snapshot() {
   SERVICE="${DATASET##*/}"
-  SNAPSHOT_NAME="$TIMESTAMP-$PERIODICITY"
-  SNAPSHOT="$DATASET@$SNAPSHOT_NAME"
+  SNAPSHOT="$DATASET@$TIMESTAMP"
   if zfs list -H -t snapshot "$SNAPSHOT"; then
     if [ -n "$BACKUP_PATH" ]; then
       if [ ! -d "$BACKUP_PATH" ]; then
@@ -37,7 +36,7 @@ backup_snapshot() {
         BORG_PASSPHRASE="$BACKUP_KEY" borg key export --paper "$BACKUP_PATH" > "$KEY_PATH/$SERVICE.txt"
       fi
 
-      BORG_PASSPHRASE="$BACKUP_KEY" borg create "$BACKUP_PATH::${DATASET#*/}@$SNAPSHOT_NAME" "/var/$DATASET/.zfs/snapshot/$SNAPSHOT_NAME"
+      BORG_PASSPHRASE="$BACKUP_KEY" borg create "$BACKUP_PATH::$SERVICE@$TIMESTAMP" "/var/$DATASET/.zfs/snapshot/$TIMESTAMP"
     else
       echo "Please provide a valid repository path."
       exit 1
@@ -46,6 +45,63 @@ backup_snapshot() {
     echo "Please provide a valid ZFS snapshot."
     exit 1
   fi
+}
+
+# Compares backup archive against source snapshot to validate backup integrity
+validate_backup() {
+  RESULT=1
+  SERVICE="${DATASET##*/}"
+  SNAPSHOT="$DATASET@$SNAPSHOT_NAME"
+
+  # Create temporary directory to mount borg archive.
+  ARCHIVE_PATH="/var/tmp/$SERVICE-$TIMESTAMP"
+  if [ -d "$ARCHIVE_PATH" ] || mkdir "$ARCHIVE_PATH"; then
+
+    # Mount borg archive
+    ARCHIVE="$SERVICE@$TIMESTAMP"
+    BORG_PASSPHRASE="$BACKUP_KEY" borg mount "$BACKUP_PATH::$ARCHIVE" "$ARCHIVE_PATH"
+
+    # Generate diff of archive vs. snapshot
+    MOUNTPOINT=$(zfs get -H -o value mountpoint "$DATASET")
+    SNAPSHOT_PATH="$MOUNTPOINT/.zfs/snapshot/$SNAPSHOT"
+    if diff "$SNAPSHOT_PATH" "$ARCHIVE_PATH"; then
+      RESULT=0
+    fi
+
+    # Unmount borg archive
+    BORG_PASSPHRASE="$BACKUP_KEY" borg umount "$ARCHIVE_PATH"
+
+    # Remove temporary directory
+    rmdir "$ARCHIVE_PATH"
+
+  fi
+
+  exit $RESULT
+}
+
+# Prune old snapshots that are outside retention policy.
+prune_snapshots() {
+  # Prune and compact borg archives.
+  BORG_PASSPHRASE="$BACKUP_KEY" borg prune -d "$KEEP_DAILY" -w "$KEEP_WEEKLY" -m "$KEEP_MONTHLY" -y "$KEEP_YEARLY" "$DATASET"
+  BORG_PASSPHRASE="$BACKUP_KEY" borg compact "$DATASET"
+
+  # Prune ZFS snapshots for archives that aren't in borg repository. 
+  mapfile -t ARCHIVES < <(borg list --json "$BACKUP_PATH" | jq -r '.archives[].archive')
+  mapfile -t SNAPSHOTS < <(zfs list -H -o name -t snapshot "$DATASET")
+  for SNAPSHOT in "${SNAPSHOTS[@]}"
+  do
+    SHORTENED_SNAPSHOT_NAME=${SNAPSHOT##*/}
+    if [[ ! " ${ARCHIVES[*]} " =~ [[:space:]]${SHORTENED_SNAPSHOT_NAME}[[:space:]] ]]; then
+      case $RECURSIVE in
+        Y|y|yes|1)
+          zfs destroy -r "$SNAPSHOT"
+          ;;
+        *)
+          zfs destroy "$SNAPSHOT"
+          ;;
+      esac
+    fi
+  done
 }
 
 # Upload Borg repository to Backblaze
@@ -69,61 +125,19 @@ upload_to_b2() {
   fi
 }
 
-# Prune old snapshots that are outside retention policy.
-prune_snapshots() {
-  SNAPSHOT_COUNT=$(zfs list -H -t snapshot "$DATASET" | grep -c "$PERIODICITY")
-  if [ "$SNAPSHOT_COUNT" -gt "$MAX_SNAPSHOTS" ]; then
-    OLD_SNAPSHOT_COUNT=$((SNAPSHOT_COUNT - MAX_SNAPSHOTS))
-    echo "Pruning $OLD_SNAPSHOT_COUNT $PERIODICITY snapshots."
-
-    mapfile -t OLD_SNAPSHOTS < <(zfs list -H -o name -t snapshot "$DATASET" | grep "$PERIODICITY" | head -n "$OLD_SNAPSHOT_COUNT")
-    for SNAPSHOT in "${OLD_SNAPSHOTS[@]}"; do
-      case $RECURSIVE in
-        Y|y|yes|1)
-          zfs destroy -r "$SNAPSHOT"
-          ;;
-        *)
-          zfs destroy "$SNAPSHOT"
-          ;;
-      esac
-    done
-  fi
-}
-
 # Get date/time information
 YEAR=$(date +%Y)
 MONTH=$(date +%m)
 DAY=$(date +%d)
-WEEKDAY=$(date +%w)
 TIME=$(date +%H-%M-%S)
 TIMESTAMP="${YEAR}-${MONTH}-${DAY}_${TIME}"
 
-# Dynamically determine periodicity
-PERIODICITY=
-if [ -n "$KEEP_YEARLY" ] && [ "$KEEP_YEARLY" -gt 0 ] && [ "$MONTH" = "1" ] && [ "$DAY" = "1" ]; then
-  PERIODICITY="yearly"
-  MAX_SNAPSHOTS=$KEEP_YEARLY
-elif [ -n "$KEEP_MONTHLY" ] && [ "$KEEP_MONTHLY" -gt 0 ] && [ "$DAY" = "1" ]; then
-  PERIODICITY="monthly"
-  MAX_SNAPSHOTS=$KEEP_MONTHLY
-elif [ -n "$KEEP_WEEKLY" ] && [ "$KEEP_WEEKLY" -gt 0 ] && [ "$WEEKDAY" = "0" ]; then
-  PERIODICITY="weekly"
-  MAX_SNAPSHOTS=$KEEP_WEEKLY
-elif [ -n "$KEEP_DAILY" ] && [ "$KEEP_DAILY" -gt 0 ]; then
-  PERIODICITY="daily"
-  MAX_SNAPSHOTS=$KEEP_DAILY
-fi
-
 # Main process
 if zfs list -H -t filesystem "$DATASET"; then
-  if [ -n "$PERIODICITY" ]; then
-    create_snapshot || exit 1
-    backup_snapshot || exit 1
-    upload_to_b2 || exit 1
-    prune_snapshots || exit 1
-  else
-    echo "No backup policy for ZFS dataset."
-  fi
+  create_snapshot || exit 1
+  backup_snapshot || exit 1
+  prune_snapshots || exit 1
+  upload_to_b2 || exit 1
 else
   echo "Please provide a valid ZFS dataset."
   exit 1
