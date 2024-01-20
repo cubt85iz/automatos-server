@@ -1,0 +1,9 @@
+[Unit]
+Description=Synchronization script for devices
+
+[Service]
+EnvironmentFile=/etc/sync@%i.env
+ExecCondition=/bin/bash -xc "if [[ \"$SOURCE\" =~ ^/.+ ]]; then /usr/bin/test -e \"$SOURCE\"; fi"
+ExecCondition=/bin/bash -xc "if [[ \"$TARGET\" =~ ^/.+ ]]; then /usr/bin/test -e \"$TARGET\"; fi"
+ExecCondition=/bin/bash -xc '/usr/bin/test $(($(date +%s) - $(date --date="$(systemctl show -p ExecMainExitTimestamp sync@%i | cut -d '=' -f 2)" +%s))) -gt ${COOLDOWN_SECS:-3600}'
+ExecStart=/bin/sh -c "/usr/bin/sync"

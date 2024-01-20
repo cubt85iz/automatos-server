@@ -7,6 +7,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
   if [ "$DEPLOY_SUITE" == "all" ]; then
     # Include everything
     INCLUDE_AUDIOBOOKSHELF=y
+    INCLUDE_BEETS=y
     INCLUDE_EMBY=y
     INCLUDE_GOTIFY=y
     INCLUDE_JELLYFIN=y
@@ -22,6 +23,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
     INCLUDE_SYNCTHING=y
   elif [ "$DEPLOY_SUITE" == "pow" ]; then
     INCLUDE_AUDIOBOOKSHELF=y
+    INCLUDE_BEETS=y
     INCLUDE_EMBY=y
     INCLUDE_GOTIFY=y
     INCLUDE_MEALIE=y
@@ -43,6 +45,9 @@ fi
 pushd /etc/containers/systemd/ &> /dev/null
 if [ -z "${INCLUDE_AUDIOBOOKSHELF-}" ]; then
   rm audiobookshelf.container
+fi
+if [ -z "${INCLUDE_BEETS-}" ]; then
+  rm beets.container
 fi
 if [ -z "${INCLUDE_EMBY-}" ]; then
   rm embyserver.container

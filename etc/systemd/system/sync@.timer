@@ -1,0 +1,6 @@
+[Unit]
+Description=Synchronize source & target every minute
+
+[Timer]
+OnUnitInactiveSec=1m
+AccuracySec=1s

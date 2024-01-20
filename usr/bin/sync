@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+set -xeuo pipefail
+
+# Setup - SOURCE
+if [[ "$SOURCE" =~ ^/dev/.+ ]]; then
+  SOURCE_IS_DEVICE=y
+
+  # Source is a device. Is it a symbolic link?
+  SOURCE_DEVICE_PATH="$SOURCE"
+  if [ -L "$SOURCE" ]; then
+    # Get path to parent device
+    SOURCE_DEVICE_PATH=$(readlink -f "$SOURCE")
+  fi
+    
+  # Get mount point for source device
+  SOURCE_MOUNT_PATH=$(mount -l | grep "$SOURCE_DEVICE_PATH" | cut -d ' ' -f 3)
+
+  # Mount device if unmounted.
+  if [ -z "$SOURCE_MOUNT_PATH" ]; then
+    SOURCE_WAS_MOUNTED=n
+    SOURCE_MOUNT_PATH="/var/tmp/$(tr -dc A-Za-z0-9 </dev/urandom | head -c 8)"
+    if [ ! -d "$SOURCE_MOUNT_PATH" ]; then
+      mkdir -p "$SOURCE_MOUNT_PATH"
+      TEARDOWN_SOURCE=y
+    fi
+
+    # Mount device
+    mount "$SOURCE_DEVICE_PATH" "$SOURCE_MOUNT_PATH"
+    SOURCE_PATH="$SOURCE_MOUNT_PATH"
+  fi
+else
+  SOURCE_PATH="$SOURCE"
+fi
+
+# Setup - TARGET
+if [[ "$TARGET" =~ ^/dev/.+ ]]; then
+  TARGET_IS_DEVICE=y
+
+  # TARGET is a device. Is it a symbolic link?
+  TARGET_DEVICE_PATH="$TARGET"
+  if [ -L "$TARGET" ]; then
+    # Get path to parent device
+    TARGET_DEVICE_PATH=$(readlink -f "$TARGET")
+  fi
+
+  # Get mount point for target device
+  TARGET_MOUNT_PATH=$(mount -l | grep "$TARGET_DEVICE_PATH" | cut -d ' ' -f 3)
+
+  # Mount device if unmounted.
+  if [ -z "$TARGET_MOUNT_PATH" ]; then
+    TARGET_WAS_MOUNTED=n
+    TARGET_MOUNT_PATH="/var/tmp/$(tr -dc A-Za-z0-9 </dev/urandom | head -c 8)"
+    if [ ! -d "$TARGET_MOUNT_PATH" ]; then
+      mkdir -p "$TARGET_MOUNT_PATH"
+      TEARDOWN_TARGET=y
+    fi
+
+    # Mount device
+    mount "$TARGET_DEVICE_PATH" "$TARGET_MOUNT_PATH"
+    TARGET_PATH="$TARGET_MOUNT_PATH"
+  fi
+else
+  TARGET_PATH="$SOURCE"
+fi
+
+rsync "${OPTIONS[*]}" "$SOURCE_PATH" "$TARGET_PATH"
+
+# Teardown - TARGET
+if [ "${TARGET_WAS_MOUNTED-}" = "n" ]; then
+  umount "$TARGET_PATH"
+fi
+if [ "${TEARDOWN_TARGET-}" = "y" ]; then
+  rmdir "$TARGET_PATH"
+fi
+if [ "${TARGET_IS_DEVICE-}" = "y" ] && [ "${TARGET_WAS_MOUNTED-}" = "n" ]; then
+  eject "$TARGET"
+fi
+
+# Teardown - SOURCE
+if [ "${SOURCE_WAS_MOUNTED-}" = "n" ]; then
+  umount "$SOURCE_PATH"
+fi
+if [ "${TEARDOWN_SOURCE-}" = "y" ]; then
+  rmdir "$SOURCE_PATH"
+fi
+if [ "${SOURCE_IS_DEVICE-}" = "y" ] && [ "${SOURCE_WAS_MOUNTED-}" = "n" ]; then
+  eject "$SOURCE"
+fi
