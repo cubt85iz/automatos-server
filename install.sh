@@ -11,6 +11,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
     INCLUDE_EMBY=y
     INCLUDE_GOTIFY=y
     INCLUDE_JELLYFIN=y
+    INCLUDE_LUBELOGGER=y
     INCLUDE_MEALIE=y
     INCLUDE_MINIO=y
     INCLUDE_NEXTCLOUD=y
@@ -26,6 +27,7 @@ if [ -n "$DEPLOY_SUITE" ]; then
     INCLUDE_BEETS=y
     INCLUDE_EMBY=y
     INCLUDE_GOTIFY=y
+    INCLUDE_LUBELOGGER=y
     INCLUDE_MEALIE=y
     INCLUDE_NEXTCLOUD=y
     INCLUDE_PLEX=y
@@ -57,6 +59,9 @@ if [ -z "${INCLUDE_GOTIFY-}" ]; then
 fi
 if [ -z "${INCLUDE_JELLYFIN-}" ]; then
   rm jellyfin.container
+fi
+if [ -z "${INCLUDE_LUBELOGGER-}" ]; then
+  rm lubelogger.container
 fi
 if [ -z "${INCLUDE_MEALIE-}" ]; then
   rm mealie.container
