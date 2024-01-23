@@ -8,9 +8,8 @@ ContainerName=%p
 Image=lscr.io/linuxserver/beets:latest
 EnvironmentFile=/etc/containers/config/%p.env
 Volume=/var/containers/volumes/beets/config:/config:Z
-Volume=/var/containers/volumes/beets/downloads:/downloads:Z
+Volume=/var/containers/shared-volumes/staging:/downloads:Z
 Volume=/var/containers/shared-volumes/music:/music:z,rw,rslave,rbind
-PublishPort=8337:8337
 AutoUpdate=registry
 
 [Service]
