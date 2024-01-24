@@ -43,7 +43,7 @@ jobs:
         id: env
         run: |
           pushd env
-          echo "files=[\\\"$(echo *)\\\"] | sed 's/ /\\\",\\\"/g'" >> $GITHUB_OUTPUT
+          echo "files=$(ls | jq -R -s -c 'split(\"\\n\")[:-1]'" >> $GITHUB_OUTPUT
           popd
       - run: |
           echo "${{ steps.env.outputs.files }}"
