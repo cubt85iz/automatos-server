@@ -41,9 +41,9 @@ jobs:
       - name: Find .env files
         id: env
         run: |
-          pushd env &> /dev/null
+          pushd env
           echo "files=[\\\"$(echo *)\\\"] | sed 's/ /\\",\\"/g'" >> $GITHUB_OUTPUT
-          popd &> /dev/null
+          popd
       - run: |
           echo "${{ steps.env.outputs.files }}"
 
