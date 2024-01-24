@@ -38,6 +38,7 @@ jobs:
     outputs:
       files: ${{ steps.env.outputs.files }}
     steps:
+      - uses: actions/checkout@v4
       - name: Find .env files
         id: env
         run: |
