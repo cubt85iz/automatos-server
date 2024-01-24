@@ -32,11 +32,26 @@ jobs:
         run: |
           echo "${{ toJSON(steps.stable.outputs) }}"
 
+  env_files:
+    name: Generate Build Environments
+    runs-on: ubuntu-latest
+    outputs:
+      files: ${{ steps.env.outputs.files }}
+    steps:
+      - name: Find .env files
+        id: env
+        run: |
+          pushd env &> /dev/null
+          echo "files=[\\\"$(echo *)\\\"] | sed 's/ /\\",\\"/g'" >> $GITHUB_OUTPUT
+          popd &> /dev/null
+      - run: |
+          echo "${{ steps.env.outputs.files }}"
+
   build_osn:
     name: Build and push image
     runs-on: ubuntu-22.04
     if: always() && !cancelled()
-    needs: [fcos_version]
+    needs: [fcos_version, env_files]
     permissions:
       contents: read
       packages: write
@@ -46,10 +61,7 @@ jobs:
       matrix:
         image_name:
           - osn
-        deploy_suite_tag:
-          - "all"
-          - "nnk"
-          - "pow"
+        environment: ${{ fromJSON(needs.env_files.outputs.files) }}
         include:
           - image_version: ${{ needs.fcos_version.outputs.stable_version }}
     steps:
@@ -69,11 +81,11 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ matrix.image_name }}-${{ matrix.deploy_suite_tag }}
+            ${{ matrix.image_name }}-${{ matrix.environment }}
           labels: |
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/cubt85iz/osn/main/README.md
             org.opencontainers.image.description=A ucore-derived image with ZFS and container quadlets
-            org.opencontainers.image.title=${{ matrix.image_name }}
+            org.opencontainers.image.title=${{ matrix.image_name }}-${{ matrix.environment }}
             org.opencontainers.image.version=${{ matrix.image_version }}
 
       - name: Build Image
@@ -83,11 +95,11 @@ jobs:
           containerfiles: |
             ./Containerfile
           context: ./
-          image: ${{ matrix.image_name }}-${{ matrix.deploy_suite_tag }}
+          image: ${{ matrix.image_name }}-${{ matrix.environment }}
           tags: |
             ${{ steps.generate-image-tags.outputs.alias_tags }}
-          build-args: |
-            DEPLOY_SUITE=${{ matrix.deploy_suite_tag }}
+          extra-args: |
+            --build-arg-file env/${{ matrix.environment }}
           labels: ${{ steps.define-image-metadata.outputs.labels }}
           oci: false
 

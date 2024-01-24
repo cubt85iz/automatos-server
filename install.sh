@@ -2,101 +2,62 @@
 
 set -euo pipefail
 
-# Define deployment suites
-if [ -n "$DEPLOY_SUITE" ]; then
-  if [ "$DEPLOY_SUITE" == "all" ]; then
-    # Include everything
-    INCLUDE_AUDIOBOOKSHELF=y
-    INCLUDE_BEETS=y
-    INCLUDE_EMBY=y
-    INCLUDE_GOTIFY=y
-    INCLUDE_JELLYFIN=y
-    INCLUDE_LUBELOGGER=y
-    INCLUDE_MEALIE=y
-    INCLUDE_MINIO=y
-    INCLUDE_NEXTCLOUD=y
-    INCLUDE_PLEX=y
-    INCLUDE_PMM=y
-    INCLUDE_SYNCTHING=y
-    INCLUDE_UNIFI=y
-    INCLUDE_YTSUBS=y
-  elif [ "$DEPLOY_SUITE" == "nnk" ]; then
-    INCLUDE_SYNCTHING=y
-  elif [ "$DEPLOY_SUITE" == "pow" ]; then
-    INCLUDE_AUDIOBOOKSHELF=y
-    INCLUDE_BEETS=y
-    INCLUDE_EMBY=y
-    INCLUDE_GOTIFY=y
-    INCLUDE_LUBELOGGER=y
-    INCLUDE_MEALIE=y
-    INCLUDE_NEXTCLOUD=y
-    INCLUDE_PLEX=y
-    INCLUDE_PMM=y
-    INCLUDE_SYNCTHING=y
-    INCLUDE_UNIFI=y
-  else
-    echo "ERROR: Deployment suite not recognized ($DEPLOY_SUITE)."
-    exit 1
-  fi
-else
-  echo "ERROR: Deployment suite not provided."
-  exit 1
-fi
-
-# Remove quadlet containers & networks
+# Remove containers, networks, services, & timers
 pushd /etc/containers/systemd/ &> /dev/null
-if [ -z "${INCLUDE_AUDIOBOOKSHELF-}" ]; then
+if [ "${INCLUDE_AUDIOBOOKSHELF-}" != "y" ]; then
   rm audiobookshelf.container
 fi
-if [ -z "${INCLUDE_BEETS-}" ]; then
+if [ "${INCLUDE_BEETS-}" != "y" ]; then
   rm beets.container
 fi
-if [ -z "${INCLUDE_EMBY-}" ]; then
+if [ "${INCLUDE_EMBY-}" != "y" ]; then
   rm embyserver.container
 fi
-if [ -z "${INCLUDE_GOTIFY-}" ]; then
+if [ "${INCLUDE_GOTIFY-}" != "y" ]; then
   rm gotify.container
 fi
-if [ -z "${INCLUDE_JELLYFIN-}" ]; then
+if [ "${INCLUDE_JELLYFIN-}" != "y" ]; then
   rm jellyfin.container
 fi
-if [ -z "${INCLUDE_LUBELOGGER-}" ]; then
+if [ "${INCLUDE_LUBELOGGER-}" != "y" ]; then
   rm lubelogger.container
 fi
-if [ -z "${INCLUDE_MEALIE-}" ]; then
+if [ "${INCLUDE_MEALIE-}" != "y" ]; then
   rm mealie.container
 fi
-if [ -z "${INCLUDE_MINIO-}" ]; then
+if [ "${INCLUDE_MINIO-}" != "y" ]; then
   rm minio.container
 fi
-if [ -z "${INCLUDE_NEXTCLOUD-}" ]; then
+if [ "${INCLUDE_NEXTCLOUD-}" != "y" ]; then
   rm nextcloud*.container
   pushd /etc/systemd/system/ &> /dev/null
   rm nextcloud*.{service,timer}
   popd &> /dev/null
 fi
-if [ -z "${INCLUDE_PLEX-}" ]; then
+if [ "${INCLUDE_PLEX-}" != "y" ]; then
   rm plex*.{container,network}
 fi
-if [ -z "${INCLUDE_PMM-}" ]; then
+if [ "${INCLUDE_PMM-}" != "y" ]; then
   if [ -f plexmetamanager.container ]; then
     rm plexmetamanager.container
   fi
 fi
-if [ -z "${INCLUDE_SYNCTHING-}" ]; then
+if [ "${INCLUDE_SYNCTHING-}" != "y" ]; then
   rm syncthing.container
 fi
-if [ -z "${INCLUDE_UNIFI-}" ]; then
+if [ "${INCLUDE_UNIFI-}" != "y" ]; then
   rm unifi*.{container,network}
 fi
-if [ -z "${INCLUDE_YTSUBS-}" ]; then
+if [ "${INCLUDE_YTSUBS-}" != "y" ]; then
   rm ytsubs.container
   rm /etc/systemd/system/ytsubs.timer
 fi
 popd &> /dev/null
 
+# Override nfs to provide full utilities
 rpm-ostree override remove nfs-utils-coreos --install nfs-utils
 
+# Include additional packages
 INCLUDED_PACKAGES=(borgbackup curl dbus-tools firewalld iwlegacy-firmware iwlwifi-dvm-firmware iwlwifi-mvm-firmware just nano podman rclone samba vim wget xdg-dbus-proxy xdg-user-dirs)
 rpm-ostree install "${INCLUDED_PACKAGES[@]}"
 
