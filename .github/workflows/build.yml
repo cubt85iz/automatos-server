@@ -64,6 +64,7 @@ jobs:
           DATE="$(echo ${TIMESTAMP} | cut -d '-' -f 1)"
           echo "DATE=$DATE" >> $GITHUB_ENV
           MAJOR_VERSION="$(echo ${{ matrix.image_version }} | cut -d '.' -f 1)"
+          echo "MAJOR_VERSION=$MAJOR_VERSION" >> $GITHUB_ENV
           BUILD_TAGS=( "latest" "${TIMESTAMP}" "${DATE}")
           echo "alias_tags=${BUILD_TAGS[*]}" >> $GITHUB_OUTPUT
 
