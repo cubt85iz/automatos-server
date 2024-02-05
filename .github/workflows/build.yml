@@ -45,7 +45,7 @@ jobs:
       fail-fast: false
       matrix:
         image_name:
-          - osn
+          - automatos-server
         deploy_suite_tag:
           - "all"
           - "nnk"
@@ -75,7 +75,7 @@ jobs:
           images: |
             ${{ matrix.image_name }}-${{ matrix.deploy_suite_tag }}
           labels: |
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/cubt85iz/osn/main/README.md
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/cubt85iz/automatos-server/main/README.md
             org.opencontainers.image.description=A ucore-derived image with ZFS and container quadlets
             org.opencontainers.image.title=${{ matrix.image_name }}-${{ matrix.deploy_suite_tag }}
             org.opencontainers.image.version=${{ env.MAJOR_VERSION }}.${{ env.DATE }}
