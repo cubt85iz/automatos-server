@@ -6,13 +6,13 @@ After=network-online.target nss-lookup.target plex-network.service
 [Container]
 ContainerName=%p
 Image=docker.io/tautulli/tautulli:latest
-EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/tautulli/config:/config:Z
-PublishPort=43918:8181
+Volume=${CONTAINER_PATH}/config:/config:Z
+PodmanArgs=--publish ${PORT}:8181
 Network=plex-network
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

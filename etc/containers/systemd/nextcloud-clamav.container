@@ -6,11 +6,11 @@ After=network-online.target nss-lookup.target nextcloud-network.service
 [Container]
 ContainerName=%p
 Image=docker.io/clamav/clamav:latest
-EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/nextcloud/av:/var/lib/clamav:Z
+Volume=${CONTAINER_PATH}/av:/var/lib/clamav:Z
 Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
-ExecStartPre=/usr/bin/chown -R 100 /var/containers/volumes/nextcloud/av
+EnvironmentFile=/etc/containers/config/%p.env
+ExecStartPre=/usr/bin/chown -R 100 ${CONTAINER_PATH}/nextcloud/av
 Restart=on-failure

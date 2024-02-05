@@ -6,14 +6,15 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/advplyr/audiobookshelf:latest
-EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/audiobookshelf/config:/config:Z
-Volume=/var/containers/volumes/audiobookshelf/metadata:/metadata:Z
-Volume=/var/containers/shared-volumes/audiobooks:/audiobooks:z,rw,rslave,rbind
-PublishPort=8689:80
+Volume=${CONTAINER_PATH}/config:/config:Z
+Volume=${CONTAINER_PATH}/metadata:/metadata:Z
+Volume=${SHARED_VOLUMES_PATH}/audiobooks:/audiobooks:z,rw,rslave,rbind
+PodmanArgs=--publish ${PORT}:80
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/environment
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

@@ -6,12 +6,12 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/hkotel/%p:latest
-EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/mealie/data:/app/data:Z
-PublishPort=8082:80
+Volume=${CONTAINER_PATH}/data:/app/data:Z
+PodmanArgs=--publish ${PORT}:80
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

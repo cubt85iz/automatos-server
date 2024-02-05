@@ -7,15 +7,16 @@ After=network-online.target nss-lookup.target
 ContainerName=%p
 Image=docker.io/emby/%p:latest
 AddDevice=/dev/dri/renderD128
-EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/embyserver/data:/config:Z
-Volume=/var/containers/shared-volumes/movies:/media/movies:z,rw,rslave,rbind
-Volume=/var/containers/shared-volumes/tv:/media/tv:z,rw,rslave,rbind
+Volume=${CONTAINER_PATH}/data:/config:Z
+Volume=${SHARED_VOLUMES_PATH}/movies:/media/movies:z,rw,rslave,rbind
+Volume=${SHARED_VOLUMES_PATH}/tv:/media/tv:z,rw,rslave,rbind
+PodmanArgs=--publish ${PORT}:8096
 Tmpfs=/transcode
-PublishPort=8096:8096
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/environment
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

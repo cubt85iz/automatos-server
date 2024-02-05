@@ -11,15 +11,15 @@ After=nextcloud-fts.service nextcloud-redis.service
 ContainerName=%p
 Image=ghcr.io/cubt85iz/nextcloud:stable
 AddDevice=/dev/dri
-EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/nextcloud/www:/var/www/html:z,rw,rslave,rbind
-Volume=/var/containers/volumes/nextcloud/scans:/var/www/html/scans:z
-PublishPort=8100:80/tcp
+Volume=${CONTAINER_PATH}/www:/var/www/html:z,rw,rslave,rbind
+Volume=${CONTAINER_PATH}/scans:/var/www/html/scans:z
+PodmanArgs=--publish ${PORT}:80/tcp
 Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
-ExecStartPre=/usr/bin/chown -R 33 /var/containers/volumes/nextcloud/www
+EnvironmentFile=/etc/containers/config/%p.env
+ExecStartPre=/usr/bin/chown -R 33 ${CONTAINER_PATH}/nextcloud/www
 Restart=on-failure
 
 [Install]

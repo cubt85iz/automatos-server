@@ -6,18 +6,18 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=ghcr.io/hargata/lubelogger:latest
-EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/lubelogger/config:/App/config:Z
-Volume=/var/containers/volumes/lubelogger/data:/App/data:Z
-Volume=/var/containers/volumes/lubelogger/documents:/App/documents:Z
-Volume=/var/containers/volumes/lubelogger/images:/App/images:Z
-Volume=/var/containers/volumes/lubelogger/temp:/App/temp:Z
-Volume=/var/containers/volumes/lubelogger/log:/App/log:Z
-Volume=/var/containers/volumes/lubelogger/keys:/root/.aspnet/DataProtection-Keys:Z
-PublishPort=50663:8080
+Volume=${CONTAINER_PATH}/config:/App/config:Z
+Volume=${CONTAINER_PATH}/data:/App/data:Z
+Volume=${CONTAINER_PATH}/documents:/App/documents:Z
+Volume=${CONTAINER_PATH}/images:/App/images:Z
+Volume=${CONTAINER_PATH}/temp:/App/temp:Z
+Volume=${CONTAINER_PATH}/log:/App/log:Z
+Volume=${CONTAINER_PATH}/keys:/root/.aspnet/DataProtection-Keys:Z
+PodmanArgs=--publish ${PORT}:8080
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]
