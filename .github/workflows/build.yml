@@ -160,6 +160,7 @@ jobs:
           args: --file=Containerfile --severity-threshold=high --sarif-file-output=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          TAGS: ${{ steps.push.outputs.digest }}
       - name: Upload Snyk report as sarif
         uses: github/codeql-action/upload-sarif@v2
         with:
