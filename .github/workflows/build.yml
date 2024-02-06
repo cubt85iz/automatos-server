@@ -147,7 +147,7 @@ jobs:
 
   scan_image:
     permissions:
-      id-token: read
+      id-token: write
       contents: read
       packages: read
     runs-on: ubuntu-latest
