@@ -97,7 +97,10 @@ popd &> /dev/null
 
 rpm-ostree override remove nfs-utils-coreos --install nfs-utils
 
-INCLUDED_PACKAGES=(borgbackup curl dbus-tools firewalld iwlegacy-firmware iwlwifi-dvm-firmware iwlwifi-mvm-firmware just kernel-modules-extra nano pciutils podman rclone rsync-daemon samba setroubleshoot vim wget xdg-dbus-proxy xdg-user-dirs)
+# Install some packages
+INCLUDED_PACKAGES=( borgbackup curl dbus-tools firewalld iwlegacy-firmware iwlwifi-dvm-firmware )
+INCLUDED_PACKAGES+=( iwlwifi-mvm-firmware just kernel-modules-extra nano pciutils podman rclone )
+INCLUDED_PACKAGES+=( rsync-daemon samba setroubleshoot vim wget xdg-dbus-proxy xdg-user-dirs )
 rpm-ostree install "${INCLUDED_PACKAGES[@]}"
 
 # Configure samba
