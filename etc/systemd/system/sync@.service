@@ -2,8 +2,10 @@
 Description=Synchronization script for devices
 
 [Service]
+Type=oneshot
 EnvironmentFile=/etc/sync@%i.env
 ExecCondition=/bin/bash -xc "if [[ \"$SOURCE\" =~ ^/.+ ]]; then /usr/bin/test -e \"$SOURCE\"; fi"
 ExecCondition=/bin/bash -xc "if [[ \"$TARGET\" =~ ^/.+ ]]; then /usr/bin/test -e \"$TARGET\"; fi"
-ExecCondition=/bin/bash -xc '/usr/bin/test $(($(date +%%s) - $(date --date="$(systemctl show -p ExecMainExitTimestamp sync@%i | cut -d '=' -f 2)" +%%s))) -gt ${COOLDOWN_SECS:-3600}'
+ExecCondition=/bin/bash -xc '!/usr/bin/test -f /etc/.last-sync@%i || /usr/bin/test $(($(date +%%s) - $(cat /etc/.last-sync@%i))) -gt ${COOLDOWN_SECS:-3600}'
 ExecStart=/bin/bash -f /usr/local/bin/sync
+ExecStartPost=/bin/bash -xc "echo $(date +%%s) > /etc/.last-sync@%i"
