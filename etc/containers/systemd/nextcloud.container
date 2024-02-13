@@ -19,7 +19,7 @@ AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/containers/config/%p.env
-ExecStartPre=/usr/bin/chown -R 33 ${CONTAINER_PATH}/nextcloud/www
+ExecStartPre=/usr/bin/chown -R 33 ${CONTAINER_PATH}/www
 Restart=on-failure
 
 [Install]
