@@ -12,5 +12,5 @@ AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/containers/config/%p.env
-ExecStartPre=/usr/bin/chown -R 100 ${CONTAINER_PATH}/nextcloud/av
+ExecStartPre=/usr/bin/chown -R 100 ${CONTAINER_PATH}/av
 Restart=on-failure
