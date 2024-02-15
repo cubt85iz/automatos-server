@@ -2,7 +2,7 @@
 
 # Creates a backup for the specified dataset and uploads to Backblaze B2.
 
-set -euo pipefail
+set -euox pipefail
 
 DATASET=$1
 RECURSIVE=${2:-n}
