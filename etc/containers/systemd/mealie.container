@@ -8,7 +8,7 @@ ContainerName=%p
 Image=docker.io/hkotel/%p:latest
 EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/data:/app/data:Z
-PodmanArgs=--publish ${PORT}:80
+PodmanArgs=--publish ${PORT}:9000
 AutoUpdate=registry
 
 [Service]
