@@ -6,6 +6,7 @@ After=network-online.target nss-lookup.target unifi-db.service
 [Container]
 ContainerName=%p
 Image=docker.io/jacobalberty/unifi:latest
+EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/data:/unifi:Z
 PodmanArgs=--publish ${STUN_PORT}:3478/udp
 PodmanArgs=--publish ${SPEED_TEST_PORT}:6789/tcp

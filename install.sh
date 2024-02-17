@@ -105,3 +105,6 @@ rpm-ostree install "${INCLUDED_PACKAGES[@]}"
 
 # Configure samba
 setsebool -P samba_export_all_rw 1
+
+# Configure rsync
+setsebool -P rsync_full_access 1

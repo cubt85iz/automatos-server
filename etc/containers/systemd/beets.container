@@ -6,6 +6,7 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=lscr.io/linuxserver/beets:latest
+EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/config:/config:Z
 Volume=${SHARED_VOLUMES_PATH}/staging:/downloads:Z
 Volume=${SHARED_VOLUMES_PATH}/music:/music:z,rw,rslave,rbind

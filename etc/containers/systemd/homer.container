@@ -6,6 +6,7 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/b4bz/homer:latest
+EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/assets:/www/assets:Z
 PodmanArgs=--publish ${PORT}:8080
 AutoUpdate=registry

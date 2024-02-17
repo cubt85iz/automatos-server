@@ -6,6 +6,7 @@ After=network-online.target nss-lookup.target nextcloud-network.service
 [Container]
 ContainerName=%p
 Image=docker.io/postgres:16
+EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/db:/var/lib/postgresql/data:Z
 Network=nextcloud-network
 AutoUpdate=registry
