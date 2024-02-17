@@ -8,7 +8,7 @@ ContainerName=%p
 Image=docker.io/tautulli/tautulli:latest
 EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/config:/config:Z
-PodmanArgs=--publish ${PORT}:8181
+PodmanArgs=--publish ${WEB_PORT}:8181
 Network=plex-network
 AutoUpdate=registry
 

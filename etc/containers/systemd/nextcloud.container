@@ -14,7 +14,7 @@ EnvironmentFile=/etc/containers/config/%p.env
 AddDevice=/dev/dri
 Volume=${CONTAINER_PATH}/www:/var/www/html:z,rw,rslave,rbind
 Volume=${CONTAINER_PATH}/scans:/var/www/html/scans:z
-PodmanArgs=--publish ${PORT}:80/tcp
+PodmanArgs=--publish ${WEB_PORT}:80/tcp
 Network=nextcloud-network
 AutoUpdate=registry
 

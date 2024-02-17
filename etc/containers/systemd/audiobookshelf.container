@@ -10,7 +10,7 @@ EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/config:/config:Z
 Volume=${CONTAINER_PATH}/metadata:/metadata:Z
 Volume=${SHARED_VOLUMES_PATH}/audiobooks:/audiobooks:z,rw,rslave,rbind
-PodmanArgs=--publish ${PORT}:80
+PodmanArgs=--publish ${WEB_PORT}:80
 AutoUpdate=registry
 
 [Service]

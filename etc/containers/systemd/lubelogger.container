@@ -14,7 +14,7 @@ Volume=${CONTAINER_PATH}/images:/App/images:Z
 Volume=${CONTAINER_PATH}/temp:/App/temp:Z
 Volume=${CONTAINER_PATH}/log:/App/log:Z
 Volume=${CONTAINER_PATH}/keys:/root/.aspnet/DataProtection-Keys:Z
-PodmanArgs=--publish ${PORT}:8080
+PodmanArgs=--publish ${WEB_PORT}:8080
 AutoUpdate=registry
 
 [Service]
