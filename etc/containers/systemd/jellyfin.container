@@ -14,6 +14,8 @@ Volume=${SHARED_VOLUMES_PATH}/movies:/media/movies:z,rw,rslave,rbind
 Volume=${SHARED_VOLUMES_PATH}/tv:/media/tv:z,rw,rslave,rbind
 PodmanArgs=--publish ${WEB_PORT}:8096
 Tmpfs=/transcode
+User=${UID}
+Group=${GID}
 AutoUpdate=registry
 
 [Service]

@@ -110,7 +110,9 @@ upload_snapshot() {
   BUCKET="$SERVICE.$(hostname --fqdn)"
   BUCKET=${BUCKET//./-}
   if [ -n "$BACKUP_PATH" ] && [ -d "$BACKUP_PATH" ]; then
-    for REMOTE in "${BACKUP_REMOTES[@]}"; do
+    ORIGIFS=$IFS
+    IFS=","
+    for REMOTE in "$BACKUP_REMOTES"; do
       if [ -n "$BUCKET" ]; then
         if ! rclone lsd "$REMOTE:$BUCKET"; then
           rclone mkdir "$REMOTE:$BUCKET"
@@ -121,6 +123,7 @@ upload_snapshot() {
         exit 1
       fi
     done
+    IFS=$ORIGIFS
   else
     echo "Please provide a valid backup path."
     exit 1
