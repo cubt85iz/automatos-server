@@ -2,7 +2,7 @@
 
 # Creates a backup for the specified dataset and uploads to Backblaze B2.
 
-set -euo pipefail
+set -euox pipefail
 
 DATASET=$1
 RECURSIVE=${2:-n}
@@ -104,21 +104,26 @@ prune_snapshots() {
   done
 }
 
-# Upload Borg repository to Backblaze
-upload_to_b2() {
+# Upload Borg repository
+upload_snapshot() {
   SERVICE="${DATASET##*/}"
   BUCKET="$SERVICE.$(hostname --fqdn)"
   BUCKET=${BUCKET//./-}
   if [ -n "$BACKUP_PATH" ] && [ -d "$BACKUP_PATH" ]; then
-    if [ -n "$BUCKET" ]; then
-      if ! rclone lsd "$RCLONE_REMOTE:$BUCKET"; then
-        rclone mkdir "$RCLONE_REMOTE:$BUCKET"
+    ORIGIFS=$IFS
+    IFS=","
+    for REMOTE in "$BACKUP_REMOTES"; do
+      if [ -n "$BUCKET" ]; then
+        if ! rclone lsd "$REMOTE:$BUCKET"; then
+          rclone mkdir "$REMOTE:$BUCKET"
+        fi
+        rclone sync "$BACKUP_PATH" "$REMOTE:$BUCKET"
+      else
+        echo "Please provide a bucket name."
+        exit 1
       fi
-      rclone sync "$BACKUP_PATH" "$RCLONE_REMOTE:$BUCKET"
-    else
-      echo "Please provide a bucket name."
-      exit 1
-    fi
+    done
+    IFS=$ORIGIFS
   else
     echo "Please provide a valid backup path."
     exit 1
@@ -137,7 +142,7 @@ if zfs list -H -t filesystem "$DATASET"; then
   create_snapshot || exit 1
   backup_snapshot || exit 1
   prune_snapshots || exit 1
-  upload_to_b2 || exit 1
+  upload_snapshot || exit 1
 else
   echo "Please provide a valid ZFS dataset."
   exit 1

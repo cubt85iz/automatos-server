@@ -6,17 +6,21 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/jellyfin/%p:latest
-AddDevice=/dev/dri
 EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/jellyfin/config:/config:Z
-Volume=/var/containers/volumes/jellyfin/cache:/cache:Z
-Volume=/var/containers/shared-volumes/movies:/media/movies:z,rw,rslave,rbind
-Volume=/var/containers/shared-volumes/tv:/media/tv:z,rw,rslave,rbind
+AddDevice=/dev/dri
+Volume=${CONTAINER_PATH}/config:/config:Z
+Volume=${CONTAINER_PATH}/cache:/cache:Z
+Volume=${SHARED_VOLUMES_PATH}/movies:/media/movies:z,rw,rslave,rbind
+Volume=${SHARED_VOLUMES_PATH}/tv:/media/tv:z,rw,rslave,rbind
+PodmanArgs=--publish ${WEB_PORT}:8096
 Tmpfs=/transcode
-PublishPort=8097:8096
+User=${UID}
+Group=${GID}
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/environment
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

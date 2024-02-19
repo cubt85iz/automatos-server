@@ -6,26 +6,28 @@ After=network-online.target nss-lookup.target plex-network.service
 [Container]
 ContainerName=%p
 Image=docker.io/plexinc/pms-docker:plexpass
-AddDevice=/dev/dri
 EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/plex/config:/config:Z
-Volume=/var/containers/shared-volumes/movies:/media/movies:z,rw,rslave,rbind
-Volume=/var/containers/shared-volumes/music:/media/music:z,rw,rslave,rbind
-Volume=/var/containers/shared-volumes/tv:/media/tv:z,rw,rslave,rbind
+AddDevice=/dev/dri
+Volume=${CONTAINER_PATH}/config:/config:Z
+Volume=${SHARED_VOLUMES_PATH}/movies:/media/movies:z,rw,rslave,rbind
+Volume=${SHARED_VOLUMES_PATH}/music:/media/music:z,rw,rslave,rbind
+Volume=${SHARED_VOLUMES_PATH}/tv:/media/tv:z,rw,rslave,rbind
+PodmanArgs=--publish ${WEB_PORT}:32400/tcp
+PodmanArgs=--publish ${COMPANION_PORT}:3005/tcp
+PodmanArgs=--publish ${ROKU_C2_PORT}:8324/tcp
+PodmanArgs=--publish ${DLNA_PORT_B}:32469/tcp
+PodmanArgs=--publish ${DLNA_PORT_A}:1900/udp
+PodmanArgs=--publish ${GDM_PORT_A}:32410/udp
+PodmanArgs=--publish ${GDM_PORT_B}:32412/udp
+PodmanArgs=--publish ${GDM_PORT_C}:32413/udp
+PodmanArgs=--publish ${GDM_PORT_D}:32414/udp
 Tmpfs=/transcode
-PublishPort=32400:32400/tcp
-PublishPort=3005:3005/tcp
-PublishPort=8324:8324/tcp
-PublishPort=32469:32469/tcp
-PublishPort=1900:1900/udp
-PublishPort=32410:32410/udp
-PublishPort=32412:32412/udp
-PublishPort=32413:32413/udp
-PublishPort=32414:32414/udp
 Network=plex-network
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/environment
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

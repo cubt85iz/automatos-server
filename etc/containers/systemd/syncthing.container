@@ -7,19 +7,21 @@ After=network-online.target nss-lookup.target
 ContainerName=%p
 Image=docker.io/%p/%p:latest
 EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/%p/data:/var/%p:Z
-Volume=/var/containers/shared-volumes/files:/var/%p/files:z,rw,rslave,rbind
-Volume=/var/containers/shared-volumes/audiobooks:/var/%p/audiobooks:z,rw,rslave,rbind
-Volume=/var/containers/shared-volumes/games:/var/%p/games:z,rw,rslave,rbind
-Volume=/var/containers/shared-volumes/movies:/var/%p/movies:z,rw,rslave,rbind
-Volume=/var/containers/shared-volumes/music:/var/%p/music:z,rw,rslave,rbind
-Volume=/var/containers/shared-volumes/tv:/var/%p/tv:z,rw,rslave,rbind
-PublishPort=8384:8384
-PublishPort=22000:22000/tcp
-PublishPort=22000:22000/udp
+Volume=${CONTAINER_PATH}/data:/var/%p:Z
+Volume=${SHARED_VOLUMES_PATH}/files:/var/%p/files:z,rw,rslave,rbind
+Volume=${SHARED_VOLUMES_PATH}/audiobooks:/var/%p/audiobooks:z,rw,rslave,rbind
+Volume=${SHARED_VOLUMES_PATH}/games:/var/%p/games:z,rw,rslave,rbind
+Volume=${SHARED_VOLUMES_PATH}/movies:/var/%p/movies:z,rw,rslave,rbind
+Volume=${SHARED_VOLUMES_PATH}/music:/var/%p/music:z,rw,rslave,rbind
+Volume=${SHARED_VOLUMES_PATH}/tv:/var/%p/tv:z,rw,rslave,rbind
+PodmanArgs=--publish ${WEB_PORT}:8384
+PodmanArgs=--publish ${SYNC_PORT}:22000/tcp
+PodmanArgs=--publish ${SYNC_PORT}:22000/udp
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/environment
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

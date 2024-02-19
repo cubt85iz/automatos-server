@@ -7,11 +7,12 @@ After=network-online.target nss-lookup.target unifi-network.service
 ContainerName=%p
 Image=docker.io/mongo:latest
 EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/unifi/db:/data/db:Z
+Volume=${CONTAINER_PATH}/db:/data/db:Z
 Network=unifi-network
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

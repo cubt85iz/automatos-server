@@ -7,11 +7,12 @@ After=network-online.target nss-lookup.target zfs.target
 ContainerName=%p
 Image=docker.io/meisnate12/plex-meta-manager:nightly
 EnvironmentFile=/etc/containers/config/%p.env
-Volume=/var/containers/volumes/plex-meta-manager/config:/config:Z
+Volume=${CONTAINER_PATH}/config:/config:Z
 Network=plex-network
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]
