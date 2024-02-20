@@ -4,7 +4,7 @@ Fedora CoreOS image, based on [ucore](https://github.com/ublue-os/ucore.git), wi
 
 ## Customization
 
-Clone the repo and create a DEPLOY_SUITE to deploy your own custom combination of services. Use the [automatos-server-config](https://github.com/cubt85iz/automatos-server-config.git) project for secrets management.
+Clone the repo and create a configuration file in the .config folder. In the configuration file, specify your custom configuration. Use the [automatos-server-config](https://github.com/cubt85iz/automatos-server-config.git) project for secrets management.
 
 ## Installation
 
@@ -17,6 +17,5 @@ Clone the repo and create a DEPLOY_SUITE to deploy your own custom combination o
 
 The following features are experimental/untested:
 
-* Jellyfin
 * MinIO
 * YTSubs
