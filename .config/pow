@@ -1,0 +1,49 @@
+{
+  "containers": [
+    "audiobookshelf",
+    "beets",
+    "gotify",
+    "jellyfin",
+    "lubelogger",
+    "mealie",
+    "nextcloud",
+    "plex",
+    "pmm",
+    "syncthing",
+    "unifi"
+  ],
+  "packages": [
+    "borgbackup",
+    "curl",
+    "dbus-tools",
+    "firewalld",
+    "iwlegacy-firmware",
+    "iwlwifi-dvm-firmware",
+    "iwlwifi-mvm-firmware",
+    "just",
+    "kernel-modules-extra",
+    "nano",
+    "pciutils",
+    "podman",
+    "rclone",
+    "samba",
+    "setroubleshoot",
+    "vim",
+    "wget",
+    "xdg-dbus-proxy",
+    "xdg-user-dirs"
+  ],
+  "selinux":
+  {
+    "booleans": [
+      {
+        "name": "rsync_full_access",
+        "value": "1"
+      },
+      {
+        "name": "samba_export_all_rw",
+        "value": "1"
+      }
+    ]
+  }
+}

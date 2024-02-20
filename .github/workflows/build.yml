@@ -32,27 +32,27 @@ jobs:
         run: |
           echo "${{ toJSON(steps.stable.outputs) }}"
 
-  env_files:
+  json_files:
     name: Generate Build Environments
     runs-on: ubuntu-latest
     outputs:
-      files: ${{ steps.env.outputs.files }}
+      files: ${{ steps.json.outputs.files }}
     steps:
       - uses: actions/checkout@v4
-      - name: Find .env files
-        id: env
+      - name: Find JSON files
+        id: json
         run: |
-          pushd env
+          pushd .config
           echo "files=$(ls | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
           popd
       - run: |
-          echo "${{ steps.env.outputs.files }}"
+          echo "${{ steps.json.outputs.files }}"
 
-  build_osn:
+  build:
     name: Build and push image
     runs-on: ubuntu-22.04
     if: always() && !cancelled()
-    needs: [fcos_version, env_files]
+    needs: [fcos_version, json_files]
     permissions:
       contents: read
       packages: write
@@ -62,7 +62,7 @@ jobs:
       matrix:
         image_name:
           - automatos-server
-        environment: ${{ fromJSON(needs.env_files.outputs.files) }}
+        environment: ${{ fromJSON(needs.json_files.outputs.files) }}
         include:
           - image_version: ${{ needs.fcos_version.outputs.stable_version }}
     steps:
@@ -104,7 +104,7 @@ jobs:
           tags: |
             ${{ steps.generate-image-tags.outputs.alias_tags }}
           extra-args: |
-            --build-arg-file env/${{ matrix.environment }}
+            --build-arg=CONFIG=${{ matrix.environment }}
           labels: ${{ steps.define-image-metadata.outputs.labels }}
           oci: false
 
