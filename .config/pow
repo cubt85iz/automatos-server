@@ -28,6 +28,7 @@
     "rclone",
     "samba",
     "setroubleshoot",
+    "tree",
     "vim",
     "wget",
     "xdg-dbus-proxy",
