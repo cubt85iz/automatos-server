@@ -26,7 +26,7 @@ jobs:
           skopeo inspect docker://quay.io/fedora/fedora-coreos:stable > inspect.json
           linux=$(jq -r '.["Labels"]["ostree.linux"]' inspect.json)
           echo "linux=$linux" >> $GITHUB_OUTPUT
-          version=$(jq -r '.["Labels"]["version"]' inspect.json)
+          version=$(jq -r '.["Labels"]["org.opencontainers.image.version"]' inspect.json)
           echo "version=$version" >> $GITHUB_OUTPUT
       - name: Echo outputs
         run: |
