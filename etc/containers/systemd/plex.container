@@ -12,6 +12,7 @@ Volume=${CONTAINER_PATH}/config:/config:Z
 Volume=${SHARED_VOLUMES_PATH}/movies:/media/movies:z,rw,rslave,rbind
 Volume=${SHARED_VOLUMES_PATH}/music:/media/music:z,rw,rslave,rbind
 Volume=${SHARED_VOLUMES_PATH}/tv:/media/tv:z,rw,rslave,rbind
+Volume=${SHARED_VOLUMES_PATH}/equestrian:/media/equestrian:z,rw,rslave,rbind
 PodmanArgs=--publish ${WEB_PORT}:32400/tcp
 PodmanArgs=--publish ${COMPANION_PORT}:3005/tcp
 PodmanArgs=--publish ${ROKU_C2_PORT}:8324/tcp
