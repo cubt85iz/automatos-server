@@ -28,6 +28,9 @@ fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]jellyfin[[:space:]] ]]; then
   rm jellyfin.container
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]kometa[[:space:]] ]]; then
+  rm kometa.container
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]lubelogger[[:space:]] ]]; then
   rm lubelogger.container
 fi
@@ -43,22 +46,17 @@ if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]nextcloud[[:space:]] ]]; then
   rm nextcloud*.{service,timer}
   popd &> /dev/null
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pinchflat[[:space:]] ]]; then
+  rm pinchflat.container
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]plex[[:space:]] ]]; then
   rm plex*.{container,network}
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pmm[[:space:]] ]]; then
-  if [ -f plexmetamanager.container ]; then
-    rm plexmetamanager.container
-  fi
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]syncthing[[:space:]] ]]; then
   rm syncthing.container
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]unifi[[:space:]] ]]; then
   rm unifi*.{container,network}
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pinchflat[[:space:]] ]]; then
-  rm pinchflat.container
 fi
 popd &> /dev/null
 
