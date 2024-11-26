@@ -2,7 +2,6 @@
   "containers": [
     "kometa",
     "plex",
-    "pmm",
     "syncthing"
   ],
   "packages": [
