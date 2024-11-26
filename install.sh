@@ -57,9 +57,8 @@ fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]unifi[[:space:]] ]]; then
   rm unifi*.{container,network}
 fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]ytsubs[[:space:]] ]]; then
-  rm ytsubs.container
-  rm /etc/systemd/system/ytsubs.timer
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pinchflat[[:space:]] ]]; then
+  rm pinchflat.container
 fi
 popd &> /dev/null
 
