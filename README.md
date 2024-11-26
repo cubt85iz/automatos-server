@@ -18,4 +18,3 @@ Clone the repo and create a configuration file in the .config folder. In the con
 The following features are experimental/untested:
 
 * MinIO
-* YTSubs
