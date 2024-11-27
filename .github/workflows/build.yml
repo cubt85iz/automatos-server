@@ -112,11 +112,16 @@ jobs:
         uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: 'localhost/${{ github.repository }}-${{ matrix.environment }}:latest'
-          format: 'table'
-          exit-code: '1'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy SARIF report
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
             
       # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
       # https://github.com/macbre/push-to-ghcr/issues/12
