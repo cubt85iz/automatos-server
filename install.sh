@@ -26,7 +26,7 @@ if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]gotify[[:space:]] ]]; then
   rm gotify.container
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]jellyfin[[:space:]] ]]; then
-  rm jellyfin.container
+  rm jellyfin*.{container,network}
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]kometa[[:space:]] ]]; then
   rm kometa.container

@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Jellyfin
-Requires=network-online.target nss-lookup.target
-After=network-online.target nss-lookup.target
+Requires=network-online.target nss-lookup.target jellyfin-network.service
+After=network-online.target nss-lookup.target jellyfin-network.service
 
 [Container]
 ContainerName=%p
@@ -16,6 +16,7 @@ PodmanArgs=--publish ${WEB_PORT}:8096
 Tmpfs=/transcode
 User=${UID}
 Group=${GID}
+Network=jellyfin-network
 AutoUpdate=registry
 
 [Service]
