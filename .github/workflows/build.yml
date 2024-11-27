@@ -100,7 +100,7 @@ jobs:
           containerfiles: |
             ./Containerfile
           context: ./
-          image: ${{ matrix.image_name }}-${{ matrix.environment }}
+          image: ghrc.io/${{ github.repository }}-${{ matrix.environment }}
           tags: |
             ${{ steps.generate-image-tags.outputs.alias_tags }}
           extra-args: |
@@ -111,7 +111,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: 'localhost/${{ github.repository }}-${{ matrix.environment }}:latest'
+          image-ref: 'ghcr.io/${{ github.repository }}-${{ matrix.environment }}:latest'
           format: 'sarif'
           output: 'trivy-results.sarif'
           ignore-unfixed: true
