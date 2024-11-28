@@ -3,3 +3,10 @@ scan:
     - vuln
   skip-dirs:
     - /sysroot
+
+severity:
+  - CRITICAL
+  - HIGH
+
+vulnerability:
+  ignore-unfixed: true
