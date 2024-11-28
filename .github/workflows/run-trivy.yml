@@ -46,11 +46,15 @@ jobs:
         environment: ${{ fromJSON(needs.json_files.outputs.files) }}
     steps:
       - name: Run Trivy vulnerability scanner against latest image
-        uses: aquasecurity/trivy-action@0.29.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'ghcr.io/${{ github.repository }}-${{ matrix.environment }}:latest'
-          trivy-config: .github/workflows/config/trivy.yaml
+          format: 'sarif'
           output: '${{ matrix.image_name }}-${{ matrix.environment }}.sarif'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+          skip-dirs: 'sysroot'
+          scanners: 'vuln'
       - name: Upload Trivy scan results to Github Security Tab
         uses: github/codeql-action/upload-sarif@v3
         with:
