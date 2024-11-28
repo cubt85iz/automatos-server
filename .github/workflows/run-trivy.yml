@@ -1,5 +1,9 @@
 name: run-trivy
 on:
+  workflow_run:
+    workflows: [build]
+    types:
+      - completed
   workflow_dispatch:
 
 env:
@@ -10,6 +14,7 @@ jobs:
   json_files:
     name: Generate Build Environments
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     outputs:
       files: ${{ steps.json.outputs.files }}
     steps:
@@ -26,6 +31,7 @@ jobs:
   build:
     name: Run Trivy
     runs-on: ubuntu-20.04
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     needs: [json_files]
     permissions:
       contents: read
@@ -50,6 +56,6 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
       - name: Upload Trivy scan results to Github Security Tab
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: '${{ matrix.image_name }}-${{ matrix.environment }}.sarif'
