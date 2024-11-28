@@ -57,7 +57,6 @@ jobs:
       contents: read
       packages: write
       id-token: write
-      security-events: write
     strategy:
       fail-fast: false
       matrix:
@@ -101,7 +100,7 @@ jobs:
           containerfiles: |
             ./Containerfile
           context: ./
-          image: ghrc.io/${{ github.repository }}-${{ matrix.environment }}
+          image: ${{ github.repository }}-${{ matrix.environment }}
           tags: |
             ${{ steps.generate-image-tags.outputs.alias_tags }}
           extra-args: |
