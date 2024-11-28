@@ -2,4 +2,4 @@ scan:
   scanners:
     - vuln
   skip-dirs:
-    - sysroot
+    - /sysroot
