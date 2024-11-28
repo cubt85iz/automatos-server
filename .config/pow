@@ -28,7 +28,6 @@
     "podman",
     "rclone",
     "samba",
-    "setroubleshoot",
     "tree",
     "vim",
     "xdg-dbus-proxy",

@@ -18,7 +18,6 @@
     "podman",
     "rclone",
     "samba",
-    "setroubleshoot",
     "vim",
     "xdg-dbus-proxy",
     "xdg-user-dirs"
