@@ -100,7 +100,7 @@ jobs:
           containerfiles: |
             ./Containerfile
           context: ./
-          image: ${{ github.repository }}-${{ matrix.environment }}
+          image: ${{ matrix.image_name }}-${{ matrix.environment }}
           tags: |
             ${{ steps.generate-image-tags.outputs.alias_tags }}
           extra-args: |
