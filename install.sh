@@ -52,7 +52,7 @@ if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]nextcloud[[:space:]] ]]; then
   rm nextcloud*.{service,timer}
   popd &> /dev/null
   pushd /etc/systemd/system/timers.target.wants/ &> /dev/null
-  rm nextcloud-backgroud.timer
+  rm nextcloud-background.timer
   popd &> /dev/null
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pinchflat[[:space:]] ]]; then
