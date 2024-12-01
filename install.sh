@@ -30,6 +30,12 @@ if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]jellyfin[[:space:]] ]]; then
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]kometa[[:space:]] ]]; then
   rm kometa.container
+  pushd /etc/systemd/system/ &> /dev/null
+  rm kometa.timer
+  popd &> /dev/null
+  pushd /etc/systemd/system/timers.target.wants/ &> /dev/null
+  rm kometa.timer
+  popd &> /dev/null
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]lubelogger[[:space:]] ]]; then
   rm lubelogger.container
@@ -44,6 +50,9 @@ if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]nextcloud[[:space:]] ]]; then
   rm nextcloud*.container
   pushd /etc/systemd/system/ &> /dev/null
   rm nextcloud*.{service,timer}
+  popd &> /dev/null
+  pushd /etc/systemd/system/timers.target.wants/ &> /dev/null
+  rm nextcloud-backgroud.timer
   popd &> /dev/null
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pinchflat[[:space:]] ]]; then
