@@ -1,0 +1,14 @@
+[Unit]
+Description=Container service for Immich Redis Cache
+Requires=network-online.target nss-lookup.target immich-network.service
+After=network-online.target nss-lookup.target immich-network.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/redis:7
+EnvironmentFile=/etc/containers/config/%p.env
+Network=immich-network
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure

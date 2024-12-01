@@ -25,6 +25,9 @@ fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]gotify[[:space:]] ]]; then
   rm gotify.container
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]immich[[:space:]] ]]; then
+  rm immich*.{container,network}
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]jellyfin[[:space:]] ]]; then
   rm jellyfin*.{container,network}
 fi
