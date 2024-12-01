@@ -7,14 +7,13 @@ After=network-online.target nss-lookup.target immich-redis.service immich-db.ser
 ContainerName=%p
 Image=ghcr.io/immich-app/immich-server:release
 EnvironmentFile=/etc/containers/config/%p.env
-Volume=${SHARED_VOLUMES_PATH}/photos:/usr/src/app/upload:z,rw,rslave,rbind
+Volume=${CONTAINER_PATH}/photos:/usr/src/app/upload:Z
 Volume=/etc/localtime:/etc/localtime:ro
 PodmanArgs=--publish ${WEB_PORT}:2283
 Network=immich-network
 AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/environment
 EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 

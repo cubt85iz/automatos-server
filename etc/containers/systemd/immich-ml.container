@@ -12,4 +12,5 @@ Network=immich-network
 AutoUpdate=registry
 
 [Service]
+EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure

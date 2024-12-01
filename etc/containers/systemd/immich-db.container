@@ -6,7 +6,7 @@ After=network-online.target nss-lookup.target immich-network.service
 [Container]
 ContainerName=%p
 Image=docker.io/tensorchord/pgvecto-rs:pg17-v0.4.0
-Exec=postgres -c shared_preload_libraries=vectors.so -c search_path="$$user", public, vectors -c logging_collector=on -c max_wal_size=2GB -c shared_buffers=512MB -c wal_compression=on
+Exec=postgres -c shared_preload_libraries=vectors.so -c search_path="$$user",public,vectors -c logging_collector=on -c max_wal_size=2GB -c shared_buffers=512MB -c wal_compression=on
 EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/db:/var/lib/postgresql/data:Z
 Network=immich-network
