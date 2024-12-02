@@ -1,6 +1,7 @@
 {
   "containers": [
     "kometa",
+    "photoprism",
     "plex",
     "syncthing"
   ],
