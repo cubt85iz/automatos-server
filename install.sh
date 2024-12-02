@@ -58,7 +58,7 @@ if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]nextcloud[[:space:]] ]]; then
   rm nextcloud-background.timer
   popd &> /dev/null
 fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pinchflat[[:space:]] ]]; then
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]photoprism[[:space:]] ]]; then
   rm photoprism.container
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pinchflat[[:space:]] ]]; then
