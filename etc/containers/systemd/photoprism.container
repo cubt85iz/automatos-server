@@ -1,0 +1,22 @@
+[Unit]
+Description=Container service for PhotoPrism
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/photoprism/photoprism:latest
+EnvironmentFile=/etc/containers/config/%p.env
+Volume=${CONTAINER_PATH}/photos:/photoprism/originals:Z
+Volume=${CONTAINER_PATH}/data:/photoprism/storage:Z
+PodmanArgs=--publish ${WEB_PORT}:2342
+WorkingDir=/photoprism
+AutoUpdate=registry
+
+[Service]
+EnvironmentFile=/etc/containers/config/%p.env
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

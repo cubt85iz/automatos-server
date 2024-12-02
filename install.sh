@@ -59,6 +59,9 @@ if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]nextcloud[[:space:]] ]]; then
   popd &> /dev/null
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pinchflat[[:space:]] ]]; then
+  rm photoprism.container
+fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pinchflat[[:space:]] ]]; then
   rm pinchflat.container
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]plex[[:space:]] ]]; then
