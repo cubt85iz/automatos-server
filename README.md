@@ -18,3 +18,7 @@ Clone the repo and create a configuration file in the .config folder. In the con
 The following features are experimental/untested:
 
 * MinIO
+
+## Implementation
+
+Containers are defined using quadlets and placed in the /etc/containers/systemd folder. Each of these quadlets reference environment files stored in /etc/containers/config. These environment files contain the secrets for each container. The /etc/environment file is used to store global variables for containers (ex. SHARED_VOLUME_PATH). The values for these variables are shared amongst all containers and this limits how many times they must be defined.
