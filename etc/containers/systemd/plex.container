@@ -5,7 +5,7 @@ After=network-online.target nss-lookup.target plex-network.service
 
 [Container]
 ContainerName=%p
-Image=lscr.io/linuxserver/plex:latest
+Image=docker.io/plexinc/pms-docker:latest
 EnvironmentFile=/etc/containers/config/%p.env
 AddDevice=/dev/dri
 Volume=${CONTAINER_PATH}/config:/config:Z
