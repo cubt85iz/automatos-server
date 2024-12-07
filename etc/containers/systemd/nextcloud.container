@@ -13,15 +13,12 @@ Image=docker.io/library/nextcloud:29
 EnvironmentFile=/etc/containers/config/%p.env
 AddDevice=/dev/dri
 Volume=${CONTAINER_PATH}/www:/var/www/html:z,rw,rslave,rbind
-Volume=${CONTAINER_PATH}/photos:/photos:z
-Volume=${CONTAINER_PATH}/scans:/scans:z
 PodmanArgs=--publish ${WEB_PORT}:80/tcp
 Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/containers/config/%p.env
-ExecStartPre=/usr/bin/chown -R 33 ${CONTAINER_PATH}/www
 Restart=on-failure
 
 [Install]
