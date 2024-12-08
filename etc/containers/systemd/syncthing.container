@@ -6,14 +6,7 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/%p/%p:latest
-EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/data:/var/%p:Z
-Volume=${SHARED_VOLUMES_PATH}/files:/var/%p/files:z,rw,rslave,rbind
-Volume=${SHARED_VOLUMES_PATH}/audiobooks:/var/%p/audiobooks:z,rw,rslave,rbind
-Volume=${SHARED_VOLUMES_PATH}/games:/var/%p/games:z,rw,rslave,rbind
-Volume=${SHARED_VOLUMES_PATH}/movies:/var/%p/movies:z,rw,rslave,rbind
-Volume=${SHARED_VOLUMES_PATH}/music:/var/%p/music:z,rw,rslave,rbind
-Volume=${SHARED_VOLUMES_PATH}/tv:/var/%p/tv:z,rw,rslave,rbind
 PodmanArgs=--publish ${WEB_PORT}:8384
 PodmanArgs=--publish ${SYNC_PORT}:22000/tcp
 PodmanArgs=--publish ${SYNC_PORT}:22000/udp
@@ -21,7 +14,6 @@ AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/environment
-EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

@@ -6,13 +6,11 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/gotify/server:latest
-EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/data:/app/data:Z
 PodmanArgs=--publish ${WEB_PORT}:80
 AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

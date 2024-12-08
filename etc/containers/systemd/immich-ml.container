@@ -6,11 +6,9 @@ After=network-online.target nss-lookup.target immich-network.service
 [Container]
 ContainerName=%p
 Image=ghcr.io/immich-app/immich-machine-learning:release
-EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/cache:/cache:Z
 Network=immich-network
 AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure

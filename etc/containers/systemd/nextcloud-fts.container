@@ -6,12 +6,10 @@ After=network-online.target nss-lookup.target nextcloud-network.service
 [Container]
 ContainerName=%p
 Image=docker.io/elasticsearch:8.16.1
-EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/fts:/usr/share/elasticsearch/data:Z
 Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/containers/config/%p.env
 ExecStartPre=/usr/bin/chown -R 1000 ${CONTAINER_PATH}/fts
 Restart=on-failure

@@ -10,7 +10,6 @@ After=nextcloud-fts.service nextcloud-redis.service
 [Container]
 ContainerName=%p
 Image=docker.io/library/nextcloud:29
-EnvironmentFile=/etc/containers/config/%p.env
 AddDevice=/dev/dri
 Volume=${CONTAINER_PATH}/www:/var/www/html:z,rw,rslave,rbind
 PodmanArgs=--publish ${WEB_PORT}:80/tcp
@@ -18,7 +17,6 @@ Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

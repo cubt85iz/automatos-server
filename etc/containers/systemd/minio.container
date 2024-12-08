@@ -6,7 +6,6 @@ After=network-online.target nss-lookup.target
 [Container]
 ContainerName=%p
 Image=docker.io/minio/minio:latest
-EnvironmentFile=/etc/containers/config/%p.env
 Exec=server /data --console-address ":9001"
 Volume=${CONTAINER_PATH}/data:/data:Z
 PodmanArgs=--publish ${WEB_PORT}:9000
@@ -14,7 +13,6 @@ PodmanArgs=--publish ${CONSOLE_PORT}:9001
 AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
 
 [Install]

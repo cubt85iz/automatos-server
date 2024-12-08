@@ -6,11 +6,9 @@ After=network-online.target nss-lookup.target zfs.target
 [Container]
 ContainerName=%p
 Image=docker.io/kometateam/kometa:nightly
-EnvironmentFile=/etc/containers/config/%p.env
 Volume=${CONTAINER_PATH}/config:/config:Z
 Network=plex-network
 AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/containers/config/%p.env
 Restart=on-failure
