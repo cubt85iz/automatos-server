@@ -111,8 +111,8 @@ upload_snapshot() {
   BUCKET=${BUCKET//./-}
   if [ -n "$BACKUP_PATH" ] && [ -d "$BACKUP_PATH" ]; then
     ORIGIFS=$IFS
-    IFS=","
-    for REMOTE in "$BACKUP_REMOTES"; do
+    IFS="," read -r -a REMOTES <<< "$BACKUP_REMOTES"
+    for REMOTE in "${REMOTES[@]}"; do
       if [ -n "$BUCKET" ]; then
         if ! rclone lsd "$REMOTE:$BUCKET"; then
           rclone mkdir "$REMOTE:$BUCKET"
