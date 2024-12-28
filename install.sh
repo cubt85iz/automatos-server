@@ -70,6 +70,9 @@ fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]syncthing[[:space:]] ]]; then
   rm syncthing.container
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]tautulli[[:space:]] ]]; then
+  rm tautulli.container
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]unifi[[:space:]] ]]; then
   rm unifi*.{container,network}
 fi
