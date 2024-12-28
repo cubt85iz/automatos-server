@@ -3,6 +3,7 @@
     "audiobookshelf",
     "beets",
     "gotify",
+    "homer",
     "jellyfin",
     "kometa",
     "lubelogger",
@@ -11,6 +12,7 @@
     "pinchflat",
     "plex",
     "syncthing",
+    "tautulli",
     "unifi"
   ],
   "packages": [
