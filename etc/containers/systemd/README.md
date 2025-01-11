@@ -52,6 +52,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Nextcloud](https://nextcloud.com) is a self-hosted file storage and sync platform with powerful collaboration capabilities for remote work and data protection.
 
+### Paperless-ngx
+
+[Paperless-ngx](https://docs.paperless-ngx.com/) transforms your physical documents into a searchable online archive that you can keep, well, less paper.
+
 ### Photoprism
 
 [PhotoPrism](https://www.photoprism.app) is a self-hosted app that lets you browse, search, and play your photos and videos automatically.

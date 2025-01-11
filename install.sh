@@ -61,6 +61,9 @@ if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]nextcloud[[:space:]] ]]; then
   rm nextcloud-background.timer
   popd &> /dev/null
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]paperless-ngx[[:space:]] ]]; then
+  rm paperless-ngx*.{container,network}
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]photoprism[[:space:]] ]]; then
   rm photoprism.container
 fi

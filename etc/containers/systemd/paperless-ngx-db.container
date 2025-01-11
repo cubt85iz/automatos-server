@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for Paperless-ngx Database
+Requires=network-online.target nss-lookup.target paperless-ngx-network.service
+After=network-online.target nss-lookup.target paperless-ngx-network.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/postgres:16
+Volume=${CONTAINER_PATH}/db:/var/lib/postgresql/data:Z
+Network=paperless-ngx-network
+AutoUpdate=registry
+
+[Service]
+ExecStartPre=/usr/bin/chown -R 999 ${CONTAINER_PATH}/db
+Restart=on-failure

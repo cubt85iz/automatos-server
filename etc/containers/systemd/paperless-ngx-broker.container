@@ -1,0 +1,14 @@
+[Unit]
+Description=Container service for Paperless-ngx Broker
+Requires=network-online.target nss-lookup.target paperless-ngx-network.service
+After=network-online.target nss-lookup.target paperless-ngx-network.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/library/redis:7
+Volume=${CONTAINER_PATH}/redis:/data:Z
+Network=paperless-ngx-network
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure

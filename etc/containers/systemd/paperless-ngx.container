@@ -1,0 +1,23 @@
+[Unit]
+Description=Container service for Paperless-ngx
+Requires=network-online.target nss-lookup.target paperless-ngx-network.service paperless-ngx-db.service paperless-ngx-broker.service
+After=network-online.target nss-lookup.target paperless-ngx-network.service paperless-ngx-db.service paperless-ngx-broker.service
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/paperless-ngx/paperless-ngx:latest
+Environment=PAPERLESS_DBHOST=paperless-ngx-db
+Environment=PAPERLESS_REDIS=redis://paperless-ngx-broker:6379
+Volume=${CONTAINER_PATH}/data:/usr/src/paperless/data:Z
+Volume=${CONTAINER_PATH}/media:/usr/src/paperless/media:Z
+Volume=${CONTAINER_PATH}/export:/usr/src/paperless/export:Z
+Volume=${CONTAINER_PATH}/consume:/usr/src/paperless/consume:Z
+PodmanArgs=--publish ${WEB_PORT}:8000
+Network=paperless-ngx-network
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
