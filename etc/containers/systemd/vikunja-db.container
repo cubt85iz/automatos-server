@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for Vikunja Database
+Requires=network-online.target nss-lookup.target vikunja-network.service
+After=network-online.target nss-lookup.target vikunja-network.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/postgres:16
+Volume=${CONTAINER_PATH}/db:/var/lib/postgresql/data:Z
+Network=vikunja-network
+AutoUpdate=registry
+
+[Service]
+ExecStartPre=/usr/bin/chown -R 999 ${CONTAINER_PATH}/db
+Restart=on-failure

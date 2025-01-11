@@ -75,3 +75,7 @@ To add support for a new service, add a systemd container file and update the `i
 ### UniFi
 
 [UniFi Web Controller](https://www.ui.com) allows users to manage UniFi network devices.
+
+### Vikunja
+
+[Vikunja](https://vikunja.io) is the perfect solution for homelab enthusiasts looking for a way to track tasks, set reminders and due dates, categorize tasks into lists, and prioritize projects in your everyday life.

@@ -79,6 +79,9 @@ fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]unifi[[:space:]] ]]; then
   rm unifi*.{container,network}
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]vikunja[[:space:]] ]]; then
+  rm vikunja*.{container,network}
+fi
 popd &> /dev/null
 
 # Override nfs to provide full utilities
