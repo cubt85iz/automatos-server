@@ -1,5 +1,6 @@
 {
   "containers": [
+    "actual",
     "audiobookshelf",
     "beets",
     "code-server",
