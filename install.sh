@@ -19,6 +19,9 @@ fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]beets[[:space:]] ]]; then
   rm beets.container
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]code-server[[:space:]] ]]; then
+  rm code-server.container
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]emby[[:space:]] ]]; then
   rm embyserver.container
 fi
