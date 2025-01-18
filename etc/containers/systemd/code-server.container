@@ -1,0 +1,17 @@
+[Unit]
+Description=Container service for %p
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/codercom/code-server:latest
+Volume=${CONTAINER_PATH}:/home/coder:Z
+PodmanArgs=--publish ${WEB_PORT}:8080
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
