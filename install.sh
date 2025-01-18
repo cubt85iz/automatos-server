@@ -13,6 +13,9 @@ readarray -t SELINUX_BOOLEANS < <(jq -rc '.selinux.booleans[]' /tmp/$CONFIG)
 
 # Remove containers, networks, services, & timers
 pushd /etc/containers/systemd/ &> /dev/null
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]actual[[:space:]] ]]; then
+  rm actual.container
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]audiobookshelf[[:space:]] ]]; then
   rm audiobookshelf.container
 fi
