@@ -4,6 +4,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 ## Supported Containers
 
+### Actual
+
+[Actual](https://actualbudget.org) is a super fast and privacy-focused app for managing your finances.
+
 ### Audiobookshelf
 
 [Audiobookshelf](https://www.audiobookshelf.org/docs) is an open-source self-hosted media server for your audiobooks and podcasts.
