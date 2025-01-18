@@ -1,0 +1,17 @@
+[Unit]
+Description=Container service for Actual
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/actualbudget/actual-server:latest-alpine
+Volume=${CONTAINER_PATH}/data:/data:Z
+PodmanArgs=--publish ${WEB_PORT}:5006
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
