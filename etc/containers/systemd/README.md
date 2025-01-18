@@ -12,6 +12,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Beets](https://beets.io) is the media library management system for obsessive music geeks.
 
+### Code Server
+
+[Code Server](https://github.com/coder/code-server) allows users to run VS Code on any machine anywhere and access it in the browser.
+
 ### Emby
 
 [Emby](https://emby.media) is a media server designed to organize, play, and stream audio and video to a variety of devices.
