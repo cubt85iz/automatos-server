@@ -1,0 +1,17 @@
+[Unit]
+Description=Container service for Collabora
+Requires=network-online.target nss-lookup.target nextcloud-network.service
+After=network-online.target nss-lookup.target nextcloud-network.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/collabora/code:latest
+PodmanArgs=--publish ${WEB_PORT}:9980
+Network=nextcloud-network
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
