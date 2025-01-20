@@ -4,6 +4,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 ## Supported Containers
 
+### abcde
+
+[abcde-container](https://github.com/cubt85iz/abcde-container) is a container that will automatically rip CDs. To use, create a drop-in for the service to specify the volumes (`/etc/abcde.conf` and `/dev/cdrom`) and `/etc/udev/rules.d/*.rules` file. Click the link for more detailed instructions.
+
 ### Actual
 
 [Actual](https://actualbudget.org) is a super fast and privacy-focused app for managing your finances.
