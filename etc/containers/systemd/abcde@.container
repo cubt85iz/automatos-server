@@ -1,0 +1,11 @@
+[Unit]
+Description=Container for processing audio CDs using abcde
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/cubt85iz/abcde-container:latest
+AddDevice=%I:/dev/cdrom
+AutoUpdate=registry
+
+[Service]
+ExecStopPost=eject %I
