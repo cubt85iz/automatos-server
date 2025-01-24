@@ -1,9 +1,14 @@
 {
   "containers": [
+    "audiobookshelf",
     "kometa",
+    "lubelogger",
+    "mealie",
     "photoprism",
     "plex",
-    "syncthing"
+    "syncthing",
+    "tautulli",
+    "vikunja"
   ],
   "packages": [
     "borgbackup",
