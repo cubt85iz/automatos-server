@@ -2,7 +2,6 @@
 Description=Healthcheck for containers
 
 [Service]
-EnvironmentFile=/etc/containers/config/%i.env
 ExecStartPre=/bin/sh -c "/usr/bin/test $(podman container inspect -f '{{.State.Running}}' %i) = "true""
 ExecStartPre=/bin/sh -c "/usr/bin/test $(podman container inspect -f '{{.State.Restarting}}' %i) = "false""
 ExecStart=/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null "$MONITOR_URL"
