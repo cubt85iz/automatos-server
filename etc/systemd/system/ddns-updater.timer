@@ -1,0 +1,9 @@
+[Unit]
+Description=Periodically run ddns-updater to update Cloudflare DNS records
+
+[Timer]
+OnBootSec=15min
+OnUnitInactiveSec=30min
+
+[Install]
+WantedBy=timers.target
