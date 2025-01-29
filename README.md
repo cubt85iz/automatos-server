@@ -15,4 +15,4 @@ Clone the repo and create a configuration file in the .config folder. In the con
 
 ## Implementation
 
-Containers are defined using quadlets and placed in the /etc/containers/systemd folder. Many of these containers require additional variables/volumes. The automatos-server-config repo creates systemd drop-ins for the values. Check out the automatism servers config repo for specifying these.
+Containers are defined using quadlets and placed in the /etc/containers/systemd folder. Many of these container require additional variables/volumes. Check out the automatos-server-config repo for more information.
