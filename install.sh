@@ -25,6 +25,15 @@ fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]code-server[[:space:]] ]]; then
   rm code-server.container
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]ddns-updater[[:space:]] ]]; then
+  rm ddns-updater.container
+  pushd /etc/systemd/system/ &> /dev/null
+  rm ddns-updater.timer
+  popd &> /dev/null
+  pushd /etc/systemd/system/timers.target.wants/ &> /dev/null
+  rm ddns-updater.timer
+  popd &> /dev/null
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]emby[[:space:]] ]]; then
   rm embyserver.container
 fi
