@@ -1,9 +1,7 @@
 {
   "containers": [
-    "actual",
     "audiobookshelf",
     "beets",
-    "code-server",
     "gotify",
     "homer",
     "jellyfin",
