@@ -19,7 +19,8 @@
     "tree",
     "vim",
     "xdg-dbus-proxy",
-    "xdg-user-dirs"
+    "xdg-user-dirs",
+    "wireguard-tools"
   ],
   "selinux":
   {
