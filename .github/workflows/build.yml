@@ -6,6 +6,7 @@ on:
     branches:
       - main
     paths-ignore:
+      - ".github/workflows/build-iso.yml"
       - "**.md"
   workflow_dispatch:
 
