@@ -39,7 +39,7 @@ jobs:
         environment: ${{ fromJSON(needs.json_files.outputs.files) }}
     steps:
       - name: Install podman
-        run: sudo apt-get update -y && apt-get install -y podman
+        run: sudo apt-get update -y && sudo apt-get install -y podman
 
       - name: Checkout Push to Registry action
         uses: actions/checkout@v4
