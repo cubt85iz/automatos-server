@@ -12,12 +12,14 @@
   ],
   "packages": [
     "borgbackup",
+    "chezmoi",
     "curl",
     "dbus-tools",
     "firewalld",
     "iwlegacy-firmware",
     "iwlwifi-dvm-firmware",
     "iwlwifi-mvm-firmware",
+    "just",
     "kernel-modules-extra",
     "nano",
     "pciutils",
@@ -25,6 +27,7 @@
     "rclone",
     "samba",
     "vim",
+    "wireguard-tools",
     "xdg-dbus-proxy",
     "xdg-user-dirs"
   ],
