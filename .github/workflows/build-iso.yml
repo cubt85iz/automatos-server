@@ -49,6 +49,7 @@ jobs:
         uses: centos-workstation/bootc-image-builder-action@main
         with:
           image: ${{ env.IMAGE_REGISTRY }}/${{ matrix.image_name }}-${{ matrix.environment }}:latest
+          config-file: config.toml
 
       - name: Upload to artifacts
         uses: actions/upload-artifact@v4
