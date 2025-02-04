@@ -22,6 +22,9 @@ fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]beets[[:space:]] ]]; then
   rm beets.container
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]caddy[[:space:]] ]]; then
+  rm caddy.container proxy.network
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]code-server[[:space:]] ]]; then
   rm code-server.container
 fi

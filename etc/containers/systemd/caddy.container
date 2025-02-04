@@ -1,0 +1,24 @@
+[Unit]
+Description=Container service for Caddy Reverse Proxy
+Requires=network-online.target nss-lookup.target proxy-network.service
+After=network-online.target nss-lookup.target proxy-network.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/library/caddy:latest
+AddCapability=CAP_NET_ADMIN
+Volume=${CONTAINER_PATH}/caddy:/etc/caddy:Z
+Volume=${CONTAINER_PATH}/config:/config:Z
+Volume=${CONTAINER_PATH}/data:/data:Z
+Volume=${CONTAINER_PATH}/site:/srv:Z
+PodmanArgs=--publish 80:80
+PodmanArgs=--publish 443:443
+PodmanArgs=--publish 443:443/udp
+Network=proxy-network
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

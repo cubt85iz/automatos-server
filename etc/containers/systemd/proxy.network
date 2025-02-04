@@ -1,4 +1,4 @@
 [Network]
 NetworkName=%N
-Subnet=172.16.206.0/24
+Subnet=172.16.207.0/24
 IPv6=true
