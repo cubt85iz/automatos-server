@@ -1,0 +1,10 @@
+[Unit]
+Description=Container service for backing up opnsense configuration
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/cubt85iz/opnsense-bkp:latest
+Volume=${CONTAINER_PATH}/config:/config:Z
+AutoUpdate=registry

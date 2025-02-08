@@ -79,6 +79,15 @@ if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]nextcloud[[:space:]] ]]; then
   rm nextcloud-background.timer
   popd &> /dev/null
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]opnsense-bkp[[:space:]] ]]; then
+  rm opnsense-bkp.container
+  pushd /etc/systemd/system/ &> /dev/null
+  rm opnsense-bkp.timer
+  popd &> /dev/null
+  pushd /etc/systemd/system/timers.target.wants/ &> /dev/null
+  rm opnsense-bkp.timer
+  popd &> /dev/null
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]paperless-ngx[[:space:]] ]]; then
   rm paperless-ngx*.{container,network}
 fi
