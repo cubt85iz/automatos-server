@@ -1,0 +1,12 @@
+[Unit]
+Description=Service to add users for Samba
+After=smb.service
+
+[Service]
+Type=oneshot
+ExecCondition=/bin/sh -c "/usr/bin/test -f /etc/samba/smbusers.export"
+ExecStart=/bin/sh -c "/usr/bin/pdbedit -i smbpasswd:/etc/samba/smbusers.export"
+ExecStartPost=/bin/sh -c "rm /etc/samba/smbusers.export"
+
+[Install]
+WantedBy=multi-user.target
