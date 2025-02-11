@@ -20,13 +20,17 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Beets](https://beets.io) is the media library management system for obsessive music geeks.
 
-## Caddy Web Server
+### Caddy Web Server
 
 [Caddy](https://caddyserver.com) is a web server that serves every site with TLS by default, without any configuration or hassle. It can also be configured as a reverse proxy.
 
 ### Code Server
 
 [Code Server](https://github.com/coder/code-server) allows users to run VS Code on any machine anywhere and access it in the browser.
+
+### Dynamic DNS Updater
+
+[ddns-updater](https://github.com/cubt85iz/ddns-updater.git) is a container that will update A/AAAA records with WAN IP address.
 
 ### Emby
 
