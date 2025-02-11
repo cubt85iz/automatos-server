@@ -2,5 +2,5 @@
 Description=Service for background jobs for Nextcloud container
 
 [Service]
-ExecCondition=/bin/sh -c "/usr/bin/test $(podman container inspect -f '{{.State.Running}}' nextcloud) = "true""
+ExecCondition=/bin/sh -c "/usr/bin/systemctl is-active nextcloud"
 ExecStart=/usr/bin/podman exec -it -u www-data nextcloud php /var/www/html/cron.php
