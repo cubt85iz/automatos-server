@@ -23,6 +23,7 @@
     "curl",
     "dbus-tools",
     "firewalld",
+    "graphviz",
     "iwlegacy-firmware",
     "iwlwifi-dvm-firmware",
     "iwlwifi-mvm-firmware",
