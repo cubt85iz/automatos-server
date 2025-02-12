@@ -7,7 +7,7 @@ After=network-online.target nss-lookup.target
 ContainerName=%p
 Image=docker.io/photoprism/photoprism:latest
 Volume=${CONTAINER_PATH}/data:/photoprism/storage:Z
-PodmanArgs=--publish ${WEB_PORT}:2342
+PublishPort=${WEB_PORT}:2342
 WorkingDir=/photoprism
 AutoUpdate=registry
 

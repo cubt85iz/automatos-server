@@ -8,8 +8,8 @@ ContainerName=%p
 Image=docker.io/minio/minio:latest
 Exec=server /data --console-address ":9001"
 Volume=${CONTAINER_PATH}/data:/data:Z
-PodmanArgs=--publish ${WEB_PORT}:9000
-PodmanArgs=--publish ${CONSOLE_PORT}:9001
+PublishPort=${WEB_PORT}:9000
+PublishPort=${CONSOLE_PORT}:9001
 AutoUpdate=registry
 
 [Service]

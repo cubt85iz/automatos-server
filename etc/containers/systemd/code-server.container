@@ -7,7 +7,7 @@ After=network-online.target nss-lookup.target
 ContainerName=%p
 Image=docker.io/codercom/code-server:latest
 Volume=${CONTAINER_PATH}/data:/home/coder:Z
-PodmanArgs=--publish ${WEB_PORT}:8080
+PublishPort=${WEB_PORT}:8080
 AutoUpdate=registry
 
 [Service]

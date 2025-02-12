@@ -7,7 +7,7 @@ After=network-online.target nss-lookup.target plex-network.service
 ContainerName=%p
 Image=docker.io/tautulli/tautulli:latest
 Volume=${CONTAINER_PATH}/config:/config:Z
-PodmanArgs=--publish ${WEB_PORT}:8181
+PublishPort=${WEB_PORT}:8181
 Network=plex-network
 AutoUpdate=registry
 

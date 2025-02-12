@@ -12,7 +12,7 @@ Volume=${CONTAINER_PATH}/data:/usr/src/paperless/data:Z
 Volume=${CONTAINER_PATH}/media:/usr/src/paperless/media:Z
 Volume=${CONTAINER_PATH}/export:/usr/src/paperless/export:Z
 Volume=${CONTAINER_PATH}/consume:/usr/src/paperless/consume:Z
-PodmanArgs=--publish ${WEB_PORT}:8000
+PublishPort=${WEB_PORT}:8000
 Network=paperless-ngx-network
 AutoUpdate=registry
 

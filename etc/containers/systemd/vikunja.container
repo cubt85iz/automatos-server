@@ -7,7 +7,7 @@ After=network-online.target nss-lookup.target vikunja-network.service vikunja-db
 ContainerName=%p
 Image=docker.io/vikunja/vikunja:latest
 Volume=${CONTAINER_PATH}/files:/app/vikunja/files:Z
-PodmanArgs=--publish ${WEB_PORT}:3456
+PublishPort=${WEB_PORT}:3456
 Network=vikunja-network
 AutoUpdate=registry
 

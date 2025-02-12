@@ -7,7 +7,7 @@ After=network-online.target nss-lookup.target
 ContainerName=%p
 Image=docker.io/hkotel/%p:latest
 Volume=${CONTAINER_PATH}/data:/app/data:Z
-PodmanArgs=--publish ${WEB_PORT}:9000
+PublishPort=${WEB_PORT}:9000
 AutoUpdate=registry
 
 [Service]

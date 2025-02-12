@@ -14,7 +14,7 @@ ContainerName=%p
 Image=docker.io/library/nextcloud:29
 AddDevice=/dev/dri
 Volume=${CONTAINER_PATH}/www:/var/www/html:z,rw,rslave,rbind
-PodmanArgs=--publish ${WEB_PORT}:80/tcp
+PublishPort=${WEB_PORT}:80/tcp
 Network=nextcloud-network
 AutoUpdate=registry
 

@@ -7,9 +7,9 @@ After=network-online.target nss-lookup.target
 ContainerName=%p
 Image=docker.io/%p/%p:latest
 Volume=${CONTAINER_PATH}/data:/var/%p:Z
-PodmanArgs=--publish ${WEB_PORT}:8384
-PodmanArgs=--publish ${SYNC_PORT}:22000/tcp
-PodmanArgs=--publish ${SYNC_PORT}:22000/udp
+PublishPort=${WEB_PORT}:8384
+PublishPort=${SYNC_PORT}:22000/tcp
+PublishPort=${SYNC_PORT}:22000/udp
 AutoUpdate=registry
 
 [Service]

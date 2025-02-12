@@ -7,7 +7,7 @@ After=network-online.target nss-lookup.target
 ContainerName=%p
 Image=docker.io/b4bz/homer:latest
 Volume=${CONTAINER_PATH}/assets:/www/assets:Z
-PodmanArgs=--publish ${WEB_PORT}:8080
+PublishPort=${WEB_PORT}:8080
 AutoUpdate=registry
 
 [Service]
