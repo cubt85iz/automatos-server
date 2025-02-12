@@ -1,9 +1,12 @@
 {
   "containers": [
     "audiobookshelf",
+    "gotify",
+    "homer",
     "kometa",
     "lubelogger",
     "mealie",
+    "opnsense-bkp",
     "photoprism",
     "plex",
     "syncthing",
