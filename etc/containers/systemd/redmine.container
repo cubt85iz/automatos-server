@@ -1,0 +1,41 @@
+# $ docker run -d --name some-redmine --network some-network -e REDMINE_DB_MYSQL=some-mysql -e REDMINE_DB_USERNAME=redmine -e REDMINE_DB_PASSWORD=secret amd64/redmine
+[Unit]
+Description=Container service for Redmine
+Requires=network-online.target nss-lookup.target redmine-network.service redmine-db.service
+After=network-online.target nss-lookup.target redmine-network.service redmine-db.service
+
+[Container]
+ContainerName=%p
+Image=amd64/redmine:latest
+Volume=${CONTAINER_PATH}/files:/app/redmine/files:Z
+PublishPort=${WEB_PORT}:3856
+Network=redmine-network
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+
+##################################################################################
+#version: '3.1'
+#
+#services:
+#
+# redmine:
+#    image: redmine
+#    restart: always
+#    ports:
+#      - 8080:3000
+#    environment:
+#      REDMINE_DB_MYSQL: db
+#      REDMINE_DB_PASSWORD: example
+#      REDMINE_SECRET_KEY_BASE: supersecretkey
+#
+#  db:
+#    image: mysql:8.0
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: example
+#      MYSQL_DATABASE: redmine
