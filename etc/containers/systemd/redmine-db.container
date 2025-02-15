@@ -12,5 +12,4 @@ Network=redmine-network
 AutoUpdate=registry
 
 [Service]
-ExecStartPre=/usr/bin/chown -R 999 ${CONTAINER_PATH}/db
 Restart=on-failure
