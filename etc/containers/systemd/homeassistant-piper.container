@@ -1,0 +1,20 @@
+[Unit]
+Description=Container for Piper TTS
+Requires=network-online.target nss-lookup.target homeassistant-network.service
+After=network-online.target nss-lookup.target homeassistant-network.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/rhasspy/wyoming-piper:latest
+Exec="--voice ${VOICE}"
+Volume=${CONTAINER_PATH}/data:/data:Z
+PublishPort=${WEB_PORT}:10200
+Network=homeassistant-network
+AutoUpdate=registry
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

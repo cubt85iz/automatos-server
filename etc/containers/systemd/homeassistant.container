@@ -1,15 +1,17 @@
 [Unit]
 Description=Container for Home Assistant Core
-Requires=network-online.target nss-lookup.target
-After=network-online.target nss-lookup.target
+Requires=network-online.target nss-lookup.target homeassistant-network.service 
+Requires=homeassistant-mqtt.service homeassistant-piper.service
+After=network-online.target nss-lookup.target homeassistant-network.service
+After=homeassistant-mqtt.service homeassistant-piper.service
 
 [Container]
 ContainerName=%p
 Image=ghcr.io/home-assistant/home-assistant:stable
 Volume=${CONTAINER_PATH}/config:/config:Z
 PublishPort=${WEB_PORT}:8123
+Network=homeassistant-network
 AutoUpdate=registry
-
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
