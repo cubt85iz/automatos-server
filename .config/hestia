@@ -1,0 +1,40 @@
+{
+  "containers": [
+    "homeassistant"
+  ],
+  "packages": [
+    "avahi",
+    "borgbackup",
+    "https://github.com/twpayne/chezmoi/releases/download/v2.58.0/chezmoi-2.58.0-x86_64.rpm",
+    "curl",
+    "dbus-tools",
+    "firewalld",
+    "iwlegacy-firmware",
+    "iwlwifi-dvm-firmware",
+    "iwlwifi-mvm-firmware",
+    "just",
+    "kernel-modules-extra",
+    "nano",
+    "pciutils",
+    "podman",
+    "rclone",
+    "samba",
+    "tree",
+    "vim",
+    "xdg-dbus-proxy",
+    "xdg-user-dirs"
+  ],
+  "selinux":
+  {
+    "booleans": [
+      {
+        "name": "rsync_full_access",
+        "value": "1"
+      },
+      {
+        "name": "samba_export_all_rw",
+        "value": "1"
+      }
+    ]
+  }
+}

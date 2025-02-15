@@ -40,6 +40,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Gotify](https://gotify.net) is a free and open source project that lets you control your data and communicate via a REST-API and a web socket.
 
+### Home Assistant
+
+[Home Assistant](https://www.home-assistant.io) is free and open-source software used for home automation. It serves as an integration platform and smart home hub, allowing users to control smart home devices.
+
 ### Homer
 
 [Homer](https://github.com/bastienwirtz/homer) is a lightweight and fast dashboard that lets you keep your services on hand with a simple yaml configuration file.

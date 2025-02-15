@@ -1,0 +1,19 @@
+[Unit]
+Description=Container for Home Assistant Core
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/home-assistant/home-assistant:stable
+Volume=${CONTAINER_PATH}/config:/config:Z
+PublishPort=${WEB_PORT}:8123
+AutoUpdate=registry
+
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
