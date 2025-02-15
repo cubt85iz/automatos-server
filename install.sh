@@ -103,6 +103,9 @@ fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]plex[[:space:]] ]]; then
   rm plex*.{container,network}
 fi
+if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]redmine[[:space:]] ]]; then
+  rm redmine*.{container,network}
+fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]syncthing[[:space:]] ]]; then
   rm syncthing.container
 fi
