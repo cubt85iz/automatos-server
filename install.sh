@@ -44,7 +44,7 @@ if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]gotify[[:space:]] ]]; then
   rm gotify.container
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]homeassistant[[:space:]] ]]; then
-  rm homeassistant.container
+  rm homeassistant*.{container,network}
 fi
 if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]homer[[:space:]] ]]; then
   rm homer.container
