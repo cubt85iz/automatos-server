@@ -6,7 +6,7 @@ After=network-online.target nss-lookup.target redmine-network.service redmine-db
 
 [Container]
 ContainerName=%p
-Image=amd64/redmine:latest
+Image=https://hub.docker.com/amd64/redmine:latest
 Volume=${CONTAINER_PATH}/files:/app/redmine/files:Z
 PublishPort=${WEB_PORT}:3856
 Network=redmine-network
