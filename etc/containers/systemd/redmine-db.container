@@ -1,4 +1,5 @@
-# POSTGRES_PASSWORD=secret -e POSTGRES_USER=redmine postgres
+# $ docker run -d --name some-postgres --network some-network -e POSTGRES_PASSWORD=secret -e POSTGRES_USER=redmine postgres
+
 [Unit]
 Description=Container service for Redmine Database
 Requires=network-online.target nss-lookup.target redmine-network.service
