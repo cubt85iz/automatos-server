@@ -12,6 +12,7 @@ WorkingDir=/photoprism
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
 Restart=on-failure
 RestartSec=10
 

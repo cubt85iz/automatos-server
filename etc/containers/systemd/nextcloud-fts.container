@@ -11,5 +11,6 @@ Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/fts"
 ExecStartPre=/usr/bin/chown -R 1000 ${CONTAINER_PATH}/fts
 Restart=on-failure

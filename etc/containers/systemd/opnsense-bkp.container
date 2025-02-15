@@ -8,3 +8,7 @@ ContainerName=%p
 Image=ghcr.io/cubt85iz/opnsense-bkp:latest
 Volume=${CONTAINER_PATH}/config:/config:Z
 AutoUpdate=registry
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+Restart=on-failure

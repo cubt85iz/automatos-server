@@ -17,6 +17,13 @@ PublishPort=${WEB_PORT}:8080
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/documents"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/images"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/temp"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/log"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/keys"
 Restart=on-failure
 
 [Install]

@@ -13,6 +13,7 @@ PublishPort=${CONSOLE_PORT}:9001
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
 Restart=on-failure
 
 [Install]

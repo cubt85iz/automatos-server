@@ -11,5 +11,6 @@ Network=paperless-ngx-network
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/db"
 ExecStartPre=/usr/bin/chown -R 999 ${CONTAINER_PATH}/db
 Restart=on-failure

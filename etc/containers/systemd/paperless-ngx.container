@@ -17,6 +17,10 @@ Network=paperless-ngx-network
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/media"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/export"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/consume"
 Restart=on-failure
 
 [Install]

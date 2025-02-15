@@ -19,6 +19,7 @@ Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/www"
 Restart=on-failure
 
 [Install]

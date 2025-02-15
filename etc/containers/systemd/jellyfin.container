@@ -18,6 +18,8 @@ AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/environment
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/cache"
 Restart=on-failure
 
 [Install]

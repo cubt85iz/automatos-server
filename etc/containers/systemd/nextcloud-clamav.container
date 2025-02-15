@@ -11,5 +11,6 @@ Network=nextcloud-network
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/av"
 ExecStartPre=/usr/bin/chown -R 100 ${CONTAINER_PATH}/av
 Restart=on-failure

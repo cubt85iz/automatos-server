@@ -11,6 +11,7 @@ PublishPort=${WEB_PORT}:8080
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/assets"
 Restart=on-failure
 
 [Install]

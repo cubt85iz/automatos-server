@@ -11,6 +11,7 @@ Network=unifi-network
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/db"
 Restart=on-failure
 
 [Install]

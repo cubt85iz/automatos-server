@@ -12,6 +12,7 @@ Network=vikunja-network
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/files"
 Restart=on-failure
 
 [Install]

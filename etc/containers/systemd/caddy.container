@@ -18,6 +18,10 @@ Network=proxy-network
 AutoUpdate=registry
 
 [Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/caddy"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/site"
 Restart=on-failure
 
 [Install]
