@@ -5,7 +5,7 @@ After=network-online.target nss-lookup.target nextcloud-network.service
 
 [Container]
 ContainerName=%p
-Image=docker.io/elasticsearch:8.16.1
+Image=docker.io/library/elasticsearch:8.16.1
 Volume=${CONTAINER_PATH}/fts:/usr/share/elasticsearch/data:Z
 Network=nextcloud-network
 AutoUpdate=registry

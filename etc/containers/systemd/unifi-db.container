@@ -5,7 +5,7 @@ After=network-online.target nss-lookup.target unifi-network.service
 
 [Container]
 ContainerName=%p
-Image=docker.io/mongo:latest
+Image=docker.io/library/mongo:latest
 Volume=${CONTAINER_PATH}/db:/data/db:Z
 Network=unifi-network
 AutoUpdate=registry
