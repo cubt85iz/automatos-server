@@ -1,6 +1,9 @@
 {
   "containers": [
-    "homeassistant"
+    "homeassistant",
+    "homeassistant-esphome",
+    "homeassistant-mqtt",
+    "homeassistant-piper"
   ],
   "packages": [
     "avahi",

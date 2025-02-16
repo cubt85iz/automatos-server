@@ -13,111 +13,54 @@ readarray -t SELINUX_BOOLEANS < <(jq -rc '.selinux.booleans[]' /tmp/$CONFIG)
 
 # Remove containers, networks, services, & timers
 pushd /etc/containers/systemd/ &> /dev/null
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]actual[[:space:]] ]]; then
-  rm actual.container
+for CONTAINER_FILE in *.container; do
+  CONTAINER=${CONTAINER_FILE%.*}
+  if ! [[ "${CONTAINERS[@]}" =~ ${CONTAINER} ]]; then
+    rm "${CONTAINER_FILE}"
+
+    # Check for network
+    if [ -f "${CONTAINER}.network" ]; then
+      rm "${CONTAINER}.network"
+    fi
+
+    # Check for timer & symlink
+    if [ -f "/etc/systemd/system/${CONTAINER}.timer" ]; then
+      rm "/etc/systemd/system/${CONTAINER}.timer"
+      if [ -f "/etc/systemd/system/timers.target.wants/${CONTAINER}.timer" ]; then
+        rm "/etc/systemd/system/timers.target.wants/${CONTAINER}.timer"
+      fi
+    fi
+
+    # Special cases
+    # Caddy uses the proxy network
+    if [ "${CONTAINER}" = "caddy" ]; then
+      if [ -f "proxy.network" ]; then
+        rm proxy.network
+      fi
+    fi
+    # Nextcloud has a background service for performing tasks.
+    if [ "${CONTAINER}" = "nextcloud" ]; then
+      if [ -f "/etc/systemd/system/nextcloud-background.service" ]; then
+        rm /etc/systemd/system/nextcloud-background.service
+      fi
+      if [ -f "/etc/systemd/system/nextcloud-background.timer" ]; then
+        rm /etc/systemd/system/nextcloud-background.timer
+      fi
+      if [ -f "/etc/systemd/system/timers.target.wants/nextcloud-background.timer" ]; then
+        rm /etc/systemd/system/timers.target.wants/nextcloud-background.timer
+      fi
+    fi
+  fi
+done
+
+# Output remaining files for debugging
+if [ "$DEBUG" = "true" ]; then
+  cat <<EOF
+Remaining files:
+$(ls -1)
+EOF
 fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]audiobookshelf[[:space:]] ]]; then
-  rm audiobookshelf.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]beets[[:space:]] ]]; then
-  rm beets.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]caddy[[:space:]] ]]; then
-  rm caddy.container proxy.network
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]code-server[[:space:]] ]]; then
-  rm code-server.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]ddns-updater[[:space:]] ]]; then
-  rm ddns-updater.container
-  pushd /etc/systemd/system/ &> /dev/null
-  rm ddns-updater.timer
-  popd &> /dev/null
-  pushd /etc/systemd/system/timers.target.wants/ &> /dev/null
-  rm ddns-updater.timer
-  popd &> /dev/null
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]emby[[:space:]] ]]; then
-  rm embyserver.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]gotify[[:space:]] ]]; then
-  rm gotify.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]homeassistant[[:space:]] ]]; then
-  rm homeassistant*.{container,network}
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]homer[[:space:]] ]]; then
-  rm homer.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]immich[[:space:]] ]]; then
-  rm immich*.{container,network}
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]jellyfin[[:space:]] ]]; then
-  rm jellyfin*.{container,network}
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]kometa[[:space:]] ]]; then
-  rm kometa.container
-  pushd /etc/systemd/system/ &> /dev/null
-  rm kometa.timer
-  popd &> /dev/null
-  pushd /etc/systemd/system/timers.target.wants/ &> /dev/null
-  rm kometa.timer
-  popd &> /dev/null
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]lubelogger[[:space:]] ]]; then
-  rm lubelogger.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]mealie[[:space:]] ]]; then
-  rm mealie.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]minio[[:space:]] ]]; then
-  rm minio.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]nextcloud[[:space:]] ]]; then
-  rm nextcloud*.container
-  pushd /etc/systemd/system/ &> /dev/null
-  rm nextcloud*.{service,timer}
-  popd &> /dev/null
-  pushd /etc/systemd/system/timers.target.wants/ &> /dev/null
-  rm nextcloud-background.timer
-  popd &> /dev/null
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]opnsense-bkp[[:space:]] ]]; then
-  rm opnsense-bkp.container
-  pushd /etc/systemd/system/ &> /dev/null
-  rm opnsense-bkp.timer
-  popd &> /dev/null
-  pushd /etc/systemd/system/timers.target.wants/ &> /dev/null
-  rm opnsense-bkp.timer
-  popd &> /dev/null
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]paperless-ngx[[:space:]] ]]; then
-  rm paperless-ngx*.{container,network}
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]photoprism[[:space:]] ]]; then
-  rm photoprism.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]pinchflat[[:space:]] ]]; then
-  rm pinchflat.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]plex[[:space:]] ]]; then
-  rm plex*.{container,network}
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]redmine[[:space:]] ]]; then
-  rm redmine*.{container,network}
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]syncthing[[:space:]] ]]; then
-  rm syncthing.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]tautulli[[:space:]] ]]; then
-  rm tautulli.container
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]unifi[[:space:]] ]]; then
-  rm unifi*.{container,network}
-fi
-if [[ ! " ${CONTAINERS[*]} " =~ [[:space:]]vikunja[[:space:]] ]]; then
-  rm vikunja*.{container,network}
-fi
+
 popd &> /dev/null
 
 # Override nfs to provide full utilities

@@ -1,6 +1,7 @@
 FROM ghcr.io/ublue-os/fedora-coreos:stable-zfs
 
 ARG CONFIG=${CONFIG:-pow}
+ARG DEBUG=${DEBUG:-false}
 
 COPY etc/ /etc/
 COPY usr/ /usr/

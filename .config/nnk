@@ -10,9 +10,11 @@
     "photoprism",
     "plex",
     "redmine",
+    "redmine-db",
     "syncthing",
     "tautulli",
-    "vikunja"
+    "vikunja",
+    "vikunja-db"
   ],
   "packages": [
     "borgbackup",
