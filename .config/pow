@@ -11,19 +11,15 @@
     "nextcloud",
     "nextcloud-clamav",
     "nextcloud-code",
-    "nextcloud-db",
     "nextcloud-fts",
     "nextcloud-redis",
     "opnsense-bkp",
     "paperless-ngx",
-    "paperless-ngx-broker",
-    "paperless-ngx-db",
     "pinchflat",
     "plex",
     "syncthing",
     "tautulli",
-    "unifi",
-    "unifi-db"
+    "unifi"
   ],
   "packages": [
     "borgbackup",

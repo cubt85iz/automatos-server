@@ -11,6 +11,23 @@ readarray -t CONTAINERS < <(jq -rc '.containers[]' /tmp/$CONFIG)
 # Read SELinux boolean values from json config.
 readarray -t SELINUX_BOOLEANS < <(jq -rc '.selinux.booleans[]' /tmp/$CONFIG)
 
+# Review container requirements for specified containers. If any
+# requirements are not satisfied by the provided containers, then
+# add them to the container list.
+for CONTAINER in "${CONTAINERS[@]}"; do
+  while read -r MATCH; do
+    REQUIREMENTS=($(echo "${MATCH}" | awk -F= '{print $2}'))
+    for REQUIREMENT in "${REQUIREMENTS[@]}"; do
+      if ! [[ "${CONTAINERS[@]}" =~ ${REQUIREMENT} ]]; then
+        if [ -f "/etc/containers/systemd/${REQUIREMENT%.*}.container" ]; then
+          echo "Added ${REQUIREMENT} to list of containers."
+          CONTAINERS+=("${REQUIREMENT}")
+        fi
+      fi
+    done
+  done < <(grep Requires "/etc/containers/systemd/${CONTAINER}.container")
+done
+
 # Remove containers, networks, services, & timers
 pushd /etc/containers/systemd/ &> /dev/null
 for CONTAINER_FILE in *.container; do
