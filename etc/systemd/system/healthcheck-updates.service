@@ -3,6 +3,6 @@ Description=Healthcheck for important updates
 
 [Service]
 EnvironmentFile=/etc/environment
-ExecCondition=/usr/bin/test -n "$UPDATES_MONITOR_URL"
+ExecCondition=/bin/sh -c '/usr/bin/test -n "$UPDATES_MONITOR_URL"'
 ExecStartPre=/bin/sh -c "/usr/bin/test $(/usr/bin/rpm-ostree status --json | /usr/bin/jq -r '(.[\"cached-update\"])? | .advisories[][2] | select (. >= 3)' | /usr/bin/wc -l) = "0""
 ExecStart=/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null "$UPDATES_MONITOR_URL"

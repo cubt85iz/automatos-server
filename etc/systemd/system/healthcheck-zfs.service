@@ -3,6 +3,6 @@ Description=Healthcheck for ZFS pools
 
 [Service]
 EnvironmentFile=/etc/environment
-ExecCondition=/usr/bin/test -n "$ZFS_MONITOR_URL"
+ExecCondition=/bin/sh -c '/usr/bin/test -n "$ZFS_MONITOR_URL"'
 ExecCondition=/bin/sh -c '! /usr/sbin/zpool list -Ho health | grep -qv "ONLINE"'
 ExecStart=/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null "$ZFS_MONITOR_URL"
