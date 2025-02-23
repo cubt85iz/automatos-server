@@ -1,0 +1,58 @@
+# docker run -d --name smartermail -e TZ=America/Phoenix -p 80:80 -p 443:443 -p 443:443/udp 
+# -p 25:25 -p 110:110 -p 143:143 -p 465:465 -p 587:587 -p 993:993 -p 995:995 -p 5222:5222 
+# -v /path/to/data:/app/Data -v /path/to/systemdata:/app/SystemData smartertools/smartermail:latest
+
+[Unit]
+Description=Container service for SmarterMail
+Requires=network-online.target nss-lookup.target smartermail-network.service
+After=network-online.target nss-lookup.target smartermail-network.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/library/smartermail:latest
+Volume=${CONTAINER_PATH}/files:/app/smartermail/Data:Z
+Volume=${CONTAINER_PATH}/files:/app/smartermail/SystemData:Z
+PublishPort=${WEB_PORT}:80
+PublishPort=443:443
+PublishPort=443:443/udp
+PublishPort=25:25
+PublishPort=110:110
+PublishPort=143:143
+PublishPort=465:465
+PublishPort=587:587
+PublishPort=993:993
+PublishPort=995:995
+PublishPort=5222:5222
+Network=smartermail-network
+AutoUpdate=registry
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+
+# Version: '3.8'
+#
+# services:
+#   smartermail:
+#     image: smartertools/smartermail:latest
+#     container_name: smartermail
+#     environment:
+#       - TZ=America/Phoenix
+#     ports:
+#       - "<fill in web port>:80"
+#       - "<fill in web port>:443"
+#       - "<fill in web port>:443/udp"
+#       - "25:25"
+#       - "110:110"
+#       - "143:143"
+#       - "465:465"
+#       - "587:587"
+#       - "993:993"
+#       - "995:995"
+#       - "5222:5222"
+#     volumes:
+#       - <Path on host>:/app/Data
+#       - <Path on host>:/app/SystemData
+#     restart: unless-stopped
