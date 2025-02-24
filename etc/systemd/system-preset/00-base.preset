@@ -1,0 +1,4 @@
+enable add-samba-users.service
+enable fix-host-keys.service
+enable healthcheck-updates.timer
+enable healthcheck-zfs.timer
