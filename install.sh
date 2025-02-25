@@ -28,7 +28,7 @@ for CONTAINER in "${CONTAINERS[@]}"; do
   done < <(grep Requires "/etc/containers/systemd/${CONTAINER}.container")
 done
 
-# Remove containers, networks, services, & timers
+# Remove containers & networks
 pushd /etc/containers/systemd/ &> /dev/null
 for CONTAINER_FILE in *.container; do
   CONTAINER=${CONTAINER_FILE%.*}
@@ -40,31 +40,11 @@ for CONTAINER_FILE in *.container; do
       rm "${CONTAINER}.network"
     fi
 
-    # Check for timer & symlink
-    if [ -f "/etc/systemd/system/${CONTAINER}.timer" ]; then
-      rm "/etc/systemd/system/${CONTAINER}.timer"
-      if [ -f "/etc/systemd/system/timers.target.wants/${CONTAINER}.timer" ]; then
-        rm "/etc/systemd/system/timers.target.wants/${CONTAINER}.timer"
-      fi
-    fi
-
     # Special cases
     # Caddy uses the proxy network
     if [ "${CONTAINER}" = "caddy" ]; then
       if [ -f "proxy.network" ]; then
         rm proxy.network
-      fi
-    fi
-    # Nextcloud has a background service for performing tasks.
-    if [ "${CONTAINER}" = "nextcloud" ]; then
-      if [ -f "/etc/systemd/system/nextcloud-background.service" ]; then
-        rm /etc/systemd/system/nextcloud-background.service
-      fi
-      if [ -f "/etc/systemd/system/nextcloud-background.timer" ]; then
-        rm /etc/systemd/system/nextcloud-background.timer
-      fi
-      if [ -f "/etc/systemd/system/timers.target.wants/nextcloud-background.timer" ]; then
-        rm /etc/systemd/system/timers.target.wants/nextcloud-background.timer
       fi
     fi
   fi
