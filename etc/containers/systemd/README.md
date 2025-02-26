@@ -56,6 +56,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Jellyfin](https://jellyfin.org) is a free and open-source media server and suite of multimedia applications designed to organize, manage, and share digital media files to networked devices.
 
+### Kavita
+
+[Kavita](https://www.kavitareader.com/) is an open-source, self-hosted digital library management system primarily designed for managing and reading comics, manga, and ebooks.
+
 ### Kometa
 
 [Kometa](https://kometa.wiki) (formerly known as Plex Meta Manager) is a powerful tool designed to give you complete control over your media libraries.

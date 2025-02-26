@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for Kavita
+Requires=network-online.target nss-lookup.target zfs.target
+After=network-online.target nss-lookup.target zfs.target
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/kareadita/kavita:latest
+Volume=${CONTAINER_PATH}/config:/kavita/config:Z
+Environment=DOTNET_GLOBALIZATION_INVARIANT=true
+AutoUpdate=registry
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+Restart=on-failure
