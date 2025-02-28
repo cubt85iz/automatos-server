@@ -5,6 +5,4 @@ Description=Synchronization script for devices
 Type=oneshot
 ExecCondition=/bin/bash -xc "if [[ \"$SOURCE\" =~ ^/.+ ]]; then /usr/bin/test -e \"$SOURCE\"; fi"
 ExecCondition=/bin/bash -xc "if [[ \"$TARGET\" =~ ^/.+ ]]; then /usr/bin/test -e \"$TARGET\"; fi"
-ExecCondition=/bin/bash -xc '!/usr/bin/test -f /etc/.last-sync@%i || /usr/bin/test $(($(date +%%s) - $(cat /etc/.last-sync@%i))) -gt ${COOLDOWN_SECS:-3600}'
-ExecStart=/bin/bash -f /usr/local/bin/sync
-ExecStartPost=/bin/bash -xc "echo $(date +%%s) > /etc/.last-sync@%i"
+ExecStart=/usr/bin/sync
