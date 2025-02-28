@@ -61,7 +61,7 @@ if [[ "$TARGET" =~ ^/dev/.+ ]]; then
     TARGET_PATH="$TARGET_MOUNT_PATH"
   fi
 else
-  TARGET_PATH="$SOURCE"
+  TARGET_PATH="$TARGET"
 fi
 
 rsync "${OPTIONS[*]}" "$SOURCE_PATH" "$TARGET_PATH"
