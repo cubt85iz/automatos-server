@@ -64,7 +64,7 @@ else
   TARGET_PATH="$TARGET"
 fi
 
-rsync "${OPTIONS[*]}" "$SOURCE_PATH" "$TARGET_PATH"
+rsync "$OPTIONS" "$SOURCE_PATH" "$TARGET_PATH"
 
 # Teardown - TARGET
 if [ "${TARGET_WAS_MOUNTED-}" = "n" ]; then
