@@ -2,8 +2,12 @@
   "containers": [
     "audiobookshelf",
     "beets",
+    "calibre-web",
     "gotify",
     "homer",
+    "immich",
+    "immich-ml",
+    "immich-redis",
     "jellyfin",
     "kometa",
     "lubelogger",
