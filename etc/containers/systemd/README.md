@@ -25,6 +25,7 @@ To add support for a new service, add a systemd container file and update the `i
 [Caddy](https://caddyserver.com) is a web server that serves every site with TLS by default, without any configuration or hassle. It can also be configured as a reverse proxy.
 
 ### Calibre-Web
+
 [Calibre-Web](https://github.com/janeczku/calibre-web) is a web app that offers a clean and intuitive interface for browsing, reading, and downloading eBooks using a valid Calibre database.
 
 ### Code Server
