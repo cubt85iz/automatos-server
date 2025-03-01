@@ -24,6 +24,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Caddy](https://caddyserver.com) is a web server that serves every site with TLS by default, without any configuration or hassle. It can also be configured as a reverse proxy.
 
+### Calibre-Web
+
+[Calibre-Web](https://github.com/janeczku/calibre-web) is a web app that offers a clean and intuitive interface for browsing, reading, and downloading eBooks using a valid Calibre database.
+
 ### Code Server
 
 [Code Server](https://github.com/coder/code-server) allows users to run VS Code on any machine anywhere and access it in the browser.
@@ -59,6 +63,10 @@ To add support for a new service, add a systemd container file and update the `i
 ### Jellyfin
 
 [Jellyfin](https://jellyfin.org) is a free and open-source media server and suite of multimedia applications designed to organize, manage, and share digital media files to networked devices.
+
+### Kavita
+
+[Kavita](https://www.kavitareader.com/) is an open-source, self-hosted digital library management system primarily designed for managing and reading comics, manga, and ebooks.
 
 ### Kometa
 

@@ -5,9 +5,10 @@ After=network-online.target nss-lookup.target immich-network.service
 
 [Container]
 ContainerName=%p
-Image=docker.io/tensorchord/pgvecto-rs:pg17-v0.4.0
+Image=docker.io/tensorchord/pgvecto-rs:pg16-v0.3.0
 Exec=postgres -c shared_preload_libraries=vectors.so -c search_path="$$user",public,vectors -c logging_collector=on -c max_wal_size=2GB -c shared_buffers=512MB -c wal_compression=on
 Volume=${CONTAINER_PATH}/db:/var/lib/postgresql/data:Z
+Environment=POSTGRES_INITDB_ARGS="--data-checksums"
 Network=immich-network
 AutoUpdate=registry
 
@@ -15,3 +16,4 @@ AutoUpdate=registry
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/db"
 ExecStartPre=/usr/bin/chown -R 999 ${CONTAINER_PATH}/db
 Restart=on-failure
+RestartSec=15

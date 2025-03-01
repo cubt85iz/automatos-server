@@ -12,7 +12,7 @@ if [[ "$SOURCE" =~ ^/dev/.+ ]]; then
     # Get path to parent device
     SOURCE_DEVICE_PATH=$(readlink -f "$SOURCE")
   fi
-    
+
   # Get mount point for source device
   SOURCE_MOUNT_PATH=$(mount -l | grep "$SOURCE_DEVICE_PATH" | cut -d ' ' -f 3)
 
@@ -61,10 +61,10 @@ if [[ "$TARGET" =~ ^/dev/.+ ]]; then
     TARGET_PATH="$TARGET_MOUNT_PATH"
   fi
 else
-  TARGET_PATH="$SOURCE"
+  TARGET_PATH="$TARGET"
 fi
 
-rsync "${OPTIONS[*]}" "$SOURCE_PATH" "$TARGET_PATH"
+rsync ${OPTIONS[*]} "$SOURCE_PATH" "$TARGET_PATH"
 
 # Teardown - TARGET
 if [ "${TARGET_WAS_MOUNTED-}" = "n" ]; then
