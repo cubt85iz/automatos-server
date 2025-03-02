@@ -9,7 +9,7 @@ After=network-online.target nss-lookup.target smartermail-network.service
 
 [Container]
 ContainerName=%p
-Image=docker.io/library/smartermail:latest
+Image=docker.io/smartertools/smartermail:latest
 Volume=${CONTAINER_PATH}/files:/app/smartermail/Data:Z
 Volume=${CONTAINER_PATH}/files:/app/smartermail/SystemData:Z
 PublishPort=${WEB_PORT}:80
