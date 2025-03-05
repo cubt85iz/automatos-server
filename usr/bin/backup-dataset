@@ -7,6 +7,19 @@ set -euox pipefail
 DATASET=$1
 RECURSIVE=${2:-n}
 
+# Initializes Borg repo
+initialize_repo() {
+  SERVICE=$(echo "${DATASET##*/}" | tr "[:upper:]" "[:lower:]")
+  BORG_PASSPHRASE="$BACKUP_KEY" borg init -e repokey "$BACKUP_PATH"
+
+  KEY_PATH="${BACKUP_PATH%/*}/keys"
+  if [ ! -d "$KEY_PATH" ]; then
+    mkdir -p "$KEY_PATH"
+  fi
+  BORG_PASSPHRASE="$BACKUP_KEY" borg key export "$BACKUP_PATH" > "$KEY_PATH/$SERVICE"
+  BORG_PASSPHRASE="$BACKUP_KEY" borg key export --paper "$BACKUP_PATH" > "$KEY_PATH/$SERVICE.txt"
+}
+
 # Create snapshot for provided dataset
 create_snapshot() {
   case $RECURSIVE in
@@ -21,19 +34,12 @@ create_snapshot() {
 
 # Back up snapshot to Borg repository
 backup_snapshot() {
-  SERVICE="${DATASET##*/}"
+  SERVICE=$(echo "${DATASET##*/}" | tr "[:upper:]" "[:lower:]")
   SNAPSHOT="$DATASET@$TIMESTAMP"
   if zfs list -H -t snapshot "$SNAPSHOT"; then
     if [ -n "$BACKUP_PATH" ]; then
       if [ ! -d "$BACKUP_PATH" ]; then
-        BORG_PASSPHRASE="$BACKUP_KEY" borg init -e repokey "$BACKUP_PATH"
-
-        KEY_PATH="${BACKUP_PATH%/*}/keys"
-        if [ ! -d "$KEY_PATH" ]; then
-          mkdir -p "$KEY_PATH"
-        fi
-        BORG_PASSPHRASE="$BACKUP_KEY" borg key export "$BACKUP_PATH" > "$KEY_PATH/$SERVICE"
-        BORG_PASSPHRASE="$BACKUP_KEY" borg key export --paper "$BACKUP_PATH" > "$KEY_PATH/$SERVICE.txt"
+        initialize_repo
       fi
 
       BORG_PASSPHRASE="$BACKUP_KEY" borg create "$BACKUP_PATH::$SERVICE@$TIMESTAMP" "/var/$DATASET/.zfs/snapshot/$TIMESTAMP"
@@ -50,7 +56,7 @@ backup_snapshot() {
 # Compares backup archive against source snapshot to validate backup integrity
 validate_backup() {
   RESULT=1
-  SERVICE="${DATASET##*/}"
+  SERVICE=$(echo "${DATASET##*/}" | tr "[:upper:]" "[:lower:]")
   SNAPSHOT="$DATASET@$SNAPSHOT_NAME"
 
   # Create temporary directory to mount borg archive.
@@ -106,7 +112,7 @@ prune_snapshots() {
 
 # Upload Borg repository
 upload_snapshot() {
-  SERVICE="${DATASET##*/}"
+  SERVICE=$(echo "${DATASET##*/}" | tr "[:upper:]" "[:lower:]")
   BUCKET="$SERVICE.$(hostname --fqdn)"
   BUCKET=${BUCKET//./-}
   if [ -n "$BACKUP_PATH" ] && [ -d "$BACKUP_PATH" ]; then
@@ -131,11 +137,7 @@ upload_snapshot() {
 }
 
 # Get date/time information
-YEAR=$(date +%Y)
-MONTH=$(date +%m)
-DAY=$(date +%d)
-TIME=$(date +%H-%M-%S)
-TIMESTAMP="${YEAR}-${MONTH}-${DAY}_${TIME}"
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 
 # Main process
 if zfs list -H -t filesystem "$DATASET"; then
