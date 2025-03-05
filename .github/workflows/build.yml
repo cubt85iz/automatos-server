@@ -73,12 +73,13 @@ jobs:
         id: generate-image-tags
         shell: bash
         run: |
+          BRANCH="${{ github.ref_name }}"
           TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
           DATE="$(echo ${TIMESTAMP} | cut -d '-' -f 1)"
           echo "DATE=$DATE" >> $GITHUB_ENV
           MAJOR_VERSION="$(echo ${{ matrix.image_version }} | cut -d '.' -f 1)"
           echo "MAJOR_VERSION=$MAJOR_VERSION" >> $GITHUB_ENV
-          BUILD_TAGS=( "latest" "${TIMESTAMP}" "${MAJOR_VERSION}.${DATE}")
+          BUILD_TAGS=( "latest" "${BRANCH}" "${TIMESTAMP}" "${MAJOR_VERSION}.${DATE}")
           echo "alias_tags=${BUILD_TAGS[*]}" >> $GITHUB_OUTPUT
 
       - name: Define Image Metadata
