@@ -15,3 +15,6 @@ AutoUpdate=registry
 EnvironmentFile=/etc/environment
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure
+
+[Install]
+WantedBy=default.target
