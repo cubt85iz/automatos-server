@@ -1,0 +1,20 @@
+[Unit]
+Description=Container service for ProtonMail Bridge
+Requires=network-online.target nss-lookup.target mail-network.service
+After=network-online.target nss-lookup.target mail-network.service
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/cubt85iz/protonmail-bridge-docker:latest
+Volume=${CONTAINER_PATH}/root:/root:Z
+PublishPort=${SMTP_PORT}:25/tcp
+PublishPort=${IMAP_PORT}:143/tcp
+Network=mail-network
+AutoUpdate=registry
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/root"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

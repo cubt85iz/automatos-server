@@ -47,6 +47,24 @@ for CONTAINER_FILE in *.container; do
         rm proxy.network
       fi
     fi
+    # Nextcloud has a background service for performing tasks.
+    if [ "${CONTAINER}" = "nextcloud" ]; then
+      if [ -f "/etc/systemd/system/nextcloud-background.service" ]; then
+        rm /etc/systemd/system/nextcloud-background.service
+      fi
+      if [ -f "/etc/systemd/system/nextcloud-background.timer" ]; then
+        rm /etc/systemd/system/nextcloud-background.timer
+      fi
+      if [ -f "/etc/systemd/system/timers.target.wants/nextcloud-background.timer" ]; then
+        rm /etc/systemd/system/timers.target.wants/nextcloud-background.timer
+      fi
+    fi
+    # ProtonMail-Bridge uses the mail network
+    if [ "${CONTAINER}" = "protonmail-bridge" ]; then
+      if [ -f "mail.network" ]; then
+        rm mail.network
+      fi
+    fi
   fi
 done
 
