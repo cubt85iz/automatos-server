@@ -67,6 +67,12 @@ for CONTAINER_FILE in *.container; do
         rm /etc/systemd/system/timers.target.wants/nextcloud-background.timer
       fi
     fi
+    # ProtonMail-Bridge uses the mail network
+    if [ "${CONTAINER}" = "protonmail-bridge" ]; then
+      if [ -f "mail.network" ]; then
+        rm mail.network
+      fi
+    fi
   fi
 done
 

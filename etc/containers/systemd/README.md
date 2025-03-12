@@ -104,6 +104,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Plex](https://plex.tv) is an ad-supported streaming service that allows users to also stream their personal media collections to their devices.
 
+### ProtonMail Bridge
+
+[Proton Mail Bridge](https://github.com/ProtonMail/proton-bridge) provides local IMAP/SMTP endpoints for a configured Proton Mail account.
+
 ### Syncthing
 
 [Syncthing](https://syncthing.net) is a free and open source software that syncs files between your devices in real time, without a central server.
