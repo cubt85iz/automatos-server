@@ -73,6 +73,12 @@ for CONTAINER_FILE in *.container; do
         rm mail.network
       fi
     fi
+    # Ollama uses the ai network
+    if [ "${CONTAINER}" = "ollama" ]; then
+      if [ -f "ai.network" ]; then
+        rm ai.network
+      fi
+    fi
   fi
 done
 
