@@ -2,6 +2,9 @@
 
 set -euox pipefail
 
+# Read repos for installation from json config.
+readarray -t REPOS < <(jq -rc '.repos[]' /tmp/$CONFIG)
+
 # Read packages for installation from json config.
 readarray -t PACKAGES < <(jq -rc '.packages[]' /tmp/$CONFIG)
 
@@ -94,6 +97,11 @@ popd &> /dev/null
 
 # Override nfs to provide full utilities
 rpm-ostree override remove nfs-utils-coreos --install nfs-utils
+
+# Install repositories
+for REPO in ${REPOS[@]}; do
+  curl -sL "$REPO" | tee "/etc/yum.repos.d/${REPO##*/}"
+done
 
 # Install specified packages
 rpm-ostree install "${PACKAGES[@]}"
