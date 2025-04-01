@@ -1,0 +1,18 @@
+[Unit]
+Description=Container service for Ollama
+Requires=network-online.target nss-lookup.target
+After=network-online.target nss-lookup.target
+
+[Container]
+ContainerName=%p
+Image=docker.io/ollama/ollama:latest
+Volume=${CONTAINER_PATH}/config:/root/.ollama:Z
+PublishPort=${WEB_PORT}:11434
+AutoUpdate=registry
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
