@@ -62,5 +62,6 @@
         "value": "1"
       }
     ]
-  }
+  },
+  "tag": "stable-nvidia-zfs"
 }
