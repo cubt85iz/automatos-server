@@ -75,6 +75,8 @@ jobs:
         id: gather-base-tag
         shell: bash
         run: |
+          set -euox pipefail
+
           BASE_TAG="$(jq -r '.tag' .config/${{ matrix.environment }})"
           if [ -n "$BASE_TAG" ]; then
             BASE_TAG="stable-zfs"
