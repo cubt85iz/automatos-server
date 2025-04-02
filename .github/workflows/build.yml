@@ -78,7 +78,7 @@ jobs:
           set -euox pipefail
 
           BASE_TAG="$(jq -r '.tag' .config/${{ matrix.environment }})"
-          if [ -n "$BASE_TAG" ]; then
+          if [ -z "$BASE_TAG" ]; then
             BASE_TAG="stable-zfs"
           fi
           echo "BASE_TAG=$BASE_TAG" >> $GITHUB_OUTPUT
