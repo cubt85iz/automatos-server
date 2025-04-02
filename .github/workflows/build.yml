@@ -116,7 +116,6 @@ jobs:
             ${{ steps.generate-image-tags.outputs.alias_tags }}
           extra-args: |
             --build-arg=CONFIG=${{ matrix.environment }}
-            --build-arg=BASE_TAG=${{ env.BASE_TAG }}
           labels: ${{ steps.define-image-metadata.outputs.labels }}
           oci: false
 
