@@ -49,7 +49,6 @@ jobs:
           popd
       - run: |
           echo "${{ steps.json.outputs.files }}"
-          echo "${{ steps.json.outputs.tag }}"
 
   build:
     name: Build and push image
@@ -60,8 +59,6 @@ jobs:
       contents: read
       packages: write
       id-token: write
-    env:
-      BASE_TAG: ${{ needs.json_files.outputs.tag }}
     strategy:
       fail-fast: false
       matrix:
@@ -73,6 +70,16 @@ jobs:
     steps:
       - name: Checkout Push to Registry action
         uses: actions/checkout@v4
+
+      - name: Gather base tag for image
+        id: gather-base-tag
+        shell: bash
+        run: |
+          BASE_TAG="$(jq -r '.tag' .config/${{ matrix.environment }})"
+          if [ -n "$BASE_TAG" ]; then
+            BASE_TAG="stable-zfs"
+          fi
+          echo "BASE_TAG=$BASE_TAG" >> $GITHUB_OUTPUT
 
       - name: Generate image tags
         id: generate-image-tags
@@ -114,6 +121,7 @@ jobs:
           tags: |
             ${{ steps.generate-image-tags.outputs.alias_tags }}
           extra-args: |
+            --build-arg=BASE_TAG=${{ steps.gather-base-tag.outputs.BASE_TAG }}
             --build-arg=CONFIG=${{ matrix.environment }}
           labels: ${{ steps.define-image-metadata.outputs.labels }}
           oci: false
