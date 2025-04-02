@@ -36,7 +36,6 @@
     "just",
     "kernel-modules-extra",
     "nano",
-    "nvidia-container-toolkit",
     "pciutils",
     "podman",
     "rclone",
@@ -46,9 +45,6 @@
     "xdg-dbus-proxy",
     "xdg-user-dirs",
     "wireguard-tools"
-  ],
-  "repos": [
-    "https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo"
   ],
   "selinux":
   {
