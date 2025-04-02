@@ -1,0 +1,20 @@
+[Unit]
+Description=Container service for Open WebUI
+Requires=network-online.target nss-lookup.target
+Requires=ai-network.service ollama.service
+After=network-online.target nss-lookup.target
+After=ai-network.service ollama.service
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/open-webui/open-webui:main
+Volume=${CONTAINER_PATH}/data:/app/backend/data:Z
+PublishPort=${WEB_PORT}:8080
+AutoUpdate=registry
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
