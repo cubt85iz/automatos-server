@@ -8,6 +8,7 @@ ContainerName=%p
 Image=docker.io/ollama/ollama:latest
 Volume=${CONTAINER_PATH}/config:/root/.ollama:Z
 PublishPort=${WEB_PORT}:11434
+Network=ai-network
 AutoUpdate=registry
 
 [Service]
