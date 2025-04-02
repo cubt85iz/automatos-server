@@ -84,6 +84,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Nextcloud](https://nextcloud.com) is a self-hosted file storage and sync platform with powerful collaboration capabilities for remote work and data protection.
 
+### Ollama
+
+[Ollama](https://github.com/ollama/ollama) is an application that allows users to run large language models locally, including offline capabilities. It supports both CPU and GPU installations, with specific versions for NVIDIA and AMD graphics cards.
+
 ### Opnsense-bkp
 
 [opnsense-bkp](https://github.com/cubt85iz/opnsense-bkp.github) is a container that connects to a specified opnsense router and downloads its configuration.
