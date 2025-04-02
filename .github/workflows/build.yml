@@ -38,6 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       files: ${{ steps.json.outputs.files }}
+      tag: ${{ steps.json.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
       - name: Find JSON files
@@ -69,6 +70,16 @@ jobs:
     steps:
       - name: Checkout Push to Registry action
         uses: actions/checkout@v4
+
+      - name: Gather base tag for image
+        id: gather-base-tag
+        shell: bash
+        run: |
+          BASE_TAG="$(jq -r '.tag' .config/${{ matrix.environment }})"
+          if [ "$BASE_TAG" = "null" ]; then
+            BASE_TAG="stable-zfs"
+          fi
+          echo "BASE_TAG=$BASE_TAG" >> $GITHUB_OUTPUT
 
       - name: Generate image tags
         id: generate-image-tags
@@ -110,6 +121,7 @@ jobs:
           tags: |
             ${{ steps.generate-image-tags.outputs.alias_tags }}
           extra-args: |
+            --build-arg=BASE_TAG=${{ steps.gather-base-tag.outputs.BASE_TAG }}
             --build-arg=CONFIG=${{ matrix.environment }}
           labels: ${{ steps.define-image-metadata.outputs.labels }}
           oci: false

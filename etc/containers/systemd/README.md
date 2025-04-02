@@ -96,6 +96,10 @@ To add support for a new service, add a systemd container file and update the `i
 |--|
 | This container is enabled by default, but it relies upon a background task being executed periodically. Review the sample configuration for nextcloud in the automatos-server-config repository.|
 
+### Ollama
+
+[Ollama](https://github.com/ollama/ollama) is an application that allows users to run large language models locally, including offline capabilities. It supports both CPU and GPU installations, with specific versions for NVIDIA and AMD graphics cards.
+
 ### Opnsense-bkp
 
 [opnsense-bkp](https://github.com/cubt85iz/opnsense-bkp.github) is a container that connects to a specified opnsense router and downloads its configuration.

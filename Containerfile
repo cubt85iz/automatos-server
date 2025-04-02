@@ -1,4 +1,6 @@
-FROM ghcr.io/ublue-os/fedora-coreos:stable-zfs
+ARG BASE_TAG="${BASE_TAG:-stable-zfs}"
+
+FROM ghcr.io/ublue-os/fedora-coreos:${BASE_TAG}
 
 ARG CONFIG=${CONFIG:-pow}
 ARG DEBUG=${DEBUG:-false}

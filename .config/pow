@@ -13,6 +13,7 @@
     "nextcloud-code",
     "nextcloud-fts",
     "nextcloud-redis",
+    "nvidia-container-toolkit",
     "opnsense-bkp",
     "paperless-ngx",
     "pinchflat",
@@ -57,5 +58,6 @@
         "value": "1"
       }
     ]
-  }
+  },
+  "tag": "stable-nvidia-zfs"
 }
