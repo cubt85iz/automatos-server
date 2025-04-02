@@ -46,10 +46,9 @@
     "xdg-user-dirs",
     "wireguard-tools"
   ],
-  "repos":
-  {
+  "repos": [
     "https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo"
-  },
+  ],
   "selinux":
   {
     "booleans": [
