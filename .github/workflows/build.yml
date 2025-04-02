@@ -38,6 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       files: ${{ steps.json.outputs.files }}
+      tag: ${{ steps.json.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
       - name: Find JSON files
@@ -45,9 +46,11 @@ jobs:
         run: |
           pushd .config
           echo "files=$(ls | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+          echo "tag=” >> $GITHUB_OUTPUT
           popd
       - run: |
           echo "${{ steps.json.outputs.files }}"
+          echo "${{ steps.json.outputs.tag }}"
 
   build:
     name: Build and push image
@@ -58,6 +61,8 @@ jobs:
       contents: read
       packages: write
       id-token: write
+    env:
+      BASE_TAG: ${{ needs.json_files.outputs.tag }}
     strategy:
       fail-fast: false
       matrix:
@@ -111,6 +116,7 @@ jobs:
             ${{ steps.generate-image-tags.outputs.alias_tags }}
           extra-args: |
             --build-arg=CONFIG=${{ matrix.environment }}
+            --build-arg=BASE_TAG=${{ env.BASE_TAG }}
           labels: ${{ steps.define-image-metadata.outputs.labels }}
           oci: false
 
