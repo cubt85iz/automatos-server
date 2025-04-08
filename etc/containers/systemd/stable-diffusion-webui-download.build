@@ -3,4 +3,8 @@ Description=Build unit for Stable Diffusion WebUI
 
 [Build]
 SetWorkingDirectory=/usr/src/stable-diffusion-webui-docker/services/download
-Target=ghcr.io/abdbarho/stable-diffusion-webui-docker-download:latest
+ImageTag=ghcr.io/abdbarho/stable-diffusion-webui-docker-download:latest
+
+[Service]
+WorkingDirectory=/usr/src
+ExecStartPre=git clone https://github.com/AbdBarho/stable-diffusion-webui-docker.git
