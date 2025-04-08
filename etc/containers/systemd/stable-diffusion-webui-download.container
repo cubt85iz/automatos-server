@@ -3,6 +3,7 @@ Description=
 
 [Container]
 Image=ghcr.io
+Volume=${CONTAINER_PATH}/data:/data:z,rw
 
 [Service]
 Restart=on-failure
