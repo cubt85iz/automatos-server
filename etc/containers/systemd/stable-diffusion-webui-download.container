@@ -1,0 +1,9 @@
+[Unit]
+Description=
+
+[Container]
+Image=ghcr.io
+
+[Service]
+Restart=on-failure
+RestartSec=30
