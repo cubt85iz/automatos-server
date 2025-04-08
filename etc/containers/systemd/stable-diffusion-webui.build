@@ -1,0 +1,5 @@
+[Unit]
+Description=Build unit for Stable Diffusion WebUI
+
+[Build]
+SetWorkingDirectory=/usr/src/stable-diffusion-webui-docker/services/download
