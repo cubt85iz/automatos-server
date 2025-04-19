@@ -2,7 +2,7 @@
 title: 'Dotfiles'
 comments: false
 date: 2025-04-15T15:54:03-04:00
-draft: true
+draft: false
 weight: 20
 ---
 {{< icon "github" >}} [cubt85iz/automatos-server-dotfiles](https://github.com/cubt85iz/automatos-server-dotfiles)

@@ -2,7 +2,7 @@
 title: 'Audiobookshelf'
 comments: false
 date: 2025-04-15T10:34:59-04:00
-draft: true
+draft: false
 weight: 30
 ---
 ![Audiobookshelf](./audiobookshelf.webp)

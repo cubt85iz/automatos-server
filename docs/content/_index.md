@@ -5,7 +5,7 @@ cascade:
   type: docs
 comments: false
 date: 2025-04-15T12:27:06-04:00
-draft: true
+draft: false
 ---
 {{< icon "github" >}} [cubt85iz/automatos-server](https://github.com/cubt85iz/automatos-server)
 
