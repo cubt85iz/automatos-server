@@ -2,7 +2,7 @@
 title: 'Abcde'
 comments: false
 date: 2025-04-19T10:11:29-04:00
-draft: true
+draft: false
 weight: 10
 ---
 {{< icon "github" >}} [cubt85iz/abcde-container](https://github.com/cubt85iz/abcde-container)
