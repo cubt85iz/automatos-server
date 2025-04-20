@@ -2,14 +2,18 @@
 title: 'Gotify'
 comments: false
 date: 2025-04-15T14:12:46-04:00
-draft: true
+draft: false
 weight: 90
 ---
 ![Gotify](./gotify.webp)
 
 ## Configuration
 
+Gotify is a server for sending and receiving messages using HTTP REST calls.
+
 ### Image
+
+To use gotify, it needs to be included in your generated image. Update your build configuration to include it.
 
 ```json {filename=".config/my-server-build"}
 {
@@ -20,6 +24,8 @@ weight: 90
 ```
 
 ### Service
+
+A systemd container unit for gotify has been included in `automatos-server`. This container unit file serves as a baseline and requires additional customizations from the user to run gotify successfully.
 
 ```systemd {base_url="https://github.com/cubt85iz/automatos-server/blob/main", filename="/etc/containers/systemd/gotify.container"}
 [Unit]
@@ -43,6 +49,10 @@ WantedBy=default.target
 ```
 
 ### Customizations
+
+#### Environment Variables
+
+The following environment variables are used to configure the gotify container. The values provided are notional. Customize these values to suit your needs.
 
 ```systemd {filename="/etc/containers/systemd/gotify.container.d/01-variables.conf"}
 [Container]
