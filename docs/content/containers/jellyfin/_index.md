@@ -96,7 +96,7 @@ Volume=/path/to/tv:/media/tv:z,rw,rslave,rbind
 
 ## References
 
-- [{{< icon "globe" >}} Website](https://jellyfin.org/)
-- [{{< icon "document-text" >}} Container Installation Instructions](https://jellyfin.org/docs/general/installation/container/#podman)
-- [{{< icon "github" >}} Source Code](https://github.com/jellyfin/jellyfin)
-- [{{< icon "document-text" >}} podman-systemd.unit manpage](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html)
+- {{< icon "globe" >}} [Website](https://jellyfin.org/)
+- {{< icon "document-text" >}} [Documentation](https://jellyfin.org/docs/general/installation/container/#podman)
+- {{< icon "github" >}} [Source Code](https://github.com/jellyfin/jellyfin)
+- {{< icon "document-text" >}} [podman-systemd.unit man page](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html)
