@@ -7,9 +7,13 @@ weight: 40
 ---
 ![Beets](./beets.webp)
 
+Beets is a music library management tool that allows you to organize your music collection.
+
 ## Configuration
 
 ### Image
+
+To use beets, it needs to be included in your generated image. Update your build configuration to include it.
 
 ```json {filename=".config/my-server-build"}
 {
@@ -20,6 +24,8 @@ weight: 40
 ```
 
 ### Service
+
+A systemd container unit for beets has been included in `automatos-server`. This container unit file serves as a baseline and requires additional customizations from the user to run beets successfully.
 
 ```systemd {base_url="https://github.com/cubt85iz/automatos-server/blob/main", filename="/etc/containers/systemd/beets.container"}
 [Unit]
@@ -44,6 +50,10 @@ WantedBy=default.target
 
 ### Customizations
 
+#### Environment Variables
+
+The following environment variables are used to configure the beets container. The values provided are notional. Customize these values to suit your needs.
+
 ```systemd {filename="/etc/containers/systemd/beets.container.d/01-variables.conf"}
 [Container]
 Environment=PGID=1000
@@ -53,6 +63,19 @@ Environment=TZ=Etc/Utc
 [Service]
 Environment=CONTAINER_PATH=/var/path/for/beets/volumes
 ```
+
+#### Volumes
+
+The following volumes are utilized by beets. They need to be defined before beets will execute successfully.
+
+```systemd {filename="/etc/containers/systemd/beets.container.d/02-volumes.conf"}
+[Container]
+Volume=/path/to/staging:/downloads:Z
+Volume=/path/to/music:/music:z,rw,rslave,rbind
+```
+
+> [!NOTE]
+> The options `Z` & `z,rw,rslave,rbind` are for configuring bind propagation for the volume mounts. For more information about bind propagation, review [Configuration bind propagation](https://docs.docker.com/engine/storage/bind-mounts/#configure-bind-propagation) and [Configure the SELinux label](https://docs.docker.com/engine/storage/bind-mounts/#configure-the-selinux-label) in the Docker documentation.
 
 ## References
 
