@@ -2,14 +2,18 @@
 title: 'Jellyfin'
 comments: false
 date: 2025-04-15T14:13:16-04:00
-draft: true
+draft: false
 weight: 130
 ---
 ![Jellyfin](./jellyfin.webp)
 
+Jellyfin is an open-source self-hosted media server.
+
 ## Configuration
 
 ### Image
+
+To use jellyfin, it needs to be included in your generated image. Update your build configuration to include it.
 
 ```json {filename=".config/my-server-build"}
 {
@@ -20,6 +24,8 @@ weight: 130
 ```
 
 ### Service
+
+A systemd container unit for jellyfin has been included in `automatos-server`. This container unit file serves as a baseline and requires additional customizations from the user to run jellyfin successfully.
 
 ```systemd {base_url="https://github.com/cubt85iz/automatos-server/blob/main", filename="/etc/containers/systemd/jellyfin.container"}
 [Unit]
@@ -62,6 +68,10 @@ IPv6=true
 
 ### Customizations
 
+#### Environment Variables
+
+The following are some of the environment variables that can be used to configure the jellyfin container. The values provided are notional and can be changed to suit your needs.
+
 ```systemd {filename="/etc/containers/systemd/jellyfin.container.d/01-variables.conf"}
 [Container]
 Environment=GID=1000
@@ -73,6 +83,10 @@ Environment=UID=1000
 Environment=CONTAINER_PATH=/var/path/to/jellyfin/volumes
 Environment=WEB_PORT=8096
 ```
+
+#### Volumes
+
+The following are examples of volumes that could be specified for jellyin.
 
 ```systemd {filename="/etc/containers/systemd/jellyfin.container.d/02-volumes.conf"}
 [Container]
