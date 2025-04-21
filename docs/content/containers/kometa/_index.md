@@ -2,14 +2,18 @@
 title: 'Kometa'
 comments: false
 date: 2025-04-15T14:13:32-04:00
-draft: true
+draft: false
 weight: 150
 ---
 ![Kometa](./kometa.webp)
 
+Kometa is a collection manager for Plex.
+
 ## Configuration
 
 ### Image
+
+To use kometa, it needs to be included in your generated image. Update your build configuration to include it.
 
 ```json {filename=".config/my-server-build"}
 {
@@ -20,6 +24,8 @@ weight: 150
 ```
 
 ### Service
+
+A systemd container unit for kometa has been included in `automatos-server`. This container unit file serves as a baseline and requires additional customizations from the user to run kometa successfully.
 
 ```systemd {base_url="https://github.com/cubt85iz/automatos-server/blob/main", filename="/etc/containers/systemd/kometa.container"}
 [Unit]
@@ -41,6 +47,10 @@ Restart=on-failure
 
 ### Customizations
 
+#### Environment Variables
+
+The following environment variables are used to configure the kometa container. These values provided are notional. Customize these values to suit your needs.
+
 ```systemd {filename="/etc/containers/systemd/kometa.container.d/01-variables.conf"}
 [Container]
 Environment=KOMETA_RUN=true
@@ -49,6 +59,10 @@ Environment=TZ=Etc/Utc
 [Service]
 Environment=CONTAINER_PATH=/path/to/kometa/volumes
 ```
+
+#### Timer
+
+The following timer is utilized to periodically invoke kometa to update Plex collections.
 
 ```systemd {filename="/etc/systemd/system/kometa.timer"}
 [Unit]

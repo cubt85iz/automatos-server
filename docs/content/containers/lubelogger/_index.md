@@ -2,14 +2,18 @@
 title: 'Lubelogger'
 comments: false
 date: 2025-04-15T14:13:41-04:00
-draft: true
+draft: false
 weight: 160
 ---
 ![LubeLogger](./lubelogger.webp)
 
+LubeLogger is a self-hosted vehicle maintenance tracker.
+
 ## Configuration
 
 ### Image
+
+To use LubeLogger, it needs to be included in your generated image. Update your build configuration to include it.
 
 ```json {filename=".config/my-server-build"}
 {
@@ -20,6 +24,10 @@ weight: 160
 ```
 
 ### Service
+
+A systemd container unit for LubeLogger has been included in `automatos-server`. This container unit file serves as a baseline and requires additional customizations from the user to run LubeLogger successfully.
+
+A systemd container unit for LubeLogger has been included in `automatos-server`. This container unit file serves as a baseline and requires additional customizations from the user to run LubeLogger successfully.
 
 ```systemd {base_url="https://github.com/cubt85iz/automatos-server/blob/main", filename="/etc/containers/systemd/lubelogger.container"}
 [Unit]
@@ -55,6 +63,10 @@ WantedBy=default.target
 ```
 
 ### Customizations
+
+#### Environment Variables
+
+The following environment variables are used to configure the LubeLogger container. The values provided are notional. Customize these values to suit your needs.
 
 ```systemd {filename="/etc/containers/systemd/lubelogger.container.d/01-variables.conf"}
 [Container]

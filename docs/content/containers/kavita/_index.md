@@ -2,14 +2,18 @@
 title: 'Kavita'
 comments: false
 date: 2025-04-15T14:13:24-04:00
-draft: true
+draft: false
 weight: 140
 ---
 ![Kavita](./kavita.webp)
 
+Kavita is a self-hosted digital library for books, comics, and manga.
+
 ## Configuration
 
 ### Image
+
+To use kavita, it needs to be included in your generated image. Upudate your build configuration to include it.
 
 ```json {filename=".config/my-server-build"}
 {
@@ -20,6 +24,8 @@ weight: 140
 ```
 
 ### Service
+
+A systemd container unit for kavita has been included in `automatos-server`. This container unit file serves as a baseline and requires additional customizations from the user to run kavita successfully.
 
 ```systemd {base_url="https://github.com/cubt85iz/automatos-server/blob/main", filename="/etc/containers/systemd/kavita.container"}
 [Unit]
@@ -46,6 +52,10 @@ WantedBy=default.target
 
 ### Customizations
 
+#### Environment Variables
+
+The following environment variables are used to configure the kavita container. The values provided are notional. Customeize these values to suit your needs.
+
 ```systemd {filename="/etc/containers/systemd/kavita.container.d/01-variables.conf"}
 [Container]
 Environment=TZ=Etc/Utc
@@ -54,6 +64,10 @@ Environment=TZ=Etc/Utc
 Environment=CONTAINER_PATH=/path/to/kavita/volumes
 Environment=WEB_PORT=5000
 ```
+
+#### Volumes
+
+The following volumes are utilized by kavita. They need to be defined before kavita will execute successfully.
 
 ```systemd {filename="/etc/containers/systemd/kavita.container.d/02-volumes.conf"}
 [Container]
