@@ -36,7 +36,6 @@ After=network-online.target nss-lookup.target jellyfin-network.service
 [Container]
 ContainerName=%p
 Image=docker.io/jellyfin/%p:latest
-AddDevice=/dev/dri
 Volume=${CONTAINER_PATH}/config:/config:Z
 Volume=${CONTAINER_PATH}/cache:/cache:Z
 PublishPort=${WEB_PORT}:8096
@@ -92,6 +91,13 @@ The following are examples of volumes that could be specified for jellyin.
 [Container]
 Volume=/path/to/movies:/media/movies:z,rw,rslave,rbind
 Volume=/path/to/tv:/media/tv:z,rw,rslave,rbind
+```
+
+#### Devices
+
+```systemd {filename="/etc/containers/systemd/jellyfin.container.d/03-devices.conf"}
+[Container]
+AddDevice=/dev/dri
 ```
 
 ## References

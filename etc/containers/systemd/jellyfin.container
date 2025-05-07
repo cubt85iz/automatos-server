@@ -6,7 +6,6 @@ After=network-online.target nss-lookup.target jellyfin-network.service
 [Container]
 ContainerName=%p
 Image=docker.io/jellyfin/%p:latest
-AddDevice=/dev/dri
 Volume=${CONTAINER_PATH}/config:/config:Z
 Volume=${CONTAINER_PATH}/cache:/cache:Z
 PublishPort=${WEB_PORT}:8096
