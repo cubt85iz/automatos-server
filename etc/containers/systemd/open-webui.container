@@ -1,8 +1,6 @@
 [Unit]
 Description=Container service for Open WebUI
-Requires=network-online.target nss-lookup.target
 Requires=ai-network.service ollama.service
-After=network-online.target nss-lookup.target
 After=ai-network.service ollama.service
 
 [Container]

@@ -1,9 +1,9 @@
 [Unit]
 Description=Container service for Immich
-Requires=network-online.target nss-lookup.target immich-network.service
+Requires=immich-network.service
 Requires=immich-db.service
 Wants=immich-ml.service immich-redis.service
-After=network-online.target nss-lookup.target immich-network.service
+After=immich-network.service
 After=immich-db.service immich-ml.service immich-redis.service
 
 [Container]

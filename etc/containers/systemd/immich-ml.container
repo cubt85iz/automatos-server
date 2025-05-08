@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Immich Machine Learning
-Requires=network-online.target nss-lookup.target immich-network.service
-After=network-online.target nss-lookup.target immich-network.service
+Requires=immich-network.service
+After=immich-network.service
 
 [Container]
 ContainerName=%p

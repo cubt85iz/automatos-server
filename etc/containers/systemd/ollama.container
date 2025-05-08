@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Ollama
-Requires=network-online.target nss-lookup.target ai-network.service
-After=network-online.target nss-lookup.target ai-network.service
+Requires=ai-network.service
+After=ai-network.service
 
 [Container]
 ContainerName=%p
