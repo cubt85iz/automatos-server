@@ -2,8 +2,8 @@
 
 [Unit]
 Description=Container service for Redmine Database
-Requires=network-online.target nss-lookup.target redmine-network.service
-After=network-online.target nss-lookup.target redmine-network.service
+Requires=redmine-network.service
+After=redmine-network.service
 
 [Container]
 ContainerName=%p
