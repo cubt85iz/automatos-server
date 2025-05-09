@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Vikunja
-Requires=network-online.target nss-lookup.target vikunja-network.service vikunja-db.service
-After=network-online.target nss-lookup.target vikunja-network.service vikunja-db.service
+Requires=vikunja-network.service vikunja-db.service
+After=vikunja-network.service vikunja-db.service
 
 [Container]
 ContainerName=%p

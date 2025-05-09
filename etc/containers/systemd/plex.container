@@ -1,12 +1,11 @@
 [Unit]
 Description=Container service for Plex
-Requires=network-online.target nss-lookup.target plex-network.service
-After=network-online.target nss-lookup.target plex-network.service
+Requires=plex-network.service
+After=plex-network.service
 
 [Container]
 ContainerName=%p
 Image=docker.io/plexinc/pms-docker:latest
-AddDevice=/dev/dri
 Volume=${CONTAINER_PATH}/config:/config:Z
 PublishPort=${WEB_PORT}:32400/tcp
 PublishPort=${COMPANION_PORT}:3005/tcp

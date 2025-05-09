@@ -1,8 +1,8 @@
 [Unit]
 Description=Container for Home Assistant Core
-Requires=network-online.target nss-lookup.target homeassistant-network.service 
+Requires=homeassistant-network.service 
 Wants=homeassistant-esphome.service homeassistant-mqtt.service homeassistant-piper.service
-After=network-online.target nss-lookup.target homeassistant-network.service
+After=homeassistant-network.service
 After=homeassistant-esphome.service homeassistant-mqtt.service homeassistant-piper.service
 
 

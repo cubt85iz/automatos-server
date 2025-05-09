@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for ProtonMail Bridge
-Requires=network-online.target nss-lookup.target mail-network.service
-After=network-online.target nss-lookup.target mail-network.service
+Requires=mail-network.service
+After=mail-network.service
 
 [Container]
 ContainerName=%p

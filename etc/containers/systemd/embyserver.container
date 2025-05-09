@@ -1,12 +1,9 @@
 [Unit]
 Description=Container service for Emby
-Requires=network-online.target nss-lookup.target
-After=network-online.target nss-lookup.target
 
 [Container]
 ContainerName=%p
 Image=docker.io/emby/%p:latest
-AddDevice=/dev/dri/renderD128
 Volume=${CONTAINER_PATH}/data:/config:Z
 PublishPort=${WEB_PORT}:8096
 Tmpfs=/transcode

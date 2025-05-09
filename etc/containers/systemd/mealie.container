@@ -1,11 +1,9 @@
 [Unit]
 Description=Container service for Mealie
-Requires=network-online.target nss-lookup.target
-After=network-online.target nss-lookup.target
 
 [Container]
 ContainerName=%p
-Image=docker.io/hkotel/%p:latest
+Image=ghcr.io/mealie-recipes/%p:latest
 Volume=${CONTAINER_PATH}/data:/app/data:Z
 PublishPort=${WEB_PORT}:9000
 AutoUpdate=registry

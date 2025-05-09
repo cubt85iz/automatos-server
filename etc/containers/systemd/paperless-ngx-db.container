@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Paperless-ngx Database
-Requires=network-online.target nss-lookup.target paperless-ngx-network.service
-After=network-online.target nss-lookup.target paperless-ngx-network.service
+Requires=paperless-ngx-network.service
+After=paperless-ngx-network.service
 
 [Container]
 ContainerName=%p

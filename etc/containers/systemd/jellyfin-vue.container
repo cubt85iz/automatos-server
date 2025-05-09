@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Jellyfin Vue
-Requires=network-online.target nss-lookup.target jellyfin-network.service jellyfin.service
-After=network-online.target nss-lookup.target jellyfin-network.service jellyfin.service
+Requires=jellyfin-network.service jellyfin.service
+After=jellyfin-network.service jellyfin.service
 
 [Container]
 ContainerName=%p

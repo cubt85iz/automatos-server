@@ -1,7 +1,7 @@
 [Unit]
 Description=Container service for Caddy Reverse Proxy
-Requires=network-online.target nss-lookup.target proxy-network.service
-After=network-online.target nss-lookup.target proxy-network.service
+Requires=proxy-network.service
+After=proxy-network.service
 
 [Container]
 ContainerName=%p

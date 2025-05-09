@@ -4,8 +4,8 @@
 
 [Unit]
 Description=Container service for SmarterMail
-Requires=network-online.target nss-lookup.target smartermail-network.service
-After=network-online.target nss-lookup.target smartermail-network.service
+Requires=smartermail-network.service
+After=smartermail-network.service
 
 [Container]
 ContainerName=%p
