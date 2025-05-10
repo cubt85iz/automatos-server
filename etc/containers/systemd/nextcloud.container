@@ -15,7 +15,6 @@ Image=docker.io/library/nextcloud:30
 Volume=${CONTAINER_PATH}/www:/var/www/html:z,rw,rslave,rbind
 PublishPort=${WEB_PORT}:80/tcp
 Network=nextcloud-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/www"

@@ -8,7 +8,6 @@ ContainerName=%p
 Image=docker.io/collabora/code:latest
 PublishPort=${WEB_PORT}:9980
 Network=nextcloud-network
-AutoUpdate=registry
 
 [Service]
 Restart=on-failure

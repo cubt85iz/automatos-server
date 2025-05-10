@@ -6,7 +6,6 @@ ContainerName=%p
 Image=docker.io/codercom/code-server:latest
 Volume=${CONTAINER_PATH}/data:/home/coder:Z
 PublishPort=${WEB_PORT}:8080
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"

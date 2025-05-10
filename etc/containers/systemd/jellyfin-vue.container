@@ -8,7 +8,6 @@ ContainerName=%p
 Image=ghcr.io/jellyfin/%p:unstable
 PublishPort=${WEB_PORT}:80
 Network=jellyfin-network
-AutoUpdate=registry
 
 [Service]
 Restart=on-failure

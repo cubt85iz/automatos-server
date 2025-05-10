@@ -6,7 +6,6 @@ ContainerName=%p
 Image=docker.io/b4bz/homer:latest
 Volume=${CONTAINER_PATH}/assets:/www/assets:Z
 PublishPort=${WEB_PORT}:8080
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/assets"

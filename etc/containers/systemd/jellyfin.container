@@ -13,7 +13,6 @@ Tmpfs=/transcode
 User=${UID}
 Group=${GID}
 Network=jellyfin-network
-AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/environment

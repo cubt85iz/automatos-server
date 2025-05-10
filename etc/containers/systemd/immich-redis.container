@@ -7,7 +7,6 @@ After=immich-network.service
 ContainerName=%p
 Image=docker.io/library/redis:7
 Network=immich-network
-AutoUpdate=registry
 
 [Service]
 Restart=on-failure

@@ -6,7 +6,6 @@ ContainerName=%p
 Image=lscr.io/linuxserver/calibre-web:latest
 Volume=${CONTAINER_PATH}/config:/config:Z
 PublishPort=${WEB_PORT}:8083
-AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/environment

@@ -9,7 +9,6 @@ Image=ghcr.io/kareadita/kavita:latest
 Volume=${CONTAINER_PATH}/config:/kavita/config:Z
 PublishPort=${WEB_PORT}:5000
 Environment=DOTNET_GLOBALIZATION_INVARIANT=true
-AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/environment

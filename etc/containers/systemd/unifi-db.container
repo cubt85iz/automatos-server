@@ -8,7 +8,6 @@ ContainerName=%p
 Image=docker.io/library/mongo:latest
 Volume=${CONTAINER_PATH}/db:/data/db:Z
 Network=unifi-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/db"

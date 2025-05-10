@@ -10,7 +10,6 @@ Exec=postgres -c shared_preload_libraries=vectors.so -c search_path="$$user",pub
 Volume=${CONTAINER_PATH}/db:/var/lib/postgresql/data:Z
 Environment=POSTGRES_INITDB_ARGS="--data-checksums"
 Network=immich-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/db"
