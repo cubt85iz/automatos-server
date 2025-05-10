@@ -7,7 +7,6 @@ Image=docker.io/advplyr/audiobookshelf:latest
 Volume=${CONTAINER_PATH}/config:/config:Z
 Volume=${CONTAINER_PATH}/metadata:/metadata:Z
 PublishPort=${WEB_PORT}:80
-AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/environment

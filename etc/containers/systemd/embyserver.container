@@ -7,7 +7,6 @@ Image=docker.io/emby/%p:latest
 Volume=${CONTAINER_PATH}/data:/config:Z
 PublishPort=${WEB_PORT}:8096
 Tmpfs=/transcode
-AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/environment
