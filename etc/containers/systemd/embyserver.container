@@ -10,7 +10,6 @@ Tmpfs=/transcode
 AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/environment
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
 Restart=on-failure
 

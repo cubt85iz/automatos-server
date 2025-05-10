@@ -12,7 +12,6 @@ Environment=DOTNET_GLOBALIZATION_INVARIANT=true
 AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/environment
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure
 
