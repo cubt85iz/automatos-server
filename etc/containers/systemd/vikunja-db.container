@@ -8,7 +8,6 @@ ContainerName=%p
 Image=docker.io/library/postgres:16
 Volume=${CONTAINER_PATH}/db:/var/lib/postgresql/data:Z
 Network=vikunja-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/db"

@@ -8,7 +8,6 @@ Volume=${CONTAINER_PATH}/data:/var/%p:Z
 PublishPort=${WEB_PORT}:8384
 PublishPort=${SYNC_PORT}:22000/tcp
 PublishPort=${SYNC_PORT}:22000/udp
-AutoUpdate=registry
 
 [Service]
 EnvironmentFile=/etc/environment

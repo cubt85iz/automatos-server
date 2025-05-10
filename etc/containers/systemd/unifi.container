@@ -16,7 +16,6 @@ PublishPort=${HTTPS_PORTAL_PORT}:8843/tcp
 PublishPort=${DISCOVERY_PORT}:10001/udp
 Tmpfs=/var/run/unifi
 Network=unifi-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"

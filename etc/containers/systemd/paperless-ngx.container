@@ -16,7 +16,6 @@ Volume=${CONTAINER_PATH}/export:/usr/src/paperless/export:Z
 Volume=${CONTAINER_PATH}/consume:/usr/src/paperless/consume:Z
 PublishPort=${WEB_PORT}:8000
 Network=paperless-ngx-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"

@@ -10,7 +10,6 @@ Volume=${CONTAINER_PATH}/root:/root:Z
 PublishPort=${SMTP_PORT}:25/tcp
 PublishPort=${IMAP_PORT}:143/tcp
 Network=mail-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/root"

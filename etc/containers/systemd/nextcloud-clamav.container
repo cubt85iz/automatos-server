@@ -8,7 +8,6 @@ ContainerName=%p
 Image=docker.io/clamav/clamav:latest
 Volume=${CONTAINER_PATH}/av:/var/lib/clamav:Z
 Network=nextcloud-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/av"

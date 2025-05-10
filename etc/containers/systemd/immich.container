@@ -12,7 +12,6 @@ Image=ghcr.io/immich-app/immich-server:release
 Volume=/etc/localtime:/etc/localtime:ro
 PublishPort=${WEB_PORT}:2283
 Network=immich-network
-AutoUpdate=registry
 
 [Service]
 Restart=on-failure

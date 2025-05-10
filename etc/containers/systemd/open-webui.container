@@ -10,7 +10,6 @@ Environment=OLLAMA_BASE_URL=http://ollama:11434
 Volume=${CONTAINER_PATH}/data:/app/backend/data:Z
 PublishPort=${WEB_PORT}:8080
 Network=ai-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
