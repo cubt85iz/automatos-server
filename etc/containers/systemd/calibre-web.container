@@ -8,7 +8,6 @@ Volume=${CONTAINER_PATH}/config:/config:Z
 PublishPort=${WEB_PORT}:8083
 
 [Service]
-EnvironmentFile=/etc/environment
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure
 RestartSec=15

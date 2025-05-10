@@ -20,7 +20,6 @@ Tmpfs=/transcode
 Network=plex-network
 
 [Service]
-EnvironmentFile=/etc/environment
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure
 TimeoutStartSec=120
