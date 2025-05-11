@@ -9,7 +9,6 @@ Image=docker.io/tautulli/tautulli:latest
 Volume=${CONTAINER_PATH}/config:/config:Z
 PublishPort=${WEB_PORT}:8181
 Network=plex-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"

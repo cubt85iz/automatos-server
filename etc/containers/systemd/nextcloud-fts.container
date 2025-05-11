@@ -8,7 +8,6 @@ ContainerName=%p
 Image=docker.io/library/elasticsearch:8.16.4
 Volume=${CONTAINER_PATH}/fts:/usr/share/elasticsearch/data:Z
 Network=nextcloud-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/fts"

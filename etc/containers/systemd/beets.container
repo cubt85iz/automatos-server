@@ -5,10 +5,8 @@ Description=Container service for Beets
 ContainerName=%p
 Image=lscr.io/linuxserver/beets:latest
 Volume=${CONTAINER_PATH}/config:/config:Z
-AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/environment
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure
 
