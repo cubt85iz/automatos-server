@@ -4,10 +4,11 @@ FROM ghcr.io/ublue-os/fedora-coreos:${BASE_TAG}
 
 ARG CONFIG=${CONFIG:-pow}
 ARG DEBUG=${DEBUG:-false}
+ARG ROOT=${ROOT:-automatos-server}
 
-COPY etc/ /etc/
-COPY usr/ /usr/
-COPY *.sh /tmp/
+COPY $ROOT/etc/ /etc/
+COPY $ROOT/usr/ /usr/
+COPY $ROOT/*.sh /tmp/
 COPY .config/$CONFIG /tmp/
 
 RUN mkdir -p /var/lib/alternatives \
