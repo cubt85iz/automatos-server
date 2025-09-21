@@ -3,6 +3,5 @@ Description=Service for daily container volume backups
 
 [Service]
 Type=oneshot
-EnvironmentFile=/etc/environment
 ExecStart=/usr/bin/backup-dataset "${DATASET}"
 ExecStartPost=-/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null "${BACKUP_MONITOR_URL}"

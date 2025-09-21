@@ -10,7 +10,6 @@ Volume=${CONTAINER_PATH}/config:/config:Z
 Volume=/etc/localtime:/etc/localtime:ro
 PublishPort=${WEB_PORT}:6052
 Network=homeassistant-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"

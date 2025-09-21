@@ -6,7 +6,6 @@ ContainerName=%p
 Image=ghcr.io/actualbudget/actual-server:latest-alpine
 Volume=${CONTAINER_PATH}/data:/data:Z
 PublishPort=${WEB_PORT}:5006
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"

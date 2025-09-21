@@ -31,7 +31,7 @@ for CONTAINER in "${CONTAINERS[@]}"; do
   done < <(grep Requires "/etc/containers/systemd/${CONTAINER}.container")
 done
 
-# Remove containers, networks, services, & timers
+# Remove containers & networks
 pushd /etc/containers/systemd/ &> /dev/null
 for CONTAINER_FILE in *.container; do
   CONTAINER=${CONTAINER_FILE%.*}
@@ -41,14 +41,6 @@ for CONTAINER_FILE in *.container; do
     # Check for network
     if [ -f "${CONTAINER}.network" ]; then
       rm "${CONTAINER}.network"
-    fi
-
-    # Check for timer & symlink
-    if [ -f "/etc/systemd/system/${CONTAINER}.timer" ]; then
-      rm "/etc/systemd/system/${CONTAINER}.timer"
-      if [ -f "/etc/systemd/system/timers.target.wants/${CONTAINER}.timer" ]; then
-        rm "/etc/systemd/system/timers.target.wants/${CONTAINER}.timer"
-      fi
     fi
 
     # Special cases

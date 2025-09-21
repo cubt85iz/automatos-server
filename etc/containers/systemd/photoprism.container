@@ -7,7 +7,6 @@ Image=docker.io/photoprism/photoprism:latest
 Volume=${CONTAINER_PATH}/data:/photoprism/storage:Z
 PublishPort=${WEB_PORT}:2342
 WorkingDir=/photoprism
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"

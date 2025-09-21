@@ -4,4 +4,3 @@ Description=Container service for updating Cloudflare DNS records
 [Container]
 ContainerName=%p
 Image=ghcr.io/cubt85iz/ddns-updater:latest
-AutoUpdate=registry
