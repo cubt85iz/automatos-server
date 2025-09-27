@@ -80,6 +80,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [MinIO](https://github.com/minio/minio) is a High Performance Object Storage released under GNU Affero General Public License v3.0.
 
+### Navidrome
+
+[Navidrome](https://www.navidrome.org) is an open source web-based music collection server and streamer.
+
 ### Nextcloud
 
 [Nextcloud](https://nextcloud.com) is a self-hosted file storage and sync platform with powerful collaboration capabilities for remote work and data protection.
