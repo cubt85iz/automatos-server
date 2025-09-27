@@ -1,0 +1,17 @@
+[Unit]
+Description=Container service for Navidrome
+
+[Container]
+ContainerName=%p
+Image=docker.io/deluan/%p:latest
+Volume=${CONTAINER_PATH}/data:/data:Z
+PublishPort=${WEB_PORT}:4353
+User=${UID}
+Group=${GID}
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
