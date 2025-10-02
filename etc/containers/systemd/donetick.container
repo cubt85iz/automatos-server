@@ -1,0 +1,20 @@
+[Unit]
+Description=Container service for Donetick
+
+[Container]
+ContainerName=%p
+Image=docker.io/donetick/donetick:latest
+Volume=${CONTAINER_PATH}/data:/donetick-data:Z
+Volume=${CONTAINER_PATH}/config:/config:Z
+PublishPort=${WEB_PORT}:2021
+Environment=DT_ENV=selfhosted
+Environment=DT_SQLITE_PATH=/donetick-data/donetick.db
+AutoUpdate=registry
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
