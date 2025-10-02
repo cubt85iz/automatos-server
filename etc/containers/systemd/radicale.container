@@ -1,0 +1,16 @@
+[Unit]
+Description=Container service for Radicale
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/kozea/radicale:3.5.7
+Volume=${CONTAINER_PATH}/data:/var/lib/radicale:Z
+PublishPort=${WEB_PORT}:5232
+AutoUpdate=registry
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
