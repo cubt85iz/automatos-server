@@ -32,6 +32,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Code Server](https://github.com/coder/code-server) allows users to run VS Code on any machine anywhere and access it in the browser.
 
+### Donetick
+
+[Donetick](https://donetick.com) is a smart task manager that keeps individuals and families organized with intelligent scheduling and fair task distribution.
+
 ### Dynamic DNS Updater
 
 [ddns-updater](https://github.com/cubt85iz/ddns-updater.git) is a container that will update A/AAAA records with WAN IP address.
