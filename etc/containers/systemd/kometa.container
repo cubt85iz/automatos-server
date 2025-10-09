@@ -8,7 +8,6 @@ ContainerName=%p
 Image=docker.io/kometateam/kometa:nightly
 Volume=${CONTAINER_PATH}/config:/config:Z
 Network=plex-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"

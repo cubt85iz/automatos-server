@@ -12,7 +12,6 @@ Volume=${CONTAINER_PATH}/temp:/App/temp:Z
 Volume=${CONTAINER_PATH}/log:/App/log:Z
 Volume=${CONTAINER_PATH}/keys:/root/.aspnet/DataProtection-Keys:Z
 PublishPort=${WEB_PORT}:8080
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
