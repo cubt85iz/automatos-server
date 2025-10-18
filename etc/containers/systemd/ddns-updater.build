@@ -1,0 +1,6 @@
+[Unit]
+Description = Build service for ddns-updater
+
+[Build]
+ImageTag=ghcr.io/cubt85iz/ddns-updater:latest
+SetWorkingDirectory=https://github.com/cubt85iz/ddns-updater.git
