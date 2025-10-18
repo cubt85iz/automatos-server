@@ -1,6 +1,6 @@
 [Unit]
-Description=Container service for updating Cloudflare DNS records
+Description=Service for updating dynamic DNS address for Cloudflare
 
 [Container]
 ContainerName=%p
-Image=ghcr.io/cubt85iz/ddns-updater:latest
+Image=ddns-updater.build
