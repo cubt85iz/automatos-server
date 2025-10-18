@@ -8,7 +8,6 @@ Exec=server /data --console-address ":9001"
 Volume=${CONTAINER_PATH}/data:/data:Z
 PublishPort=${WEB_PORT}:9000
 PublishPort=${CONSOLE_PORT}:9001
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
