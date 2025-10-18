@@ -3,7 +3,7 @@ Description=Container service for backing up opnsense configuration
 
 [Container]
 ContainerName=%p
-Image=ghcr.io/cubt85iz/opnsense-bkp:latest
+Image=opnsense-bkp.build
 Volume=${CONTAINER_PATH}/config:/config:Z
 
 [Service]
