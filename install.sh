@@ -38,6 +38,11 @@ for CONTAINER_FILE in *.container; do
   if ! [[ "${CONTAINERS[@]}" =~ ${CONTAINER} ]]; then
     rm "${CONTAINER_FILE}"
 
+    # Check for build unit
+    if [ -f "${CONTAINER}.build" ]; then
+      rm "${CONTAINER}.build"
+    fi
+
     # Check for network
     if [ -f "${CONTAINER}.network" ]; then
       rm "${CONTAINER}.network"

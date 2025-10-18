@@ -1,0 +1,6 @@
+[Unit]
+Description = Build unit for opnsense-bkp
+
+[Build]
+ImageTag=ghcr.io/cubt85iz/opnsense-bkp:latest
+SetWorkingDirectory=https://github.com/cubt85iz/opnsense-bkp.git
