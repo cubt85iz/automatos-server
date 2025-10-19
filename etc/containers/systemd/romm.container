@@ -1,0 +1,22 @@
+[Unit]
+Description=Container service for RomM
+Requires=romm-network.service romm-db.service
+After=romm-network.service romm-db.service
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/rommapp/romm:latest
+Volume=${CONTAINER_PATH}/cache:/redis-data:Z
+Volume=${CONTAINER_PATH}/assets:/romm/assets:Z
+Volume=${CONTAINER_PATH}/config:/romm/config:Z
+PublishPort=${WEB_PORT}:8080
+Network=romm-network
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/assets"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/cache"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
