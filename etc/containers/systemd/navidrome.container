@@ -5,7 +5,7 @@ Description=Container service for Navidrome
 ContainerName=%p
 Image=docker.io/deluan/%p:latest
 Volume=${CONTAINER_PATH}/data:/data:Z
-PublishPort=${WEB_PORT}:4353
+PublishPort=${WEB_PORT}:4533
 User=${UID}
 Group=${GID}
 
