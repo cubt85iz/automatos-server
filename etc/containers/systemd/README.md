@@ -40,6 +40,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [ddns-updater](https://github.com/cubt85iz/ddns-updater.git) is a container that will update A/AAAA records with WAN IP address.
 
+| :memo: **NOTE** |
+|--|
+| This container is not enabled by default. It is intended to be invoked periodically using a systemd timer. Review the example configuration for kometa in the automatos-server-config repository for more details.|
+
 ### Emby
 
 [Emby](https://emby.media) is a media server designed to organize, play, and stream audio and video to a variety of devices.
@@ -72,6 +76,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Kometa](https://kometa.wiki) (formerly known as Plex Meta Manager) is a powerful tool designed to give you complete control over your media libraries.
 
+| :memo: **NOTE** |
+|--|
+| This container is not enabled by default. It is intended to be invoked periodically using a systemd timer. Review the example configuration in the automatos-server-config repository for more details.|
+
 ### LubeLogger
 
 [LubeLogger](https://lubelogger.com) is a self-hosted, open-source software that lets you manage your vehicle records, fuel economy, taxes, supplies, and reminders.
@@ -92,6 +100,10 @@ To add support for a new service, add a systemd container file and update the `i
 
 [Nextcloud](https://nextcloud.com) is a self-hosted file storage and sync platform with powerful collaboration capabilities for remote work and data protection.
 
+| :memo: **NOTE** |
+|--|
+| This container is enabled by default, but it relies upon a background task being executed periodically. Review the sample configuration for nextcloud in the automatos-server-config repository.|
+
 ### Ollama
 
 [Ollama](https://github.com/ollama/ollama) is an application that allows users to run large language models locally, including offline capabilities. It supports both CPU and GPU installations, with specific versions for NVIDIA and AMD graphics cards.
@@ -99,6 +111,10 @@ To add support for a new service, add a systemd container file and update the `i
 ### Opnsense-bkp
 
 [opnsense-bkp](https://github.com/cubt85iz/opnsense-bkp.github) is a container that connects to a specified opnsense router and downloads its configuration.
+
+| :memo: **NOTE** |
+|--|
+| This container is not enabled by default. It is intended to be invoked periodically using a systemd timer. Review the example configuration for kometa in the automatos-server-config repository for more details.|
 
 ### Paperless-ngx
 

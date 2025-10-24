@@ -11,7 +11,6 @@ Volume=${CONTAINER_PATH}/data:/mosquitto/data:Z
 Volume=${CONTAINER_PATH}/log:/mosquitto/log:Z
 PublishPort=${WEB_PORT}:1883
 Network=homeassistant-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
