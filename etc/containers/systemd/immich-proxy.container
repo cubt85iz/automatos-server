@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for Immich proxy
+
+[Container]
+ContainerName=%p
+Image=immich-proxy.build
+PublishPort=${WEB_PORT}:80
+Network=immich-network
+Network=podman
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
