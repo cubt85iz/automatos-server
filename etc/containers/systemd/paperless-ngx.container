@@ -4,6 +4,7 @@ Requires=paperless-ngx-network.service
 Requires=paperless-ngx-db.service paperless-ngx-broker.service
 After=paperless-ngx-network.service
 After=paperless-ngx-db.service paperless-ngx-broker.service
+PartOf=paperless-ngx-db.service paperless-ngx-broker.service
 
 [Container]
 ContainerName=%p
