@@ -12,7 +12,6 @@ Image=ghcr.io/home-assistant/home-assistant:stable
 Volume=${CONTAINER_PATH}/config:/config:Z
 PublishPort=${WEB_PORT}:8123
 Network=homeassistant-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"

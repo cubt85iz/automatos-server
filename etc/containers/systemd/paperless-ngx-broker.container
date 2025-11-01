@@ -8,7 +8,6 @@ ContainerName=%p
 Image=docker.io/library/redis:7
 Volume=${CONTAINER_PATH}/redis:/data:Z
 Network=paperless-ngx-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/redis"
