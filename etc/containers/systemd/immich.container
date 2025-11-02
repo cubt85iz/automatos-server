@@ -1,10 +1,11 @@
 [Unit]
 Description=Container service for Immich
 Requires=immich-network.service
-Requires=immich-db.service
-Wants=immich-ml.service immich-redis.service
+Requires=immich-db.service immich-redis.service
+Wants=immich-ml.service
 After=immich-network.service
 After=immich-db.service immich-ml.service immich-redis.service
+PartOf=immich-db.service immich-redis.service
 
 [Container]
 ContainerName=%p
@@ -19,3 +20,4 @@ Restart=on-failure
 
 [Install]
 WantedBy=default.target
+

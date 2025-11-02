@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for Uptime Kuma
+
+[Container]
+ContainerName=%p
+Image=docker.io/louislam/uptime-kuma:latest
+Volume=${CONTAINER_PATH}/data:/app/data:Z
+PublishPort=${WEB_PORT}:3001
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

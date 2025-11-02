@@ -5,4 +5,5 @@ Description = Build unit for service proxy
 ImageTag=ghcr.io/cubt85iz/service-proxy:latest
 File=service-proxy.containerfile
 SetWorkingDirectory=unit
-PodmanArgs=--build-arg=BACKEND_URL="http://immich:2283"
+PodmanArgs=--build-arg=BACKEND_URL="http://immich:2283" --build-arg=BUFFER_RESPONSES=off
+

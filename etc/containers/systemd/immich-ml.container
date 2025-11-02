@@ -13,3 +13,4 @@ AutoUpdate=registry
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/cache"
 Restart=on-failure
+
