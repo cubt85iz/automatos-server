@@ -12,3 +12,4 @@ Network=immich-network
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/cache"
 Restart=on-failure
+
