@@ -11,4 +11,3 @@ AutoUpdate=registry
 
 [Service]
 Restart=on-failure
-
