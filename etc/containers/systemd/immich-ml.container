@@ -10,6 +10,14 @@ Volume=${CONTAINER_PATH}/cache:/cache:Z
 Network=immich-network
 
 [Service]
+Environment=CLIP_REPO=https://huggingface.co/immich-app/ViT-B-32__openai.git
+Environment=FR_REPO=https://huggingface.co/immich-app/buffalo_l.git
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/cache"
+ExecStartPre=/bin/bash -c 'test -d "${CONTAINER_PATH}/cache/clip" || mkdir "${CONTAINER_PATH}/cache/clip"'
+ExecStartPre=/bin/bash -c 'test -d "${CONTAINER_PATH}/cache/facial-recognition" || mkdir "${CONTAINER_PATH}/cache/facial-recognition"'
+ExecStartPre=/bin/bash -c 'test -d "${CONTAINER_PATH}/cache/clip/ViT-B-32__openai" || git clone ${CLIP_REPO} "${CONTAINER_PATH}/cache/clip/ViT-B-32__openai"'
+ExecStartPre=/bin/bash -c 'test -d "${CONTAINER_PATH}/cache/facial-recognition/buffalo_l" || git clone ${FR_REPO} "${CONTAINER_PATH}/cache/facial-recognition/buffalo_l"'
+ExecStartPre=/bin/bash -c 'git --work-tree="${CONTAINER_PATH}/cache/clip/ViT-B-32__openai" --git-dir="${CONTAINER_PATH}/cache/clip/ViT-B-32__openai/.git" pull origin main'
+ExecStartPre=/bin/bash -c 'git --work-tree="${CONTAINER_PATH}/cache/facial-recognition/buffalo_l" --git-dir="${CONTAINER_PATH}/cache/facial-recognition/buffalo_l/.git" pull origin main'
+TimeoutSec=10min
 Restart=on-failure
-
