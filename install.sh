@@ -2,17 +2,82 @@
 
 set -euox pipefail
 
+# ref: https://github.com/ublue-os/ucore/ucore/install-ucore-minimal.sh
+ARCH="$(rpm -E %{_arch})"
+RELEASE="$(rpm -E %fedora)"
+
+pushd /tmp/rpms/kernel &> /dev/null || exit 1
+KERNEL_VERSION=$(find kernel-*.rpm | grep -P "kernel-(\d+\.\d+\.\d+)-.*\.fc${RELEASE}\.${ARCH}" | sed -E 's/kernel-//' | sed -E 's/\.rpm//')
+popd &> /dev/null || exit 1
+
+# always disable cisco-open264 repo
+sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/fedora-cisco-openh264.repo
+
+# Install DNF5 Plugins
+dnf -y install dnf5-plugins
+
+# Replace Existing Kernel with packages from akmods cached kernel
+for pkg in kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra; do
+    if rpm -q $pkg >/dev/null 2>&1; then
+        rpm --erase $pkg --nodeps
+    fi
+done
+echo "Install kernel version ${KERNEL_VERSION} from kernel-cache."
+dnf -y install \
+    /tmp/rpms/kernel/kernel-[0-9]*.rpm \
+    /tmp/rpms/kernel/kernel-core-*.rpm \
+    /tmp/rpms/kernel/kernel-modules-*.rpm
+
+# Ensure kernel packages can't be updated by other dnf operations
+dnf versionlock add kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
+
+# Regenerate initramfs, for new kernel; not including NVIDIA or ZFS kmods
+QUALIFIED_KERNEL="$(rpm -qa | grep -P 'kernel-(\d+\.\d+\.\d+)' | sed -E 's/kernel-//')"
+/usr/bin/dracut --no-hostonly --kver "$QUALIFIED_KERNEL" --reproducible -v --add ostree -f "/lib/modules/$QUALIFIED_KERNEL/initramfs.img"
+chmod 0600 "/lib/modules/$QUALIFIED_KERNEL/initramfs.img"
+
+## ALWAYS: install ZFS (and sanoid deps)
+# uCore does not support ZFS as rootfs, thus does not provide it in the initramfs
+dnf -y install /tmp/rpms/akmods-zfs/kmods/zfs/*.rpm /tmp/rpms/akmods-zfs/kmods/zfs/other/zfs-dracut-*.rpm
+# for some reason depmod ran automatically with zfs 2.1 but not with 2.2
+echo "Update modules.dep, etc..."
+depmod -a "${KERNEL_VERSION}"
+
+## CONDITIONAL: install NVIDIA
+if [[ "true" == "${INSTALL_NVIDIA}" ]]; then
+    # uCore expects NVIDIA drivers are able to hot load/unload, thus does not provide it in the initramfs
+    # repo for nvidia rpms
+    curl --fail --retry 15 --retry-all-errors -sSL https://negativo17.org/repos/fedora-nvidia.repo -o /etc/yum.repos.d/fedora-nvidia.repo
+
+    dnf -y install /tmp/rpms/akmods-nvidia/ucore/ublue-os-ucore-nvidia*.rpm
+    sed -i '0,/enabled=0/{s/enabled=0/enabled=1/}' /etc/yum.repos.d/nvidia-container-toolkit.repo
+
+    dnf -y install \
+        /tmp/rpms/akmods-nvidia/kmods/kmod-nvidia*.rpm \
+        nvidia-driver-cuda \
+        nvidia-container-toolkit
+
+    sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/nvidia-container-toolkit.repo
+    semodule --verbose --install /usr/share/selinux/packages/nvidia-container.pp
+    systemctl enable ublue-nvctk-cdi.service
+fi
+
+## CONDITIONAL: install packages specific to x86_64
+if [[ "x86_64" == "${ARCH}" ]]; then
+    dnf -y install intel-compute-runtime
+fi
+
 # Read repos for installation from json config.
-readarray -t REPOS < <(jq -rc '.repos[]' /tmp/$CONFIG)
+readarray -t REPOS < <(jq -rc '.repos[]' /.config/$CONFIG)
 
 # Read packages for installation from json config.
-readarray -t PACKAGES < <(jq -rc '.packages[]' /tmp/$CONFIG)
+readarray -t PACKAGES < <(jq -rc '.packages[]' /.config/$CONFIG)
 
 # Read containers for use from json config.
-readarray -t CONTAINERS < <(jq -rc '.containers[]' /tmp/$CONFIG)
+readarray -t CONTAINERS < <(jq -rc '.containers[]' /.config/$CONFIG)
 
 # Read SELinux boolean values from json config.
-readarray -t SELINUX_BOOLEANS < <(jq -rc '.selinux.booleans[]' /tmp/$CONFIG)
+readarray -t SELINUX_BOOLEANS < <(jq -rc '.selinux.booleans[]' /.config/$CONFIG)
 
 # Review container requirements for specified containers. If any
 # requirements are not satisfied by the provided containers, then
@@ -55,6 +120,7 @@ for CONTAINER_FILE in *.container; do
         rm proxy.network
       fi
     fi
+
     # Nextcloud has a background service for performing tasks.
     if [ "${CONTAINER}" = "nextcloud" ]; then
       if [ -f "/etc/systemd/system/nextcloud-background.service" ]; then
@@ -67,12 +133,14 @@ for CONTAINER_FILE in *.container; do
         rm /etc/systemd/system/timers.target.wants/nextcloud-background.timer
       fi
     fi
+
     # ProtonMail-Bridge uses the mail network
     if [ "${CONTAINER}" = "protonmail-bridge" ]; then
       if [ -f "mail.network" ]; then
         rm mail.network
       fi
     fi
+    
     # Ollama uses the ai network
     if [ "${CONTAINER}" = "ollama" ]; then
       if [ -f "ai.network" ]; then
@@ -101,7 +169,9 @@ for REPO in ${REPOS[@]}; do
 done
 
 # Install specified packages
-rpm-ostree install "${PACKAGES[@]}"
+if (( ${#PACKAGES[@]} > 0 )); then
+  rpm-ostree install "${PACKAGES[@]}"
+fi
 
 # Configure SELinux global booleans
 for BOOL in ${SELINUX_BOOLEANS[@]}; do
