@@ -35,6 +35,6 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=bind,from=akmods-zfs,src=/rpms,dst=/tmp/rpms/akmods-zfs \
     --mount=type=bind,from=akmods-common,src=/kernel-rpms,dst=/tmp/rpms/kernel \
     /context/install.sh \
-    && /ctx/cleanup.sh
+    && /context/cleanup.sh
 
 RUN ["bootc", "container", "lint"]

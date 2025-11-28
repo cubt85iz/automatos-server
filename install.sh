@@ -68,16 +68,16 @@ if [[ "x86_64" == "${ARCH}" ]]; then
 fi
 
 # Read repos for installation from json config.
-readarray -t REPOS < <(jq -rc '.repos[]' /.config/$CONFIG)
+readarray -t REPOS < <(jq -rc '.repos[]' /config/$CONFIG)
 
 # Read packages for installation from json config.
-readarray -t PACKAGES < <(jq -rc '.packages[]' /.config/$CONFIG)
+readarray -t PACKAGES < <(jq -rc '.packages[]' /config/$CONFIG)
 
 # Read containers for use from json config.
-readarray -t CONTAINERS < <(jq -rc '.containers[]' /.config/$CONFIG)
+readarray -t CONTAINERS < <(jq -rc '.containers[]' /config/$CONFIG)
 
 # Read SELinux boolean values from json config.
-readarray -t SELINUX_BOOLEANS < <(jq -rc '.selinux.booleans[]' /.config/$CONFIG)
+readarray -t SELINUX_BOOLEANS < <(jq -rc '.selinux.booleans[]' /config/$CONFIG)
 
 # Review container requirements for specified containers. If any
 # requirements are not satisfied by the provided containers, then
