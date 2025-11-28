@@ -46,6 +46,12 @@ depmod -a "${KERNEL_VERSION}"
 ## CONDITIONAL: install NVIDIA
 if [[ "true" == "${INSTALL_NVIDIA}" ]]; then
     # uCore expects NVIDIA drivers are able to hot load/unload, thus does not provide it in the initramfs
+
+    # mitigate upstream packaging bug: https://bugzilla.redhat.com/show_bug.cgi?id=2332429
+    # swap the incorrectly installed OpenCL-ICD-Loader for ocl-icd, the expected package
+    dnf5 -y swap --repo='fedora' \
+        OpenCL-ICD-Loader ocl-icd
+
     # repo for nvidia rpms
     curl --fail --retry 15 --retry-all-errors -sSL https://negativo17.org/repos/fedora-nvidia.repo -o /etc/yum.repos.d/fedora-nvidia.repo
 
@@ -53,9 +59,16 @@ if [[ "true" == "${INSTALL_NVIDIA}" ]]; then
     sed -i '0,/enabled=0/{s/enabled=0/enabled=1/}' /etc/yum.repos.d/nvidia-container-toolkit.repo
 
     dnf -y install \
-        /tmp/rpms/akmods-nvidia/kmods/kmod-nvidia*.rpm \
-        nvidia-driver-cuda \
+        /tmp/rpms/akmods-nvidia/kmods/kmod-nvidia*.rpm
+
+    # hack required until nvidia-container-toolkit and dnf6 (fedora43) are playing nice
+    # per: https://github.com/NVIDIA/nvidia-container-toolkit/issues/1307#issuecomment-3486656389
+    echo "%_pkgverify_level none" >/etc/rpm/macros.verify
+    dnf -y install \
         nvidia-container-toolkit
+    rm /etc/rpm/macros.verify
+    dnf -y install \
+        nvidia-driver-cuda
 
     sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/nvidia-container-toolkit.repo
     semodule --verbose --install /usr/share/selinux/packages/nvidia-container.pp
