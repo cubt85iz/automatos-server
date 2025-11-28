@@ -34,7 +34,7 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=bind,from=akmods-nvidia,src=/rpms,dst=/tmp/rpms/akmods-nvidia \
     --mount=type=bind,from=akmods-zfs,src=/rpms,dst=/tmp/rpms/akmods-zfs \
     --mount=type=bind,from=akmods-common,src=/kernel-rpms,dst=/tmp/rpms/kernel \
-    --mount=type=bind,src=.config/,dst=/.config \
+    --mount=type=bind,src=.config/,dst=/.config,Z \
     /context/install.sh \
     && /context/cleanup.sh
 
