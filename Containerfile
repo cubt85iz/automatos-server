@@ -44,11 +44,7 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=bind,from=akmods-common,src=/kernel-rpms,dst=/tmp/rpms/kernel \
     --mount=type=bind,from=prebuild,src=/,dst=/prebuild \
     --mount=type=bind,src=.config/,dst=/.config,Z \
-    curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/cleanup.sh -o /cleanup.sh \
-    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install.sh \
-    && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /install.sh > /install.sh \
-    && chmod +x /install.sh /cleanup.sh \
-    && /prebuild/install.sh \
+    /prebuild/install.sh \
     && /ctx/configure.sh \
     && /prebuild/cleanup.sh
 
