@@ -15,6 +15,13 @@ FROM scratch AS ctx
 ARG ROOT=${ROOT:-automatos-server}
 COPY ./$ROOT/* /
 
+FROM docker.io/library/alpine:latest AS prebuild
+RUN curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/cleanup.sh -o /cleanup.sh \
+    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install.sh \
+    && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /install.sh > /install.sh \
+    && chmod +x /install.sh /cleanup.sh \
+
+
 FROM ${REGISTRY}:${COREOS_STREAM}
 
 # Build arguments
@@ -34,13 +41,14 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=bind,from=akmods-nvidia,src=/rpms,dst=/tmp/rpms/akmods-nvidia \
     --mount=type=bind,from=akmods-zfs,src=/rpms,dst=/tmp/rpms/akmods-zfs \
     --mount=type=bind,from=akmods-common,src=/kernel-rpms,dst=/tmp/rpms/kernel \
+    --mount=type=bind,from=prebuild,src=/,dst=/prebuild \
     --mount=type=bind,src=.config/,dst=/.config,Z \
-    curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/cleanup.sh -o /ctx/cleanup.sh \
-    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /ctx/install.sh \
-    && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /ctx/install.sh > /ctx/install.sh \
-    && chmod +x /ctx/install.sh /ctx/cleanup.sh \
-    && /ctx/install.sh \
+    curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/cleanup.sh -o /cleanup.sh \
+    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install.sh \
+    && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /install.sh > /install.sh \
+    && chmod +x /install.sh /cleanup.sh \
+    && /prebuild/install.sh \
     && /ctx/configure.sh \
-    && /ctx/cleanup.sh
+    && /prebuild/cleanup.sh
 
 RUN ["bootc", "container", "lint"]
