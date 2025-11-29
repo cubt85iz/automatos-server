@@ -11,11 +11,9 @@ FROM ${AKMODS_COMMON} AS akmods-common
 FROM ${AKMODS_NVIDIA} AS akmods-nvidia
 FROM ${AKMODS_ZFS} AS akmods-zfs
 
-FROM scratch AS ctx
-ARG ROOT=${ROOT:-automatos-server}
-COPY ./$ROOT/* /
-
 FROM docker.io/library/ubuntu:latest AS prebuild
+ARG ROOT=${ROOT:-automatos-server}
+COPY ./$ROOT/configure.sh /
 RUN apt-get update \
     && apt-get -y install curl \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/cleanup.sh -o /cleanup.sh \
@@ -41,7 +39,6 @@ COPY $ROOT/usr/ /usr/
 
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/cache/rpm-ostree \
-    --mount=type=bind,from=ctx,src=/,dst=/ctx \
     --mount=type=bind,from=akmods-common,src=/rpms/ucore,dst=/tmp/rpms/akmods-common \
     --mount=type=bind,from=akmods-nvidia,src=/rpms,dst=/tmp/rpms/akmods-nvidia \
     --mount=type=bind,from=akmods-zfs,src=/rpms,dst=/tmp/rpms/akmods-zfs \
@@ -49,7 +46,7 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=bind,from=prebuild,src=/,dst=/prebuild \
     --mount=type=bind,src=.config/,dst=/.config,Z \
     /prebuild/install.sh \
-    && /ctx/configure.sh \
+    && /prebuild/configure.sh \
     && /prebuild/cleanup.sh
 
 RUN ["bootc", "container", "lint"]
