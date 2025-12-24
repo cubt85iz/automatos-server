@@ -1,0 +1,19 @@
+[Unit]
+Description=Container service for Mosquitto
+
+[Container]
+ContainerName=%p
+Image=docker.io/library/eclipse-mosquitto:latest
+Volume=${CONTAINER_PATH}/config:/mosquitto/config:Z
+Volume=${CONTAINER_PATH}/data:/mosquitto/data:Z
+Volume=${CONTAINER_PATH}/log:/mosquitto/log:Z
+PublishPort=${WEB_PORT}:1883
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/log"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
