@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for ESPHome
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/esphome/esphome:latest
+Volume=${CONTAINER_PATH}/config:/config:Z
+PublishPort=${WEB_PORT}:6052
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
