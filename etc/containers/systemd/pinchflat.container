@@ -6,10 +6,8 @@ ContainerName=%p
 Image=ghcr.io/kieraneglin/pinchflat:latest
 Volume=${CONTAINER_PATH}/config:/config:Z
 PublishPort=${WEB_PORT}:8945
-AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/environment
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure
 

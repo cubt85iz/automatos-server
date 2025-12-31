@@ -18,10 +18,8 @@ PublishPort=${GDM_PORT_C}:32413/udp
 PublishPort=${GDM_PORT_D}:32414/udp
 Tmpfs=/transcode
 Network=plex-network
-AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/environment
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure
 TimeoutStartSec=120

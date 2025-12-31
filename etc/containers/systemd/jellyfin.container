@@ -15,10 +15,8 @@ Tmpfs=/transcode
 User=${UID}
 Group=${GID}
 Network=jellyfin-network
-AutoUpdate=registry
 
 [Service]
-EnvironmentFile=/etc/environment
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/cache"
 Restart=on-failure

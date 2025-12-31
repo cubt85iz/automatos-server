@@ -1,16 +1,15 @@
 [Unit]
-Description=Container service for Calibre Web
+Description=Container service for ESPHome
 
 [Container]
 ContainerName=%p
-Image=lscr.io/linuxserver/calibre-web:latest
+Image=ghcr.io/esphome/esphome:latest
 Volume=${CONTAINER_PATH}/config:/config:Z
-PublishPort=${WEB_PORT}:8083
+PublishPort=${WEB_PORT}:6052
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure
-RestartSec=15
 
 [Install]
 WantedBy=default.target

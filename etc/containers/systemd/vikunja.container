@@ -9,7 +9,6 @@ Image=docker.io/vikunja/vikunja:latest
 Volume=${CONTAINER_PATH}/files:/app/vikunja/files:Z
 PublishPort=${WEB_PORT}:3456
 Network=vikunja-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/files"

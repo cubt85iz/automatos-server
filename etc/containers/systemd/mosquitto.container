@@ -1,7 +1,5 @@
 [Unit]
-Description=Container for MQTT service broker
-Requires=homeassistant-network.service
-After=homeassistant-network.service
+Description=Container service for Mosquitto
 
 [Container]
 ContainerName=%p
@@ -10,7 +8,6 @@ Volume=${CONTAINER_PATH}/config:/mosquitto/config:Z
 Volume=${CONTAINER_PATH}/data:/mosquitto/data:Z
 Volume=${CONTAINER_PATH}/log:/mosquitto/log:Z
 PublishPort=${WEB_PORT}:1883
-Network=homeassistant-network
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"

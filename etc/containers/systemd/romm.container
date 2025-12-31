@@ -2,6 +2,7 @@
 Description=Container service for RomM
 Requires=romm-network.service romm-db.service
 After=romm-network.service romm-db.service
+PartOf=romm-db.service
 
 [Container]
 ContainerName=%p

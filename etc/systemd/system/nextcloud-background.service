@@ -1,6 +1,0 @@
-[Unit]
-Description=Service for background jobs for Nextcloud container
-
-[Service]
-ExecCondition=/bin/sh -c "/usr/bin/systemctl is-active nextcloud"
-ExecStart=/usr/bin/podman exec -it -u www-data nextcloud php /var/www/html/cron.php

@@ -15,7 +15,6 @@ PublishPort=80:80
 PublishPort=443:443
 PublishPort=443:443/udp
 Network=proxy-network
-AutoUpdate=registry
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/caddy"

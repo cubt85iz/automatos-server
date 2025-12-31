@@ -24,7 +24,6 @@ PublishPort=993:993
 PublishPort=995:995
 PublishPort=5222:5222
 Network=smartermail-network
-AutoUpdate=registry
 
 [Service]
 Restart=on-failure

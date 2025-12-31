@@ -1,18 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -euox pipefail
+set -euxo pipefail
 
 # Read repos for installation from json config.
-readarray -t REPOS < <(jq -rc '.repos[]' /tmp/$CONFIG)
+readarray -t REPOS < <(jq -rc '.repos[]' /.config/$CONFIG)
 
 # Read packages for installation from json config.
-readarray -t PACKAGES < <(jq -rc '.packages[]' /tmp/$CONFIG)
+readarray -t PACKAGES < <(jq -rc '.packages[]' /.config/$CONFIG)
 
 # Read containers for use from json config.
-readarray -t CONTAINERS < <(jq -rc '.containers[]' /tmp/$CONFIG)
+readarray -t CONTAINERS < <(jq -rc '.containers[]' /.config/$CONFIG)
 
 # Read SELinux boolean values from json config.
-readarray -t SELINUX_BOOLEANS < <(jq -rc '.selinux.booleans[]' /tmp/$CONFIG)
+readarray -t SELINUX_BOOLEANS < <(jq -rc '.selinux.booleans[]' /.config/$CONFIG)
 
 # Review container requirements for specified containers. If any
 # requirements are not satisfied by the provided containers, then
@@ -31,7 +31,7 @@ for CONTAINER in "${CONTAINERS[@]}"; do
   done < <(grep Requires "/etc/containers/systemd/${CONTAINER}.container")
 done
 
-# Remove containers, networks, services, & timers
+# Remove containers & networks
 pushd /etc/containers/systemd/ &> /dev/null
 for CONTAINER_FILE in *.container; do
   CONTAINER=${CONTAINER_FILE%.*}
@@ -48,14 +48,6 @@ for CONTAINER_FILE in *.container; do
       rm "${CONTAINER}.network"
     fi
 
-    # Check for timer & symlink
-    if [ -f "/etc/systemd/system/${CONTAINER}.timer" ]; then
-      rm "/etc/systemd/system/${CONTAINER}.timer"
-      if [ -f "/etc/systemd/system/timers.target.wants/${CONTAINER}.timer" ]; then
-        rm "/etc/systemd/system/timers.target.wants/${CONTAINER}.timer"
-      fi
-    fi
-
     # Special cases
     # Caddy uses the proxy network
     if [ "${CONTAINER}" = "caddy" ]; then
@@ -63,6 +55,7 @@ for CONTAINER_FILE in *.container; do
         rm proxy.network
       fi
     fi
+
     # Nextcloud has a background service for performing tasks.
     if [ "${CONTAINER}" = "nextcloud" ]; then
       if [ -f "/etc/systemd/system/nextcloud-background.service" ]; then
@@ -75,12 +68,14 @@ for CONTAINER_FILE in *.container; do
         rm /etc/systemd/system/timers.target.wants/nextcloud-background.timer
       fi
     fi
+
     # ProtonMail-Bridge uses the mail network
     if [ "${CONTAINER}" = "protonmail-bridge" ]; then
       if [ -f "mail.network" ]; then
         rm mail.network
       fi
     fi
+    
     # Ollama uses the ai network
     if [ "${CONTAINER}" = "ollama" ]; then
       if [ -f "ai.network" ]; then
@@ -109,7 +104,9 @@ for REPO in ${REPOS[@]}; do
 done
 
 # Install specified packages
-rpm-ostree install "${PACKAGES[@]}"
+if (( ${#PACKAGES[@]} > 0 )); then
+  rpm-ostree install "${PACKAGES[@]}"
+fi
 
 # Configure SELinux global booleans
 for BOOL in ${SELINUX_BOOLEANS[@]}; do
