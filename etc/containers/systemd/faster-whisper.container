@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for LinuxServer.io faster-whisper
+
+[Container]
+ContainerName=%p
+Image=lscr.io/linuxserver/faster-whisper:gpu
+Volume=${CONTAINER_PATH}/config:/config:Z
+PublishPort=${PORT}:10300
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
