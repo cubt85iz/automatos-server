@@ -1,15 +1,12 @@
 [Unit]
 Description=Container for Piper TTS
-Requires=homeassistant-network.service
-After=homeassistant-network.service
 
 [Container]
 ContainerName=%p
 Image=docker.io/rhasspy/wyoming-piper:latest
-Exec="--voice ${VOICE}"
+Exec=--voice ${VOICE}
 Volume=${CONTAINER_PATH}/data:/data:Z
 PublishPort=${WEB_PORT}:10200
-Network=homeassistant-network
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
