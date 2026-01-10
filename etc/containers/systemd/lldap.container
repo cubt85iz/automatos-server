@@ -1,0 +1,18 @@
+[Unit]
+Description=Container service for LLDAP
+Requires=authelia-network.service
+After=authelia-network.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/lldap/lldap:stable
+Volume=${CONTAINER_PATH}/data:/data:Z
+PublishPort=${WEB_PORT}:17170
+Network=authelia-network
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

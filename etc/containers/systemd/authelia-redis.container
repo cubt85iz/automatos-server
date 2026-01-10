@@ -1,0 +1,14 @@
+[Unit]
+Description=Container service for redis
+Requires=authelia-network.service
+After=authelia-network.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/library/redis:alpine
+Volume=${CONTAINER_PATH}/redis:/data:Z
+Network=authelia-network
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/redis"
+Restart=on-failure

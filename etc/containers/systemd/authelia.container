@@ -1,0 +1,18 @@
+[Unit]
+Description=Container service for Authelia
+Requires=authelia-network.service authelia-redis.service
+After=authelia-network.service authelia-redis.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/authelia/authelia:latest
+Volume=${CONTAINER_PATH}/config:/config:Z
+PublishPort=${WEB_PORT}:9091
+Network=authelia-network
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
