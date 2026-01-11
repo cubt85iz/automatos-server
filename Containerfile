@@ -29,6 +29,7 @@ ARG CONFIG=${CONFIG:-pow}
 ARG DEBUG=${DEBUG:-false}
 ARG KERNEL_FLAVOR=${KERNEL_FLAVOR:-}
 ARG NVIDIA_TAG=${NVIDIA_TAG:-}
+ARG UCORE_STREAM=${UCORE_STREAM:-stable}
 ARG ROOT=${ROOT:-automatos-server}
 
 # Copy configuration files to image.
