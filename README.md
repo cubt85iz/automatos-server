@@ -15,4 +15,4 @@ Clone the repo and create a configuration file in the .config folder. In the con
 
 ## Implementation
 
-Containers are defined using quadlets and placed in the /etc/containers/systemd folder. Many of these containers require additional variables/volumes. Check out the automatos-server-config repo for more information.
+Containers are defined using quadlets and placed in the `/opt/containers` folder. Many of these containers require additional variables/volumes. To enable these services, create a symlink from either `~/.config/containers/systemd` or `/etc/containers/systemd` to point to the specific service you wish to enable. Check out the automatos-server-config repo for more information.
