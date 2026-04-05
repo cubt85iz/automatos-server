@@ -4,7 +4,7 @@ ARG FEDORA_VERSION=${FEDORA_VERSION:-43}
 ARG REGISTRY=${REGISTRY:-quay.io/fedora/fedora-coreos}
 
 # akmods from ublue-os/akmods
-ARG AKMODS_NVIDIA="ghcr.io/ublue-os/akmods-nvidia:coreos-${COREOS_VERSION}-${FEDORA_VERSION}"
+ARG AKMODS_NVIDIA="ghcr.io/ublue-os/akmods-nvidia-lts:coreos-${COREOS_VERSION}-${FEDORA_VERSION}"
 ARG AKMODS_ZFS="ghcr.io/ublue-os/akmods-zfs:coreos-${COREOS_VERSION}-${FEDORA_VERSION}"
 FROM ${AKMODS_NVIDIA} AS akmods-nvidia
 FROM ${AKMODS_ZFS} AS akmods-zfs
