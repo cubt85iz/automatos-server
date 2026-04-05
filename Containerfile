@@ -34,6 +34,7 @@ ARG ROOT=${ROOT:-automatos-server}
 
 # Copy configuration files to image.
 COPY $ROOT/etc/ /etc/
+COPY $ROOT/opt/ /opt/
 COPY $ROOT/usr/ /usr/
 
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \

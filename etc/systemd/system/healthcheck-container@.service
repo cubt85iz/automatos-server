@@ -1,6 +1,0 @@
-[Unit]
-Description=Healthcheck for containers
-
-[Service]
-ExecCondition=/bin/sh -c "/usr/bin/systemctl is-active %i"
-ExecStart=/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null "$MONITOR_URL"
