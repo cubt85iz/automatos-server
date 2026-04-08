@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -exo pipefail
+
+# Get next subid and the default range.
+NEXT_SUBID=$(awk -F: '{ start = $2; count = $3; end = start + count } end > max { max = end } END { print max + 0 }' /etc/subuid)   
+SUBID_RANGE=$(awk -F: '$1 == "core" { print $3 }' /etc/subuid)
+
+# Iterate through service users (uid >= 10000)
+while IFS=: read -r uid user; do
+  if (( uid >= 10000 )); then
+    if ! grep -q "^${user}:" /etc/subuid; then
+      usermod --add-subuids ${NEXT_SUBID}-$((${NEXT_SUBID} + ${SUBID_RANGE} - 1)) \
+        --add-subgids ${NEXT_SUBID}-$((${NEXT_SUBID} + ${SUBID_RANGE} -1)) "$user"
+        NEXT_SUBID=$(( ${NEXT_SUBID} + ${SUBID_RANGE} ))
+    fi
+  fi
+done < <(getent passwd | awk -F: -v OFS=: '{ print $3, $1}')

@@ -1,0 +1,11 @@
+[Unit]
+Description=Update SubUIDs and SubGIDs for Podman
+Before=podman.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/update-subids
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target   
