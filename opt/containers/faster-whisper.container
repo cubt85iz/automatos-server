@@ -10,6 +10,3 @@ PublishPort=${PORT}:10300
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure
-
-[Install]
-WantedBy=default.target
