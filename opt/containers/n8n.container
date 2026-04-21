@@ -1,0 +1,18 @@
+[Unit]
+Description=Container service for n8n
+
+[Container]
+ContainerName=%p
+Image=docker.n8n.io/n8nio/n8n:latest
+Volume=${CONTAINER_PATH}/data:/home/node/.n8n:Z
+PublishPort=${WEB_PORT}:5678
+Environment=N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+Environment=N8N_RUNNERS_ENABLED=true
+Network=ai-network
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
