@@ -16,6 +16,7 @@ RUN apt-get update \
     && apt-get -y install curl \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/cleanup.sh -o /cleanup.sh \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install-ucore-minimal.sh \
+    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install-ucore-minimal-nvidia.sh \
     && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /install-ucore-minimal.sh > /install.sh \
     && rm /install-ucore-minimal.sh \
     && chmod +x /install.sh /cleanup.sh
@@ -44,6 +45,7 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=bind,from=prebuild,src=/,dst=/prebuild \
     --mount=type=bind,src=.config/,dst=/.config,Z \
     /prebuild/install.sh \
+    && /prebuild/install-ucore-minimal-nvidia.sh \
     && /prebuild/configure.sh \
     && /prebuild/cleanup.sh
 
