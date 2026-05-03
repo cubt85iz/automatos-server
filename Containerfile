@@ -4,7 +4,7 @@ ARG FEDORA_VERSION=${FEDORA_VERSION:-43}
 ARG REGISTRY=${REGISTRY:-quay.io/fedora/fedora-coreos}
 
 # akmods from ublue-os/akmods
-ARG AKMODS_NVIDIA="ghcr.io/ublue-os/akmods-nvidia-lts:coreos-${COREOS_VERSION}-${FEDORA_VERSION}"
+ARG AKMODS_NVIDIA="ghcr.io/ublue-os/akmods-nvidia-open:coreos-${COREOS_VERSION}-${FEDORA_VERSION}"
 ARG AKMODS_ZFS="ghcr.io/ublue-os/akmods-zfs:coreos-${COREOS_VERSION}-${FEDORA_VERSION}"
 FROM ${AKMODS_NVIDIA} AS akmods-nvidia
 FROM ${AKMODS_ZFS} AS akmods-zfs
@@ -16,11 +16,10 @@ RUN apt-get update \
     && apt-get -y install curl \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/cleanup.sh -o /cleanup.sh \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install-ucore-minimal.sh \
-    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install-ucore-minimal-nvidia.sh \
-    && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /install-ucore-minimal-nvidia.sh | \
-       sed 's|^cp /usr/etc/containers/policy.json /etc/containers/policy.json$|# &|' > /install.sh \
+    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal-nvidia.sh -o /install-nvidia.sh \
+    && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /install-ucore-minimal.sh > /install.sh \
     && rm /install-ucore-minimal.sh \
-    && chmod +x /install.sh /install-ucore-minimal-nvidia.sh /cleanup.sh
+    && chmod +x /install.sh /install-nvidia.sh /cleanup.sh
 
 
 FROM ${REGISTRY}:${COREOS_VERSION}
@@ -30,6 +29,7 @@ ARG COREOS_VERSION
 ARG CONFIG=${CONFIG:-pow}
 ARG DEBUG=${DEBUG:-false}
 ARG KERNEL_FLAVOR=${KERNEL_FLAVOR:-}
+ARG NVIDIA_FLAVOR=${NVIDIA_FLAVOR:-nvidia-open}
 ARG NVIDIA_TAG=${NVIDIA_TAG:-}
 ARG UCORE_STREAM=${UCORE_STREAM:-stable}
 ARG ROOT=${ROOT:-automatos-server}
@@ -46,7 +46,7 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=bind,from=prebuild,src=/,dst=/prebuild \
     --mount=type=bind,src=.config/,dst=/.config,Z \
     /prebuild/install.sh \
-    && /prebuild/install-ucore-minimal-nvidia.sh \
+    && /prebuild/install-nvidia.sh \
     && /prebuild/configure.sh \
     && /prebuild/cleanup.sh
 
