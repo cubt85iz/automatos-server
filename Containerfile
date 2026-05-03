@@ -17,7 +17,8 @@ RUN apt-get update \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/cleanup.sh -o /cleanup.sh \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install-ucore-minimal.sh \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install-ucore-minimal-nvidia.sh \
-    && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /install-ucore-minimal-nvidia.sh > /install.sh \
+    && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /install-ucore-minimal-nvidia.sh | \
+       sed 's|^cp /usr/etc/containers/policy.json /etc/containers/policy.json$|# &|' > /install.sh \
     && rm /install-ucore-minimal.sh \
     && chmod +x /install.sh /install-ucore-minimal-nvidia.sh /cleanup.sh
 
