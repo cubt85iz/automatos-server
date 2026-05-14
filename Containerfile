@@ -1,13 +1,15 @@
 # Build arguments
-ARG COREOS_VERSION=${COREOS_VERSION:-stable}
-ARG FEDORA_VERSION=${FEDORA_VERSION:-43}
+ARG COREOS_VERSION
+ARG FEDORA_VERSION
 ARG REGISTRY=${REGISTRY:-quay.io/fedora/fedora-coreos}
+ARG UCORE_STREAM=${UCORE_STREAM:-stable}
 
 # akmods from ublue-os/akmods
-ARG AKMODS_NVIDIA="ghcr.io/ublue-os/akmods-nvidia-open:coreos-${COREOS_VERSION}-${FEDORA_VERSION}"
-ARG AKMODS_ZFS="ghcr.io/ublue-os/akmods-zfs:coreos-${COREOS_VERSION}-${FEDORA_VERSION}"
+ARG AKMODS_NVIDIA="ghcr.io/ublue-os/akmods-nvidia-open:coreos-${UCORE_STREAM}-${FEDORA_VERSION}"
+ARG AKMODS_ZFS="ghcr.io/ublue-os/akmods-zfs:coreos-${UCORE_STREAM}-${FEDORA_VERSION}"
 FROM ${AKMODS_NVIDIA} AS akmods-nvidia
 FROM ${AKMODS_ZFS} AS akmods-zfs
+
 
 FROM docker.io/library/ubuntu:latest AS prebuild
 ARG ROOT=${ROOT:-automatos-server}
