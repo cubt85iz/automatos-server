@@ -15,10 +15,13 @@ FROM docker.io/library/ubuntu:latest AS prebuild
 ARG ROOT=${ROOT:-automatos-server}
 COPY ./$ROOT/configure.sh /
 RUN apt-get update \
-    && apt-get -y install curl \
+    && apt-get -y install curl coreutils \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/cleanup.sh -o /cleanup.sh \
+    && echo "f8f344f1ef883967b4f922a49e85ffabbd450abd7c278c77dbd006492173feab /cleanup.sh" | sha256sum --check --status \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install-ucore-minimal.sh \
+    && echo "1cb94d154de61a55f816e3f2c638c78338c71caa4aebb59a2bd281db84abbd8b /install-ucore-minimal.sh" | sha256sum --check --status \
     && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal-nvidia.sh -o /install-nvidia.sh \
+    && echo "0c2c14365d748e0af6571fa8273600bdedeb078b9ffb2edb2ec0f34859e197af /install-nvidia.sh" | sha256sum --check --status \
     && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /install-ucore-minimal.sh > /install.sh \
     && rm /install-ucore-minimal.sh \
     && chmod +x /install.sh /install-nvidia.sh /cleanup.sh
@@ -36,9 +39,9 @@ ARG UCORE_STREAM=${UCORE_STREAM:-stable}
 ARG ROOT=${ROOT:-automatos-server}
 
 # Copy configuration files to image.
-COPY $ROOT/etc/ /etc/
-COPY $ROOT/opt/ /opt/
-COPY $ROOT/usr/ /usr/
+COPY --chown=root:root --chmod=755 $ROOT/etc/ /etc/
+COPY --chown=root:root --chmod=755 $ROOT/opt/ /opt/
+COPY --chown=root:root --chmod=755 $ROOT/usr/ /usr/
 
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/cache/rpm-ostree \

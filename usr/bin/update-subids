@@ -10,9 +10,9 @@ SUBID_RANGE=$(awk -F: '$1 == "core" { print $3 }' /etc/subuid)
 while IFS=: read -r uid user; do
   if (( uid >= 10000 )); then
     if ! grep -q "^${user}:" /etc/subuid; then
-      usermod --add-subuids ${NEXT_SUBID}-$((${NEXT_SUBID} + ${SUBID_RANGE} - 1)) \
-        --add-subgids ${NEXT_SUBID}-$((${NEXT_SUBID} + ${SUBID_RANGE} -1)) "$user"
-        NEXT_SUBID=$(( ${NEXT_SUBID} + ${SUBID_RANGE} ))
+      usermod --add-subuids ${NEXT_SUBID}-$(( NEXT_SUBID + SUBID_RANGE - 1 )) \
+        --add-subgids ${NEXT_SUBID}-$(( NEXT_SUBID + SUBID_RANGE -1 )) "$user"
+        NEXT_SUBID=$(( NEXT_SUBID + SUBID_RANGE ))
     fi
   fi
 done < <(getent passwd | awk -F: -v OFS=: '{ print $3, $1}')
