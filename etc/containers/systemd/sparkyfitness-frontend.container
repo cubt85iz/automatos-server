@@ -1,0 +1,16 @@
+[Unit]
+Description=Container service for SparkyFitness Frontend
+Requires=sparkyfitness-network.service sparkyfitness-server.service
+After=sparkyfitness-network.service sparkyfitness-server.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/codewithcj/sparkyfitness:${VERSION}
+PublishPort=${WEB_PORT}:80
+Network=sparkyfitness-network
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

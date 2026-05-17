@@ -1,0 +1,19 @@
+[Unit]
+Description=Container service for SparkyFitness Server
+Requires=sparkyfitness-network.service sparkyfitness-db.service
+After=sparkyfitness-network.service sparkyfitness-db.service
+
+[Container]
+ContainerName=%p
+Image=docker.io/codewithcj/sparkyfitness_server:${VERSION}
+Volume=${CONTAINER_PATH}/backups:/app/SparkyFitnessServer/backup:Z
+Volume=${CONTAINER_PATH}/uploads:/app/SparkyFitnessServer/uploads:Z
+Network=sparkyfitness-network
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/backups"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/uploads"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -1,18 +1,17 @@
 [Unit]
 Description=Container service for Open WebUI
-Requires=ai-network.service ollama.service
-After=ai-network.service ollama.service
+Requires=ai-network.service
+After=ai-network.service
 
 [Container]
 ContainerName=%p
 Image=ghcr.io/open-webui/open-webui:main
-Environment=OLLAMA_BASE_URL=http://ollama:11434
-Volume=${CONTAINER_PATH}/data:/app/backend/data:Z
+Volume=${CONTAINER_PATH}/open-webui:/app/backend/data:Z
 PublishPort=${WEB_PORT}:8080
 Network=ai-network
 
 [Service]
-ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/open-webui"
 Restart=on-failure
 
 [Install]
