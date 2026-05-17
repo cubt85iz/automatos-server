@@ -5,7 +5,6 @@
 set -euox pipefail
 
 DATASET=$1
-RECURSIVE=${2:-n}
 
 # Initializes Borg repo
 initialize_repo() {
@@ -22,35 +21,30 @@ initialize_repo() {
 
 # Create snapshot for provided dataset
 create_snapshot() {
-  case $RECURSIVE in
-    Y|y|yes|1)
-      zfs snapshot -r "$DATASET@$TIMESTAMP"
-      ;;
-    *)
-      zfs snapshot "$DATASET@$TIMESTAMP"
-      ;;
-  esac
+  zfs snapshot "$DATASET@$TIMESTAMP"
 }
 
 # Back up snapshot to Borg repository
 backup_snapshot() {
   SERVICE=$(echo "${DATASET##*/}" | tr "[:upper:]" "[:lower:]")
   SNAPSHOT="$DATASET@$TIMESTAMP"
-  if zfs list -H -t snapshot "$SNAPSHOT"; then
-    if [ -n "$BACKUP_PATH" ]; then
-      if [ ! -d "$BACKUP_PATH" ]; then
-        initialize_repo
-      fi
+  MOUNTPOINT=$(zfs get -H -o value mountpoint "$DATASET")
 
-      BORG_PASSPHRASE="$BACKUP_KEY" borg create "$BACKUP_PATH::$SERVICE@$TIMESTAMP" "/var/$DATASET/.zfs/snapshot/$TIMESTAMP"
-    else
-      echo "Please provide a valid repository path."
-      exit 1
-    fi
-  else
+  if ! zfs list -H -t snapshot "$SNAPSHOT"; then
     echo "Please provide a valid ZFS snapshot."
     exit 1
   fi
+
+  if [ -z "$BACKUP_PATH" ]; then
+    echo "Please provide a valid repository path."
+    exit 1
+  fi
+
+  if [ ! -d "$BACKUP_PATH" ]; then
+    initialize_repo
+  fi
+
+  BORG_PASSPHRASE="$BACKUP_KEY" borg create "$BACKUP_PATH::$SERVICE@$TIMESTAMP" "$MOUNTPOINT/.zfs/snapshot/$TIMESTAMP"
 }
 
 # Compares backup archive against source snapshot to validate backup integrity
@@ -96,16 +90,9 @@ prune_snapshots() {
   mapfile -t SNAPSHOTS < <(zfs list -H -o name -t snapshot "$DATASET")
   for SNAPSHOT in "${SNAPSHOTS[@]}"
   do
-    SHORTENED_SNAPSHOT_NAME=${SNAPSHOT##*/}
+    SHORTENED_SNAPSHOT_NAME=$(echo "${SNAPSHOT##*/}" | tr "[:upper:]" "[:lower:]")
     if [[ ! " ${ARCHIVES[*]} " =~ [[:space:]]${SHORTENED_SNAPSHOT_NAME}[[:space:]] ]]; then
-      case $RECURSIVE in
-        Y|y|yes|1)
-          zfs destroy -r "$SNAPSHOT"
-          ;;
-        *)
-          zfs destroy "$SNAPSHOT"
-          ;;
-      esac
+      zfs destroy "$SNAPSHOT"
     fi
   done
 }
@@ -143,8 +130,8 @@ TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 if zfs list -H -t filesystem "$DATASET"; then
   create_snapshot || exit 1
   backup_snapshot || exit 1
-  prune_snapshots || exit 1
   upload_snapshot || exit 1
+  prune_snapshots || exit 1
 else
   echo "Please provide a valid ZFS dataset."
   exit 1
