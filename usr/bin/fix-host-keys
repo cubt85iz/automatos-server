@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-chcon -u unconfined_u -r object_r -t etc_t /etc/ssh/ssh_host_*
+set -euxo pipefail
+
+# This will reset the labels to match the policy (sshd_key_t)
+# and will ignore files that are already correct.
+restorecon -v /etc/ssh/ssh_host_*
