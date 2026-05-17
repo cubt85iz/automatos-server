@@ -1,0 +1,16 @@
+[Unit]
+Description=Container service for llama.cpp
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/ggml-org/llama.cpp:server-cuda13
+Volume=${CONTAINER_PATH}/models:/models:Z
+PublishPort=${WEB_PORT}:8080
+Network=ai-network
+
+[Service]
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/models"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

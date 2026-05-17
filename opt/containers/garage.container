@@ -1,0 +1,21 @@
+[Unit]
+Description=Container service for Garage
+
+[Container]
+ContainerName=%p
+Image=docker.io/dxflrs/garage:v2.1.0
+Volume=${CONTAINER_PATH}/config/garage.toml:/etc/garage.toml:Z
+Volume=${CONTAINER_PATH}/data:/var/lib/garage/data:Z
+Volume=${CONTAINER_PATH}/metadata:/var/lib/garage/metadata:Z
+PublishPort=${S3_PORT}:3900
+PublishPort=${WEB_PORT}:3902
+PublishPort=${ADMIN_PORT}:3903
+
+[Service]
+ExecCondition=/usr/bin/test -f "${CONTAINER_PATH}/config/garage.toml"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/metadata"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
