@@ -1,0 +1,5 @@
+[Unit]
+Description=Target for synchronization jobs
+
+[Install]
+WantedBy=multi-user.target

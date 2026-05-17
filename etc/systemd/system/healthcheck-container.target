@@ -1,0 +1,5 @@
+[Unit]
+Description=Target for container healthchecks
+
+[Install]
+WantedBy=multi-user.target

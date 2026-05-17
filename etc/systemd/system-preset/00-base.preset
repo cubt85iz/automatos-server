@@ -1,4 +1,7 @@
 enable add-samba-users.service
+enable backup.target
 enable fix-host-keys.service
+enable healthcheck-container.target
 enable healthcheck-updates.timer
 enable healthcheck-zfs.timer
+enable sync.target
