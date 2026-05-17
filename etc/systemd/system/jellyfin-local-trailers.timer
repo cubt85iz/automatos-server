@@ -1,9 +1,0 @@
-[Unit]
-Description=Periodically download local trailers for Jellyfin content
-
-[Timer]
-OnBootSec=15min
-OnUnitInactiveSec=1day
-
-[Install]
-WantedBy=timers.target
