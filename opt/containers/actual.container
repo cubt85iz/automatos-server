@@ -13,10 +13,10 @@ Label=io.github.cubt85iz.automatos-server.actual.source="https://github.com/actu
 Label=io.github.cubt85iz.automatos-server.actual.readme="https://raw.githubusercontent.com/actualbudget/actual/refs/heads/master/README.md"
 Label=io.github.cubt85iz.automatos-server.actual.instructions="https://actualbudget.org/docs/install/docker/"
 Label=io.github.cubt85iz.automatos-server.actual.configuration="https://actualbudget.org/docs/config/"
-Label=io.github.cubt85iz.automatos-server.actual.logo.light=""
-Label=io.github.cubt85iz.automatos-server.actual.logo.dark=""
+Label=io.github.cubt85iz.automatos-server.actual.logo.light="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/actual-budget.webp"
+Label=io.github.cubt85iz.automatos-server.actual.logo.dark="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/actual-budget.webp"
 Label=io.github.cubt85iz.automatos-server.actual.category="Finance"
-Label=io.github.cubt85iz.automatos-server.actual.references.quadlet=""
+Label=io.github.cubt85iz.automatos-server.actual.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
