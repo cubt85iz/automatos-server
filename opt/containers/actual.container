@@ -7,6 +7,17 @@ Image=ghcr.io/actualbudget/actual-server:latest-alpine
 Volume=${CONTAINER_PATH}/data:/data:Z
 PublishPort=${WEB_PORT}:5006
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.actual.project="https://actualbudget.org"
+Label=io.github.cubt85iz.automatos-server.actual.source="https://github.com/actualbudget/actual"
+Label=io.github.cubt85iz.automatos-server.actual.readme="https://raw.githubusercontent.com/actualbudget/actual/refs/heads/master/README.md"
+Label=io.github.cubt85iz.automatos-server.actual.instructions="https://actualbudget.org/docs/install/docker/"
+Label=io.github.cubt85iz.automatos-server.actual.configuration="https://actualbudget.org/docs/config/"
+Label=io.github.cubt85iz.automatos-server.actual.logo.light=""
+Label=io.github.cubt85iz.automatos-server.actual.logo.dark=""
+Label=io.github.cubt85iz.automatos-server.actual.category="Finance"
+Label=io.github.cubt85iz.automatos-server.actual.references.quadlet=""
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
 Restart=on-failure
