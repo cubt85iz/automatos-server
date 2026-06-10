@@ -8,6 +8,14 @@ Volume=${CONTAINER_PATH}/models:/models:Z
 PublishPort=${WEB_PORT}:8080
 Network=ai-network
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.llama-cpp.source="https://github.com/ggml-org/llama.cpp"
+Label=io.github.cubt85iz.automatos-server.llama-cpp.readme="https://raw.githubusercontent.com/ggml-org/llama.cpp/refs/heads/master/README.md"
+Label=io.github.cubt85iz.automatos-server.llama-cpp.instructions="https://raw.githubusercontent.com/ggml-org/llama.cpp/refs/heads/master/docs/docker.md"
+Label=io.github.cubt85iz.automatos-server.llama-cpp.logo="https://raw.githubusercontent.com/ggml-org/llama.cpp/refs/heads/master/media/llama1-icon.png"
+Label=io.github.cubt85iz.automatos-server.llama-cpp.category=""
+Label=io.github.cubt85iz.automatos-server.llama-cpp.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/models"
 Restart=on-failure

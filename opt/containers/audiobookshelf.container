@@ -8,6 +8,15 @@ Volume=${CONTAINER_PATH}/config:/config:Z
 Volume=${CONTAINER_PATH}/metadata:/metadata:Z
 PublishPort=${WEB_PORT}:80
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.audiobookshelf.project="https://audiobookshelf.org"
+Label=io.github.cubt85iz.automatos-server.audiobookshelf.source="https://github.com/advplyr/audiobookshelf"
+Label=io.github.cubt85iz.automatos-server.audiobookshelf.readme="https://raw.githubusercontent.com/advplyr/audiobookshelf/refs/heads/master/readme.md"
+Label=io.github.cubt85iz.automatos-server.audiobookshelf.instructions="https://www.audiobookshelf.org/docs"
+Label=io.github.cubt85iz.automatos-server.audiobookshelf.logo="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/audiobookshelf.webp"
+Label=io.github.cubt85iz.automatos-server.audiobookshelf.category="Audiobooks,Podcasts,Entertainment"
+Label=io.github.cubt85iz.automatos-server.audiobookshelf.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/metadata"

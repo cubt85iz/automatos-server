@@ -10,6 +10,16 @@ Volume=${CONTAINER_PATH}/config:/root/.ollama:Z
 PublishPort=${WEB_PORT}:11434
 Network=ai-network
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.ollama.project="https://ollama.com"
+Label=io.github.cubt85iz.automatos-server.ollama.source="https://github.com/ollama/ollama"
+Label=io.github.cubt85iz.automatos-server.ollama.readme="https://raw.githubusercontent.com/ollama/ollama/refs/heads/main/README.md"
+Label=io.github.cubt85iz.automatos-server.ollama.instructions="https://docs.ollama.com/docker"
+Label=io.github.cubt85iz.automatos-server.ollama.logo="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/ollama.webp"
+Label=io.github.cubt85iz.automatos-server.ollama.logo.dark="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/ollama-dark.webp"
+Label=io.github.cubt85iz.automatos-server.ollama.category=""
+Label=io.github.cubt85iz.automatos-server.ollama.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure

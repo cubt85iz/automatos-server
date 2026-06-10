@@ -9,6 +9,15 @@ PublishPort=${WEB_PORT}:4533
 User=${UID}
 Group=${GID}
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.navidrome.project="https://navidrome.org"
+Label=io.github.cubt85iz.automatos-server.navidrome.source="https://github.com/navidrome/navidrome"
+Label=io.github.cubt85iz.automatos-server.navidrome.readme="https://raw.githubusercontent.com/navidrome/navidrome/refs/heads/master/README.md"
+Label=io.github.cubt85iz.automatos-server.navidrome.instructions="https://www.navidrome.org/docs/installation/docker/"
+Label=io.github.cubt85iz.automatos-server.navidrome.logo="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/navidrome.webp"
+Label=io.github.cubt85iz.automatos-server.navidrome.category=""
+Label=io.github.cubt85iz.automatos-server.navidrome.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
 Restart=on-failure

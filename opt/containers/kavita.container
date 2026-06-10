@@ -10,6 +10,15 @@ Volume=${CONTAINER_PATH}/config:/kavita/config:Z
 PublishPort=${WEB_PORT}:5000
 Environment=DOTNET_GLOBALIZATION_INVARIANT=true
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.kavita.project="https://kavitareader.com"
+Label=io.github.cubt85iz.automatos-server.kavita.source="https://github.com/Kareadita/Kavita"
+Label=io.github.cubt85iz.automatos-server.kavita.readme="https://raw.githubusercontent.com/Kareadita/Kavita/refs/heads/develop/README.md"
+Label=io.github.cubt85iz.automatos-server.kavita.instructions="https://wiki.kavitareader.com/installation/docker/github/"
+Label=io.github.cubt85iz.automatos-server.kavita.logo="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/kavita.webp"
+Label=io.github.cubt85iz.automatos-server.kavita.category=""
+Label=io.github.cubt85iz.automatos-server.kavita.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure

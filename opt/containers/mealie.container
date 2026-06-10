@@ -7,6 +7,15 @@ Image=ghcr.io/mealie-recipes/%p:latest
 Volume=${CONTAINER_PATH}/data:/app/data:Z
 PublishPort=${WEB_PORT}:9000
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.mealie.project="https://mealie.io"
+Label=io.github.cubt85iz.automatos-server.mealie.source="https://github.com/mealie-recipes/mealie"
+Label=io.github.cubt85iz.automatos-server.mealie.readme="https://raw.githubusercontent.com/mealie-recipes/mealie/refs/heads/mealie-next/README.md"
+Label=io.github.cubt85iz.automatos-server.mealie.instructions="https://docs.mealie.io/documentation/getting-started/installation/installation-checklist/"
+Label=io.github.cubt85iz.automatos-server.mealie.logo="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/mealie.webp"
+Label=io.github.cubt85iz.automatos-server.mealie.category=""
+Label=io.github.cubt85iz.automatos-server.mealie.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
 Restart=on-failure

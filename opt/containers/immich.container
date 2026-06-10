@@ -14,6 +14,16 @@ Volume=/etc/localtime:/etc/localtime:ro
 PublishPort=${WEB_PORT}:2283
 Network=immich-network
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.immich.project="https://immich.app"
+Label=io.github.cubt85iz.automatos-server.immich.source="https://github.com/immich-app/immich"
+Label=io.github.cubt85iz.automatos-server.immich.readme="https://raw.githubusercontent.com/immich-app/immich/refs/heads/main/README.md"
+Label=io.github.cubt85iz.automatos-server.immich.instructions="https://docs.immich.app/install/docker-compose"
+Label=io.github.cubt85iz.automatos-server.immich.configuration="https://docs.immich.app/install/environment-variables"
+Label=io.github.cubt85iz.automatos-server.immich.logo="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/immich.webp"
+Label=io.github.cubt85iz.automatos-server.immich.category=""
+Label=io.github.cubt85iz.automatos-server.immich.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 Restart=on-failure
 

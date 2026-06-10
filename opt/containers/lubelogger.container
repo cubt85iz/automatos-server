@@ -13,6 +13,15 @@ Volume=${CONTAINER_PATH}/log:/App/log:Z
 Volume=${CONTAINER_PATH}/keys:/root/.aspnet/DataProtection-Keys:Z
 PublishPort=${WEB_PORT}:8080
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.lubelogger.project="https://lubelogger.com"
+Label=io.github.cubt85iz.automatos-server.lubelogger.source="https://github.com/hargata/lubelog"
+Label=io.github.cubt85iz.automatos-server.lubelogger.readme="https://raw.githubusercontent.com/hargata/lubelog/refs/heads/main/README.md"
+Label=io.github.cubt85iz.automatos-server.lubelogger.instructions="https://docs.lubelogger.com/Installation/Getting%20Started/"
+Label=io.github.cubt85iz.automatos-server.lubelogger.logo="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/lubelogger.webp"
+Label=io.github.cubt85iz.automatos-server.lubelogger.category=""
+Label=io.github.cubt85iz.automatos-server.lubelogger.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"

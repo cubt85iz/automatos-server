@@ -7,6 +7,15 @@ Image=ghcr.io/homarr-labs/homarr:latest
 Volume=${CONTAINER_PATH}/data:/appdata:Z
 PublishPort=${WEB_PORT}:7575
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.homarr.project="https://homarr.dev"
+Label=io.github.cubt85iz.automatos-server.homarr.source="https://github.com/homarr-labs/homarr"
+Label=io.github.cubt85iz.automatos-server.homarr.readme="https://raw.githubusercontent.com/homarr-labs/homarr/refs/heads/dev/docs/README.md"
+Label=io.github.cubt85iz.automatos-server.homarr.instructions="https://homarr.dev/docs/getting-started/installation/docker"
+Label=io.github.cubt85iz.automatos-server.homarr.logo="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/homarr.webp"
+Label=io.github.cubt85iz.automatos-server.homarr.category=""
+Label=io.github.cubt85iz.automatos-server.homarr.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
 Restart=on-failure

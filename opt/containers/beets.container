@@ -6,6 +6,15 @@ ContainerName=%p
 Image=lscr.io/linuxserver/beets:latest
 Volume=${CONTAINER_PATH}/config:/config:Z
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.beets.project="https://beets.io"
+Label=io.github.cubt85iz.automatos-server.beets.source="https://github.com/beetbox/beets"
+Label=io.github.cubt85iz.automatos-server.beets.readme="https://raw.githubusercontent.com/beetbox/beets/refs/heads/master/README.rst"
+Label=io.github.cubt85iz.automatos-server.beets.instructions="https://docs.linuxserver.io/images/docker-beets/"
+Label=io.github.cubt85iz.automatos-server.beets.logo="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/beets.webp"
+Label=io.github.cubt85iz.automatos-server.beets.category=""
+Label=io.github.cubt85iz.automatos-server.beets.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure

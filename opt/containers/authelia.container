@@ -10,6 +10,16 @@ Volume=${CONTAINER_PATH}/config:/config:Z
 PublishPort=${WEB_PORT}:9091
 Network=authelia-network
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.authelia.project="https://authelia.com"
+Label=io.github.cubt85iz.automatos-server.authelia.source="https://github.com/authelia/authelia"
+Label=io.github.cubt85iz.automatos-server.authelia.readme="https://raw.githubusercontent.com/authelia/authelia/refs/heads/master/README.md"
+Label=io.github.cubt85iz.automatos-server.authelia.instructions="https://www.authelia.com/integration/deployment/docker/"
+Label=io.github.cubt85iz.automatos-server.authelia.configuration="https://www.authelia.com/configuration/methods/environment/"
+Label=io.github.cubt85iz.automatos-server.authelia.logo="https://www.authelia.com/svgs/branding/title.svg"
+Label=io.github.cubt85iz.automatos-server.authelia.category=""
+Label=io.github.cubt85iz.automatos-server.authelia.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 Restart=on-failure

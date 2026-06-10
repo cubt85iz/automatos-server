@@ -16,6 +16,15 @@ User=${UID}
 Group=${GID}
 Network=jellyfin-network
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.jellyfin.project="https://jellyfin.org"
+Label=io.github.cubt85iz.automatos-server.jellyfin.source="https://github.com/jellyfin/jellyfin"
+Label=io.github.cubt85iz.automatos-server.jellyfin.readme="https://raw.githubusercontent.com/jellyfin/jellyfin/refs/heads/master/README.md"
+Label=io.github.cubt85iz.automatos-server.jellyfin.instructions="https://jellyfin.org/docs/general/installation/container"
+Label=io.github.cubt85iz.automatos-server.jellyfin.logo="https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/webp/jellyfin.webp"
+Label=io.github.cubt85iz.automatos-server.jellyfin.category=""
+Label=io.github.cubt85iz.automatos-server.jellyfin.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/config"
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/cache"

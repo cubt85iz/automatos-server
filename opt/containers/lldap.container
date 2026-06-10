@@ -10,6 +10,15 @@ Volume=${CONTAINER_PATH}/data:/data:Z
 PublishPort=${WEB_PORT}:17170
 Network=lldap-network
 
+# Metadata
+Label=io.github.cubt85iz.automatos-server.lldap.source="https://github.com/lldap/lldap"
+Label=io.github.cubt85iz.automatos-server.lldap.readme="https://raw.githubusercontent.com/lldap/lldap/refs/heads/main/README.md"
+Label=io.github.cubt85iz.automatos-server.lldap.instructions="https://raw.githubusercontent.com/lldap/lldap/refs/heads/main/docs/install.md"
+Label=io.github.cubt85iz.automatos-server.lldap.logo="https://github.com/homarr-labs/dashboard-icons/blob/main/webp/lldap.webp"
+Label=io.github.cubt85iz.automatos-server.lldap.logo-dark="https://github.com/homarr-labs/dashboard-icons/blob/main/webp/lldap-dark.webp"
+Label=io.github.cubt85iz.automatos-server.lldap.category=""
+Label=io.github.cubt85iz.automatos-server.lldap.references.quadlet="https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html"
+
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
 Restart=on-failure
