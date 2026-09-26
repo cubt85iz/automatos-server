@@ -50,7 +50,7 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     /prebuild/install.sh \
     && /prebuild/install-nvidia.sh \
     # Eliminate After directive to eliminate startup issues.
-    && sed -i 's|After=multi-user.target|# &|' /etc/systemd/system/nvidia-cdi-refresh.service \
+    # && sed -i 's|After=multi-user.target|# &|' /etc/systemd/system/nvidia-cdi-refresh.service \
     && /prebuild/configure.sh \
     && /prebuild/cleanup.sh
 
