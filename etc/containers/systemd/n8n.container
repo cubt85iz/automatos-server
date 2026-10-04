@@ -8,7 +8,7 @@ Volume=${CONTAINER_PATH}/n8n:/home/node/.n8n:Z
 PublishPort=${WEB_PORT}:5678
 Environment=N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
 Environment=N8N_RUNNERS_ENABLED=true
-Network=ai-network
+Network=n8n-network
 
 [Service]
 ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/n8n"

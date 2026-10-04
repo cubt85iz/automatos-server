@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for Paperless-NGX MCP Server
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/nloui/paperless-mcp:latest
+Exec=--http --port 3000
+Network=mcp-proxy-network
+Network=paperless-ngx-network
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for Immich Photo Manager MCP Server
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/drolosoft/immich-photo-manager:latest
+Network=mcp-proxy-network
+Network=immich-network
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=90
+
+[Install]
+WantedBy=default.target

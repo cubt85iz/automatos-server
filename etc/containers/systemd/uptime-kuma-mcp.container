@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for Uptime Kuma MCP Server
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/davidfuchs/mcp-uptime-kuma:latest
+Exec=-t streamable-http
+Network=mcp-proxy-network
+Network=uptime-kuma-network
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

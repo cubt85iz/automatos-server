@@ -1,0 +1,16 @@
+[Unit]
+Description=Container service for Multi-MCP Proxy Server
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/tbxark/mcp-proxy:latest
+PublishPort=${WEB_PORT}:9090
+Volume=/etc/mcp/config.json:/config/config.json:ro
+Network=mcp-proxy-network
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=90
+
+[Install]
+WantedBy=default.target

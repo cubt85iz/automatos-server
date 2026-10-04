@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for Mealie MCP Server
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/rldiao/mealie-mcp-server:latest
+Network=mcp-proxy-network
+Network=mealie-network
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=90
+
+[Install]
+WantedBy=default.target

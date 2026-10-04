@@ -1,0 +1,16 @@
+[Unit]
+Description=Container service for Jellyfin MCP Server
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/jaredtrent/jellyfin-mcp:latest
+Exec=-http -http-addr=0.0.0.0:8080
+Network=mcp-proxy-network
+Network=jellyfin-network
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=90
+
+[Install]
+WantedBy=default.target

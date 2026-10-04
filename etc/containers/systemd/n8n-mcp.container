@@ -1,0 +1,15 @@
+[Unit]
+Description=Container service for n8n MCP Server
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/czlonkowski/n8n-mcp:latest
+Network=mcp-proxy-network
+Network=n8n-network
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=90
+
+[Install]
+WantedBy=default.target
