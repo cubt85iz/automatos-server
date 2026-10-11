@@ -1,0 +1,13 @@
+[Unit]
+Description=Container service for Wyoming OpenAI Bridge
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/roryeckel/wyoming_openai:latest
+PublishPort=${WEB_PORT}:10300
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

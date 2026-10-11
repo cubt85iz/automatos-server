@@ -11,7 +11,7 @@ PublishPort=${WEB_PORT}:8080
 Network=ai-network
 
 [Service]
-ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/open-webui"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/data"
 Restart=on-failure
 
 [Install]

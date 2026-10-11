@@ -1,0 +1,13 @@
+[Unit]
+Description=Container service for Parakeet ASR Server
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/achetronic/parakeet:latest-cuda
+PublishPort=${WEB_PORT}:5092
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

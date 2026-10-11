@@ -1,0 +1,27 @@
+[Unit]
+Description=Container service for Chatterbox Turbo TTS Server
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/devnen/chatterbox-tts-server:latest
+Volume=${CONTAINER_PATH}/config.yaml:/app/config.yaml:Z
+Volume=${CONTAINER_PATH}/hf_cache:/app/hf_cache:Z
+Volume=${CONTAINER_PATH}/logs:/app/logs:Z
+Volume=${CONTAINER_PATH}/model_cache:/app/model_cache:Z
+Volume=${CONTAINER_PATH}/outputs:/app/outputs:Z
+Volume=${CONTAINER_PATH}/reference_audio:/app/reference_audio:Z
+Volume=${CONTAINER_PATH}/voices:/app/voices:Z
+PublishPort=${WEB_PORT}:8004
+
+[Service]
+ExecCondition=/usr/bin/test -f "${CONTAINER_PATH}/config.yaml"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/hf_cache"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/logs"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/model_cache"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/outputs"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/reference_audio"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/voices"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
