@@ -1,0 +1,18 @@
+[Unit]
+Description=Container service for Frigate NVR Server
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/blakeblackshear/frigate:latest
+Volume=${CONTAINER_PATH}/config:/app/config:Z
+Volume=${CONTAINER_PATH}/media/frigate:/app/media/frigate:Z
+PublishPort=${WEB_PORT}:8004
+
+[Service]
+ExecCondition=/usr/bin/test -f "${CONTAINER_PATH}/config"
+ExecCondition=/usr/bin/test -d "${CONTAINER_PATH}/media/frigate"
+
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
