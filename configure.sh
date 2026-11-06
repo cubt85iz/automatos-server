@@ -100,9 +100,9 @@ for REPO in ${REPOS[@]}; do
   curl -sL "$REPO" | tee "/etc/yum.repos.d/${REPO##*/}"
 done
 
-# Install specified packages
+# Install specified packages and prune metadata cache.
 if (( ${#PACKAGES[@]} > 0 )); then
-  rpm-ostree install "${PACKAGES[@]}"
+  rpm-ostree install "${PACKAGES[@]}" && rpm-ostree cleanup -m
 fi
 
 # Configure SELinux global booleans
