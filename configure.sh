@@ -102,7 +102,10 @@ done
 
 # Install specified packages and prune metadata cache.
 if (( ${#PACKAGES[@]} > 0 )); then
-  rpm-ostree install "${PACKAGES[@]}" && rpm-ostree cleanup -m
+  rpm-ostree install "${PACKAGES[@]}"
+
+  # Safely wipe cache contents without triggering directory-level busy locks
+  rm -rf /var/cache/rpm-ostree/* 2>/dev/null || true
 fi
 
 # Configure SELinux global booleans
