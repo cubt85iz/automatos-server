@@ -31,6 +31,7 @@ ARG COREOS_VERSION
 ARG CONFIG=${CONFIG:-pow}
 ARG DEBUG=${DEBUG:-false}
 ARG KERNEL_FLAVOR=${KERNEL_FLAVOR:-}
+ARG INSTALL_NVIDIA=${INSTALL_NVIDIA:-false}
 ARG NVIDIA_FLAVOR=${NVIDIA_FLAVOR:-nvidia-open}
 ARG NVIDIA_TAG=${NVIDIA_TAG:-}
 ARG UCORE_STREAM=${UCORE_STREAM:-stable}
@@ -48,9 +49,9 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=bind,from=prebuild,src=/,dst=/prebuild \
     --mount=type=bind,src=.config/,dst=/.config,Z \
     /prebuild/install.sh \
-    && /prebuild/install-nvidia.sh \
-    # Eliminate After directive to eliminate startup issues.
-    # && sed -i 's|After=multi-user.target|# &|' /etc/systemd/system/nvidia-cdi-refresh.service \
+    && if [ "$INSTALL_NVIDIA" = "true" ]; then \
+        /prebuild/install-nvidia.sh; \
+    fi \
     && /prebuild/configure.sh \
     && /prebuild/cleanup.sh
 
