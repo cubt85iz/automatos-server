@@ -1,0 +1,14 @@
+[Unit]
+Description=Samba File Sharing Container
+
+[Container]
+Image=ghcr.io/servercontainers/samba:smbd-only-latest
+ContainerName=%p
+PublishPort=445:445
+PublishPort=139:139
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
