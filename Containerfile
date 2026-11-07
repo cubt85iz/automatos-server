@@ -16,9 +16,9 @@ ARG ROOT=${ROOT:-automatos-server}
 COPY ./$ROOT/configure.sh /
 RUN apt-get update \
     && apt-get -y install curl \
-    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/cleanup.sh -o /cleanup.sh \
-    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal.sh -o /install-ucore-minimal.sh \
-    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/refs/heads/main/ucore/install-ucore-minimal-nvidia.sh -o /install-nvidia.sh \
+    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/1c2180a2e30caed4d07f8dc1948eed4ff7448dc3/ucore/cleanup.sh -o /cleanup.sh \
+    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/1c2180a2e30caed4d07f8dc1948eed4ff7448dc3/ucore/install-ucore-minimal.sh -o /install-ucore-minimal.sh \
+    && curl --fail --retry 15 --retry-all-errors -sSL https://raw.githubusercontent.com/ublue-os/ucore/1c2180a2e30caed4d07f8dc1948eed4ff7448dc3/ucore/install-ucore-minimal-nvidia.sh -o /install-nvidia.sh \
     && sed -n '1,/^##\s*ALWAYS:\s*install regular packages/p' /install-ucore-minimal.sh > /install.sh \
     && rm /install-ucore-minimal.sh \
     && chmod +x /install.sh /install-nvidia.sh /cleanup.sh
