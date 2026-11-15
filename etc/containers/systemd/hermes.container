@@ -1,0 +1,15 @@
+[Unit]
+Description=Hermes Agent AI Gateway and Runtime
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+ContainerName=%p
+Image=ghcr.io/nousresearch/hermes-agent:latest
+
+[Service]
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
