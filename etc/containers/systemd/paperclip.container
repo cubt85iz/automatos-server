@@ -1,0 +1,15 @@
+[Unit]
+Description=Paperclip AI Orchestrator
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+ContainerName=paperclip
+Image=ghcr.io/paperclipai/paperclip:latest
+
+[Service]
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

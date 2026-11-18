@@ -1,10 +1,10 @@
 [Unit]
-Description=Hermes Agent AI Gateway and Runtime
+Description=Hermes Agent: %i
 After=network-online.target
 Wants=network-online.target
 
 [Container]
-ContainerName=%p
+ContainerName=hermes-%i
 Image=ghcr.io/nousresearch/hermes-agent:latest
 
 [Service]
